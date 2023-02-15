@@ -214,55 +214,15 @@
     <Compile Include="Models\SystemManagerModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report\DataSet\CustomerListing.Designer.cs">
+    <Compile Include="Report\DataSet\DataSetCouponUsed.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CustomerListing.xsd</DependentUpon>
+      <DependentUpon>DataSetCouponUsed.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Report\DataSet\DataSetSalePerson.Designer.cs">
+    <Compile Include="Report\DataSet\DataSetExchangePoint.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataSetSalePerson.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Report\DataSet\PurchaseListing.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PurchaseListing.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Report\DataSet\PurchaseOrderListing.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PurchaseOrderListing.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Report\DataSet\SaleListing.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SaleListing.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Report\DataSet\SaleOrderListing.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SaleOrderListing.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Report\DataSet\SaleQuotationListing.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SaleQuotationListing.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Report\DataSet\StockListing.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StockListing.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Report\DataSet\SupplierListing.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SupplierListing.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Report\DataSet\WarehouseListing.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WarehouseListing.xsd</DependentUpon>
+      <DependentUpon>DataSetExchangePoint.xsd</DependentUpon>
     </Compile>
     <Compile Include="Utils\sqlDescriptor.cs" />
   </ItemGroup>
@@ -2270,115 +2230,27 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <Content Include="Scripts\index.js.flow" />
-    <Content Include="Report\DataSet\SaleListing.xsc">
-      <DependentUpon>SaleListing.xsd</DependentUpon>
+    <Content Include="Report\DataSet\DataSetCouponUsed.xsc">
+      <DependentUpon>DataSetCouponUsed.xsd</DependentUpon>
     </Content>
-    <Content Include="Report\DataSet\PurchaseListing.xsc">
-      <DependentUpon>PurchaseListing.xsd</DependentUpon>
-    </Content>
-    <Content Include="Report\DataSet\CustomerListing.xsc">
-      <DependentUpon>CustomerListing.xsd</DependentUpon>
-    </Content>
-    <None Include="Report\DataSet\CustomerListing.xsd">
+    <None Include="Report\DataSet\DataSetCouponUsed.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>CustomerListing.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataSetCouponUsed.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Report\DataSet\CustomerListing.xss">
-      <DependentUpon>CustomerListing.xsd</DependentUpon>
+    <Content Include="Report\DataSet\DataSetCouponUsed.xss">
+      <DependentUpon>DataSetCouponUsed.xsd</DependentUpon>
     </Content>
-    <Content Include="Report\DataSet\DataSetSalePerson.xsc">
-      <DependentUpon>DataSetSalePerson.xsd</DependentUpon>
+    <Content Include="Report\DataSet\DataSetExchangePoint.xsc">
+      <DependentUpon>DataSetExchangePoint.xsd</DependentUpon>
     </Content>
-    <None Include="Report\DataSet\DataSetSalePerson.xsd">
+    <None Include="Report\DataSet\DataSetExchangePoint.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSetSalePerson.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataSetExchangePoint.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Report\DataSet\DataSetSalePerson.xss">
-      <DependentUpon>DataSetSalePerson.xsd</DependentUpon>
-    </Content>
-    <None Include="Report\DataSet\PurchaseListing.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>PurchaseListing.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Report\DataSet\PurchaseListing.xss">
-      <DependentUpon>PurchaseListing.xsd</DependentUpon>
-    </Content>
-    <Content Include="Report\DataSet\PurchaseOrderListing.xsc">
-      <DependentUpon>PurchaseOrderListing.xsd</DependentUpon>
-    </Content>
-    <None Include="Report\DataSet\PurchaseOrderListing.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>PurchaseOrderListing.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Report\DataSet\PurchaseOrderListing.xss">
-      <DependentUpon>PurchaseOrderListing.xsd</DependentUpon>
-    </Content>
-    <None Include="Report\DataSet\SaleListing.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SaleListing.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Report\DataSet\SaleListing.xss">
-      <DependentUpon>SaleListing.xsd</DependentUpon>
-    </Content>
-    <Content Include="Report\DataSet\StockListing.xsc">
-      <DependentUpon>StockListing.xsd</DependentUpon>
-    </Content>
-    <Content Include="Report\DataSet\SaleOrderListing.xsc">
-      <DependentUpon>SaleOrderListing.xsd</DependentUpon>
-    </Content>
-    <None Include="Report\DataSet\SaleOrderListing.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SaleOrderListing.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Report\DataSet\SaleOrderListing.xss">
-      <DependentUpon>SaleOrderListing.xsd</DependentUpon>
-    </Content>
-    <Content Include="Report\DataSet\SaleQuotationListing.xsc">
-      <DependentUpon>SaleQuotationListing.xsd</DependentUpon>
-    </Content>
-    <None Include="Report\DataSet\SaleQuotationListing.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SaleQuotationListing.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Report\DataSet\SaleQuotationListing.xss">
-      <DependentUpon>SaleQuotationListing.xsd</DependentUpon>
-    </Content>
-    <None Include="Report\DataSet\StockListing.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>StockListing.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Report\DataSet\StockListing.xss">
-      <DependentUpon>StockListing.xsd</DependentUpon>
-    </Content>
-    <Content Include="Report\DataSet\SupplierListing.xsc">
-      <DependentUpon>SupplierListing.xsd</DependentUpon>
-    </Content>
-    <None Include="Report\DataSet\SupplierListing.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SupplierListing.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Report\DataSet\SupplierListing.xss">
-      <DependentUpon>SupplierListing.xsd</DependentUpon>
-    </Content>
-    <Content Include="Report\DataSet\WarehouseListing.xsc">
-      <DependentUpon>WarehouseListing.xsd</DependentUpon>
-    </Content>
-    <None Include="Report\DataSet\WarehouseListing.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>WarehouseListing.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Report\DataSet\WarehouseListing.xss">
-      <DependentUpon>WarehouseListing.xsd</DependentUpon>
+    <Content Include="Report\DataSet\DataSetExchangePoint.xss">
+      <DependentUpon>DataSetExchangePoint.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -2633,19 +2505,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Report\CustomerListing.rdlc" />
-    <EmbeddedResource Include="Report\PurchaseListing.rdlc" />
-    <EmbeddedResource Include="Report\PurchaseOrderListing.rdlc" />
-    <EmbeddedResource Include="Report\ReportSaleDetail.rdlc" />
-    <EmbeddedResource Include="Report\SaleListing.rdlc" />
-    <EmbeddedResource Include="Report\SaleOrderListing.rdlc" />
-    <EmbeddedResource Include="Report\SalePerson.rdlc" />
-    <EmbeddedResource Include="Report\SaleQuotationListing.rdlc" />
-    <EmbeddedResource Include="Report\StockBalance.rdlc" />
-    <EmbeddedResource Include="Report\StockInOut.rdlc" />
-    <EmbeddedResource Include="Report\StockListing.rdlc" />
-    <EmbeddedResource Include="Report\SupplierListing.rdlc" />
-    <EmbeddedResource Include="Report\Warehouse.rdlc" />
+    <EmbeddedResource Include="Report\ReportCouponUsed.rdlc" />
+    <EmbeddedResource Include="Report\ReportExchangePoint.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

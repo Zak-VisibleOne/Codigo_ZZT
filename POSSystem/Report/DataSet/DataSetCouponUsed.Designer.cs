@@ -20,17 +20,17 @@ namespace POSSystem.Report.DataSet {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("DataSetSalePerson")]
+    [global::System.Xml.Serialization.XmlRootAttribute("DataSetCouponUsed")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class DataSetSalePerson : global::System.Data.DataSet {
+    public partial class DataSetCouponUsed : global::System.Data.DataSet {
         
-        private SalePersonDataTable tableSalePerson;
+        private PurchaseHeadDataTable tablePurchaseHead;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public DataSetSalePerson() {
+        public DataSetCouponUsed() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace POSSystem.Report.DataSet {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        protected DataSetSalePerson(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected DataSetCouponUsed(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace POSSystem.Report.DataSet {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["SalePerson"] != null)) {
-                    base.Tables.Add(new SalePersonDataTable(ds.Tables["SalePerson"]));
+                if ((ds.Tables["PurchaseHead"] != null)) {
+                    base.Tables.Add(new PurchaseHeadDataTable(ds.Tables["PurchaseHead"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace POSSystem.Report.DataSet {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public SalePersonDataTable SalePerson {
+        public PurchaseHeadDataTable PurchaseHead {
             get {
-                return this.tableSalePerson;
+                return this.tablePurchaseHead;
             }
         }
         
@@ -127,7 +127,7 @@ namespace POSSystem.Report.DataSet {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            DataSetSalePerson cln = ((DataSetSalePerson)(base.Clone()));
+            DataSetCouponUsed cln = ((DataSetCouponUsed)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace POSSystem.Report.DataSet {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["SalePerson"] != null)) {
-                    base.Tables.Add(new SalePersonDataTable(ds.Tables["SalePerson"]));
+                if ((ds.Tables["PurchaseHead"] != null)) {
+                    base.Tables.Add(new PurchaseHeadDataTable(ds.Tables["PurchaseHead"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace POSSystem.Report.DataSet {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableSalePerson = ((SalePersonDataTable)(base.Tables["SalePerson"]));
+            this.tablePurchaseHead = ((PurchaseHeadDataTable)(base.Tables["PurchaseHead"]));
             if ((initTable == true)) {
-                if ((this.tableSalePerson != null)) {
-                    this.tableSalePerson.InitVars();
+                if ((this.tablePurchaseHead != null)) {
+                    this.tablePurchaseHead.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace POSSystem.Report.DataSet {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "DataSetSalePerson";
+            this.DataSetName = "DataSetCouponUsed";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/DataSetSalePerson.xsd";
+            this.Namespace = "http://tempuri.org/DataSetCouponUsed.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableSalePerson = new SalePersonDataTable();
-            base.Tables.Add(this.tableSalePerson);
+            this.tablePurchaseHead = new PurchaseHeadDataTable();
+            base.Tables.Add(this.tablePurchaseHead);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private bool ShouldSerializeSalePerson() {
+        private bool ShouldSerializePurchaseHead() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace POSSystem.Report.DataSet {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            DataSetSalePerson ds = new DataSetSalePerson();
+            DataSetCouponUsed ds = new DataSetCouponUsed();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,31 +270,29 @@ namespace POSSystem.Report.DataSet {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public delegate void SalePersonRowChangeEventHandler(object sender, SalePersonRowChangeEvent e);
+        public delegate void PurchaseHeadRowChangeEventHandler(object sender, PurchaseHeadRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SalePersonDataTable : global::System.Data.TypedTableBase<SalePersonRow> {
+        public partial class PurchaseHeadDataTable : global::System.Data.TypedTableBase<PurchaseHeadRow> {
             
             private global::System.Data.DataColumn columnID;
             
-            private global::System.Data.DataColumn columnSalePersonCode;
+            private global::System.Data.DataColumn columnMemberCode;
             
-            private global::System.Data.DataColumn columnSalePersonName;
+            private global::System.Data.DataColumn columnCouponCode;
             
-            private global::System.Data.DataColumn columnAddress;
+            private global::System.Data.DataColumn columnReceiptNumber;
             
-            private global::System.Data.DataColumn columnMobile;
-            
-            private global::System.Data.DataColumn columnRemarks;
+            private global::System.Data.DataColumn columnUsedDate;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public SalePersonDataTable() {
-                this.TableName = "SalePerson";
+            public PurchaseHeadDataTable() {
+                this.TableName = "PurchaseHead";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -302,7 +300,7 @@ namespace POSSystem.Report.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal SalePersonDataTable(global::System.Data.DataTable table) {
+            internal PurchaseHeadDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -319,7 +317,7 @@ namespace POSSystem.Report.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected SalePersonDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected PurchaseHeadDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -334,41 +332,33 @@ namespace POSSystem.Report.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn SalePersonCodeColumn {
+            public global::System.Data.DataColumn MemberCodeColumn {
                 get {
-                    return this.columnSalePersonCode;
+                    return this.columnMemberCode;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn SalePersonNameColumn {
+            public global::System.Data.DataColumn CouponCodeColumn {
                 get {
-                    return this.columnSalePersonName;
+                    return this.columnCouponCode;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn AddressColumn {
+            public global::System.Data.DataColumn ReceiptNumberColumn {
                 get {
-                    return this.columnAddress;
+                    return this.columnReceiptNumber;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn MobileColumn {
+            public global::System.Data.DataColumn UsedDateColumn {
                 get {
-                    return this.columnMobile;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn RemarksColumn {
-                get {
-                    return this.columnRemarks;
+                    return this.columnUsedDate;
                 }
             }
             
@@ -383,57 +373,56 @@ namespace POSSystem.Report.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public SalePersonRow this[int index] {
+            public PurchaseHeadRow this[int index] {
                 get {
-                    return ((SalePersonRow)(this.Rows[index]));
+                    return ((PurchaseHeadRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event SalePersonRowChangeEventHandler SalePersonRowChanging;
+            public event PurchaseHeadRowChangeEventHandler PurchaseHeadRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event SalePersonRowChangeEventHandler SalePersonRowChanged;
+            public event PurchaseHeadRowChangeEventHandler PurchaseHeadRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event SalePersonRowChangeEventHandler SalePersonRowDeleting;
+            public event PurchaseHeadRowChangeEventHandler PurchaseHeadRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event SalePersonRowChangeEventHandler SalePersonRowDeleted;
+            public event PurchaseHeadRowChangeEventHandler PurchaseHeadRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void AddSalePersonRow(SalePersonRow row) {
+            public void AddPurchaseHeadRow(PurchaseHeadRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public SalePersonRow AddSalePersonRow(string SalePersonCode, string SalePersonName, string Address, string Mobile, string Remarks) {
-                SalePersonRow rowSalePersonRow = ((SalePersonRow)(this.NewRow()));
+            public PurchaseHeadRow AddPurchaseHeadRow(string MemberCode, string CouponCode, string ReceiptNumber, System.DateTime UsedDate) {
+                PurchaseHeadRow rowPurchaseHeadRow = ((PurchaseHeadRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        SalePersonCode,
-                        SalePersonName,
-                        Address,
-                        Mobile,
-                        Remarks};
-                rowSalePersonRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowSalePersonRow);
-                return rowSalePersonRow;
+                        MemberCode,
+                        CouponCode,
+                        ReceiptNumber,
+                        UsedDate};
+                rowPurchaseHeadRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowPurchaseHeadRow);
+                return rowPurchaseHeadRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public SalePersonRow FindByID(int ID) {
-                return ((SalePersonRow)(this.Rows.Find(new object[] {
+            public PurchaseHeadRow FindByID(int ID) {
+                return ((PurchaseHeadRow)(this.Rows.Find(new object[] {
                             ID})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                SalePersonDataTable cln = ((SalePersonDataTable)(base.Clone()));
+                PurchaseHeadDataTable cln = ((PurchaseHeadDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -441,18 +430,17 @@ namespace POSSystem.Report.DataSet {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new SalePersonDataTable();
+                return new PurchaseHeadDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             internal void InitVars() {
                 this.columnID = base.Columns["ID"];
-                this.columnSalePersonCode = base.Columns["SalePersonCode"];
-                this.columnSalePersonName = base.Columns["SalePersonName"];
-                this.columnAddress = base.Columns["Address"];
-                this.columnMobile = base.Columns["Mobile"];
-                this.columnRemarks = base.Columns["Remarks"];
+                this.columnMemberCode = base.Columns["MemberCode"];
+                this.columnCouponCode = base.Columns["CouponCode"];
+                this.columnReceiptNumber = base.Columns["ReceiptNumber"];
+                this.columnUsedDate = base.Columns["UsedDate"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -460,16 +448,14 @@ namespace POSSystem.Report.DataSet {
             private void InitClass() {
                 this.columnID = new global::System.Data.DataColumn("ID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnID);
-                this.columnSalePersonCode = new global::System.Data.DataColumn("SalePersonCode", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSalePersonCode);
-                this.columnSalePersonName = new global::System.Data.DataColumn("SalePersonName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSalePersonName);
-                this.columnAddress = new global::System.Data.DataColumn("Address", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAddress);
-                this.columnMobile = new global::System.Data.DataColumn("Mobile", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMobile);
-                this.columnRemarks = new global::System.Data.DataColumn("Remarks", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRemarks);
+                this.columnMemberCode = new global::System.Data.DataColumn("MemberCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMemberCode);
+                this.columnCouponCode = new global::System.Data.DataColumn("CouponCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCouponCode);
+                this.columnReceiptNumber = new global::System.Data.DataColumn("ReceiptNumber", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReceiptNumber);
+                this.columnUsedDate = new global::System.Data.DataColumn("UsedDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUsedDate);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnID}, true));
                 this.columnID.AutoIncrement = true;
@@ -478,37 +464,35 @@ namespace POSSystem.Report.DataSet {
                 this.columnID.AllowDBNull = false;
                 this.columnID.ReadOnly = true;
                 this.columnID.Unique = true;
-                this.columnSalePersonCode.MaxLength = 10;
-                this.columnSalePersonName.MaxLength = 50;
-                this.columnAddress.MaxLength = 50;
-                this.columnMobile.MaxLength = 50;
-                this.columnRemarks.MaxLength = 2147483647;
+                this.columnMemberCode.MaxLength = 50;
+                this.columnCouponCode.MaxLength = 50;
+                this.columnReceiptNumber.MaxLength = 50;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public SalePersonRow NewSalePersonRow() {
-                return ((SalePersonRow)(this.NewRow()));
+            public PurchaseHeadRow NewPurchaseHeadRow() {
+                return ((PurchaseHeadRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new SalePersonRow(builder);
+                return new PurchaseHeadRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(SalePersonRow);
+                return typeof(PurchaseHeadRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.SalePersonRowChanged != null)) {
-                    this.SalePersonRowChanged(this, new SalePersonRowChangeEvent(((SalePersonRow)(e.Row)), e.Action));
+                if ((this.PurchaseHeadRowChanged != null)) {
+                    this.PurchaseHeadRowChanged(this, new PurchaseHeadRowChangeEvent(((PurchaseHeadRow)(e.Row)), e.Action));
                 }
             }
             
@@ -516,8 +500,8 @@ namespace POSSystem.Report.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.SalePersonRowChanging != null)) {
-                    this.SalePersonRowChanging(this, new SalePersonRowChangeEvent(((SalePersonRow)(e.Row)), e.Action));
+                if ((this.PurchaseHeadRowChanging != null)) {
+                    this.PurchaseHeadRowChanging(this, new PurchaseHeadRowChangeEvent(((PurchaseHeadRow)(e.Row)), e.Action));
                 }
             }
             
@@ -525,8 +509,8 @@ namespace POSSystem.Report.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.SalePersonRowDeleted != null)) {
-                    this.SalePersonRowDeleted(this, new SalePersonRowChangeEvent(((SalePersonRow)(e.Row)), e.Action));
+                if ((this.PurchaseHeadRowDeleted != null)) {
+                    this.PurchaseHeadRowDeleted(this, new PurchaseHeadRowChangeEvent(((PurchaseHeadRow)(e.Row)), e.Action));
                 }
             }
             
@@ -534,14 +518,14 @@ namespace POSSystem.Report.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.SalePersonRowDeleting != null)) {
-                    this.SalePersonRowDeleting(this, new SalePersonRowChangeEvent(((SalePersonRow)(e.Row)), e.Action));
+                if ((this.PurchaseHeadRowDeleting != null)) {
+                    this.PurchaseHeadRowDeleting(this, new PurchaseHeadRowChangeEvent(((PurchaseHeadRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void RemoveSalePersonRow(SalePersonRow row) {
+            public void RemovePurchaseHeadRow(PurchaseHeadRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -550,7 +534,7 @@ namespace POSSystem.Report.DataSet {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSetSalePerson ds = new DataSetSalePerson();
+                DataSetCouponUsed ds = new DataSetCouponUsed();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -568,7 +552,7 @@ namespace POSSystem.Report.DataSet {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "SalePersonDataTable";
+                attribute2.FixedValue = "PurchaseHeadDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -612,166 +596,138 @@ namespace POSSystem.Report.DataSet {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class SalePersonRow : global::System.Data.DataRow {
+        public partial class PurchaseHeadRow : global::System.Data.DataRow {
             
-            private SalePersonDataTable tableSalePerson;
+            private PurchaseHeadDataTable tablePurchaseHead;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal SalePersonRow(global::System.Data.DataRowBuilder rb) : 
+            internal PurchaseHeadRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableSalePerson = ((SalePersonDataTable)(this.Table));
+                this.tablePurchaseHead = ((PurchaseHeadDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public int ID {
                 get {
-                    return ((int)(this[this.tableSalePerson.IDColumn]));
+                    return ((int)(this[this.tablePurchaseHead.IDColumn]));
                 }
                 set {
-                    this[this.tableSalePerson.IDColumn] = value;
+                    this[this.tablePurchaseHead.IDColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string SalePersonCode {
+            public string MemberCode {
                 get {
                     try {
-                        return ((string)(this[this.tableSalePerson.SalePersonCodeColumn]));
+                        return ((string)(this[this.tablePurchaseHead.MemberCodeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SalePersonCode\' in table \'SalePerson\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'MemberCode\' in table \'PurchaseHead\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSalePerson.SalePersonCodeColumn] = value;
+                    this[this.tablePurchaseHead.MemberCodeColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string SalePersonName {
+            public string CouponCode {
                 get {
                     try {
-                        return ((string)(this[this.tableSalePerson.SalePersonNameColumn]));
+                        return ((string)(this[this.tablePurchaseHead.CouponCodeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SalePersonName\' in table \'SalePerson\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'CouponCode\' in table \'PurchaseHead\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSalePerson.SalePersonNameColumn] = value;
+                    this[this.tablePurchaseHead.CouponCodeColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Address {
+            public string ReceiptNumber {
                 get {
                     try {
-                        return ((string)(this[this.tableSalePerson.AddressColumn]));
+                        return ((string)(this[this.tablePurchaseHead.ReceiptNumberColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Address\' in table \'SalePerson\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReceiptNumber\' in table \'PurchaseHead\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSalePerson.AddressColumn] = value;
+                    this[this.tablePurchaseHead.ReceiptNumberColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Mobile {
+            public System.DateTime UsedDate {
                 get {
                     try {
-                        return ((string)(this[this.tableSalePerson.MobileColumn]));
+                        return ((global::System.DateTime)(this[this.tablePurchaseHead.UsedDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Mobile\' in table \'SalePerson\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'UsedDate\' in table \'PurchaseHead\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSalePerson.MobileColumn] = value;
+                    this[this.tablePurchaseHead.UsedDateColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Remarks {
-                get {
-                    try {
-                        return ((string)(this[this.tableSalePerson.RemarksColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Remarks\' in table \'SalePerson\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalePerson.RemarksColumn] = value;
-                }
+            public bool IsMemberCodeNull() {
+                return this.IsNull(this.tablePurchaseHead.MemberCodeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsSalePersonCodeNull() {
-                return this.IsNull(this.tableSalePerson.SalePersonCodeColumn);
+            public void SetMemberCodeNull() {
+                this[this.tablePurchaseHead.MemberCodeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetSalePersonCodeNull() {
-                this[this.tableSalePerson.SalePersonCodeColumn] = global::System.Convert.DBNull;
+            public bool IsCouponCodeNull() {
+                return this.IsNull(this.tablePurchaseHead.CouponCodeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsSalePersonNameNull() {
-                return this.IsNull(this.tableSalePerson.SalePersonNameColumn);
+            public void SetCouponCodeNull() {
+                this[this.tablePurchaseHead.CouponCodeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetSalePersonNameNull() {
-                this[this.tableSalePerson.SalePersonNameColumn] = global::System.Convert.DBNull;
+            public bool IsReceiptNumberNull() {
+                return this.IsNull(this.tablePurchaseHead.ReceiptNumberColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsAddressNull() {
-                return this.IsNull(this.tableSalePerson.AddressColumn);
+            public void SetReceiptNumberNull() {
+                this[this.tablePurchaseHead.ReceiptNumberColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetAddressNull() {
-                this[this.tableSalePerson.AddressColumn] = global::System.Convert.DBNull;
+            public bool IsUsedDateNull() {
+                return this.IsNull(this.tablePurchaseHead.UsedDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsMobileNull() {
-                return this.IsNull(this.tableSalePerson.MobileColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetMobileNull() {
-                this[this.tableSalePerson.MobileColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsRemarksNull() {
-                return this.IsNull(this.tableSalePerson.RemarksColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetRemarksNull() {
-                this[this.tableSalePerson.RemarksColumn] = global::System.Convert.DBNull;
+            public void SetUsedDateNull() {
+                this[this.tablePurchaseHead.UsedDateColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -779,22 +735,22 @@ namespace POSSystem.Report.DataSet {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public class SalePersonRowChangeEvent : global::System.EventArgs {
+        public class PurchaseHeadRowChangeEvent : global::System.EventArgs {
             
-            private SalePersonRow eventRow;
+            private PurchaseHeadRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public SalePersonRowChangeEvent(SalePersonRow row, global::System.Data.DataRowAction action) {
+            public PurchaseHeadRowChangeEvent(PurchaseHeadRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public SalePersonRow Row {
+            public PurchaseHeadRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -810,7 +766,7 @@ namespace POSSystem.Report.DataSet {
         }
     }
 }
-namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
+namespace POSSystem.Report.DataSet.DataSetCouponUsedTableAdapters {
     
     
     /// <summary>
@@ -822,7 +778,7 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class SalePersonTableAdapter : global::System.ComponentModel.Component {
+    public partial class PurchaseHeadTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -836,7 +792,7 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public SalePersonTableAdapter() {
+        public PurchaseHeadTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -933,41 +889,37 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "SalePerson";
+            tableMapping.DataSetTable = "PurchaseHead";
             tableMapping.ColumnMappings.Add("ID", "ID");
-            tableMapping.ColumnMappings.Add("SalePersonCode", "SalePersonCode");
-            tableMapping.ColumnMappings.Add("SalePersonName", "SalePersonName");
-            tableMapping.ColumnMappings.Add("Address", "Address");
-            tableMapping.ColumnMappings.Add("Mobile", "Mobile");
-            tableMapping.ColumnMappings.Add("Remarks", "Remarks");
+            tableMapping.ColumnMappings.Add("MemberCode", "MemberCode");
+            tableMapping.ColumnMappings.Add("CouponCode", "CouponCode");
+            tableMapping.ColumnMappings.Add("ReceiptNumber", "ReceiptNumber");
+            tableMapping.ColumnMappings.Add("UsedDate", "UsedDate");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[SalePerson] WHERE (([ID] = @Original_ID))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[PurchaseHead] WHERE (([ID] = @Original_ID))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[SalePerson] ([SalePersonCode], [SalePersonName], [Address], [M" +
-                "obile], [Remarks]) VALUES (@SalePersonCode, @SalePersonName, @Address, @Mobile, " +
-                "@Remarks)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[PurchaseHead] ([MemberCode], [CouponCode], [ReceiptNumber], [U" +
+                "sedDate]) VALUES (@MemberCode, @CouponCode, @ReceiptNumber, @UsedDate)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SalePersonCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SalePersonCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SalePersonName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SalePersonName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Address", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Address", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Mobile", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Mobile", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Remarks", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Remarks", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MemberCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MemberCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CouponCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CouponCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReceiptNumber", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReceiptNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UsedDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UsedDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[SalePerson] SET [SalePersonCode] = @SalePersonCode, [SalePersonName" +
-                "] = @SalePersonName, [Address] = @Address, [Mobile] = @Mobile, [Remarks] = @Rema" +
-                "rks WHERE (([ID] = @Original_ID))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[PurchaseHead] SET [MemberCode] = @MemberCode, [CouponCode] = @Coupo" +
+                "nCode, [ReceiptNumber] = @ReceiptNumber, [UsedDate] = @UsedDate WHERE (([ID] = @" +
+                "Original_ID))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SalePersonCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SalePersonCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SalePersonName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SalePersonName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Address", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Address", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Mobile", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Mobile", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Remarks", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Remarks", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MemberCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MemberCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CouponCode", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CouponCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReceiptNumber", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReceiptNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UsedDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UsedDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
@@ -984,8 +936,7 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [ID]\r\n      ,[SalePersonCode]\r\n      ,[SalePersonName]\r\n      ,[Address]\r\n" +
-                "      ,[Mobile]\r\n      ,[Remarks]\r\n  FROM [dbo].[SalePerson]";
+            this._commandCollection[0].CommandText = "SELECT dbo.PurchaseHead.*\r\nFROM     dbo.PurchaseHead";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -993,7 +944,7 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(DataSetSalePerson.SalePersonDataTable dataTable) {
+        public virtual int Fill(DataSetCouponUsed.PurchaseHeadDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1006,9 +957,9 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual DataSetSalePerson.SalePersonDataTable GetData() {
+        public virtual DataSetCouponUsed.PurchaseHeadDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSetSalePerson.SalePersonDataTable dataTable = new DataSetSalePerson.SalePersonDataTable();
+            DataSetCouponUsed.PurchaseHeadDataTable dataTable = new DataSetCouponUsed.PurchaseHeadDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1016,15 +967,15 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(DataSetSalePerson.SalePersonDataTable dataTable) {
+        public virtual int Update(DataSetCouponUsed.PurchaseHeadDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(DataSetSalePerson dataSet) {
-            return this.Adapter.Update(dataSet, "SalePerson");
+        public virtual int Update(DataSetCouponUsed dataSet) {
+            return this.Adapter.Update(dataSet, "PurchaseHead");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1068,36 +1019,30 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string SalePersonCode, string SalePersonName, string Address, string Mobile, string Remarks) {
-            if ((SalePersonCode == null)) {
+        public virtual int Insert(string MemberCode, string CouponCode, string ReceiptNumber, global::System.Nullable<global::System.DateTime> UsedDate) {
+            if ((MemberCode == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(SalePersonCode));
+                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(MemberCode));
             }
-            if ((SalePersonName == null)) {
+            if ((CouponCode == null)) {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(SalePersonName));
+                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(CouponCode));
             }
-            if ((Address == null)) {
+            if ((ReceiptNumber == null)) {
                 this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Address));
+                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(ReceiptNumber));
             }
-            if ((Mobile == null)) {
+            if ((UsedDate.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((System.DateTime)(UsedDate.Value));
+            }
+            else {
                 this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(Mobile));
-            }
-            if ((Remarks == null)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(Remarks));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -1119,38 +1064,32 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string SalePersonCode, string SalePersonName, string Address, string Mobile, string Remarks, int Original_ID) {
-            if ((SalePersonCode == null)) {
+        public virtual int Update(string MemberCode, string CouponCode, string ReceiptNumber, global::System.Nullable<global::System.DateTime> UsedDate, int Original_ID) {
+            if ((MemberCode == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(SalePersonCode));
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(MemberCode));
             }
-            if ((SalePersonName == null)) {
+            if ((CouponCode == null)) {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(SalePersonName));
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(CouponCode));
             }
-            if ((Address == null)) {
+            if ((ReceiptNumber == null)) {
                 this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Address));
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(ReceiptNumber));
             }
-            if ((Mobile == null)) {
+            if ((UsedDate.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((System.DateTime)(UsedDate.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Mobile));
-            }
-            if ((Remarks == null)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Remarks));
-            }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_ID));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_ID));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -1180,7 +1119,7 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         
         private UpdateOrderOption _updateOrder;
         
-        private SalePersonTableAdapter _salePersonTableAdapter;
+        private PurchaseHeadTableAdapter _purchaseHeadTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -1202,12 +1141,12 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public SalePersonTableAdapter SalePersonTableAdapter {
+        public PurchaseHeadTableAdapter PurchaseHeadTableAdapter {
             get {
-                return this._salePersonTableAdapter;
+                return this._purchaseHeadTableAdapter;
             }
             set {
-                this._salePersonTableAdapter = value;
+                this._purchaseHeadTableAdapter = value;
             }
         }
         
@@ -1230,9 +1169,9 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
                 if ((this._connection != null)) {
                     return this._connection;
                 }
-                if (((this._salePersonTableAdapter != null) 
-                            && (this._salePersonTableAdapter.Connection != null))) {
-                    return this._salePersonTableAdapter.Connection;
+                if (((this._purchaseHeadTableAdapter != null) 
+                            && (this._purchaseHeadTableAdapter.Connection != null))) {
+                    return this._purchaseHeadTableAdapter.Connection;
                 }
                 return null;
             }
@@ -1247,7 +1186,7 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
-                if ((this._salePersonTableAdapter != null)) {
+                if ((this._purchaseHeadTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -1259,14 +1198,14 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateUpdatedRows(DataSetSalePerson dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(DataSetCouponUsed dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._salePersonTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.SalePerson.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._purchaseHeadTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.PurchaseHead.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._salePersonTableAdapter.Update(updatedRows));
+                    result = (result + this._purchaseHeadTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -1278,13 +1217,13 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateInsertedRows(DataSetSalePerson dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(DataSetCouponUsed dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._salePersonTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.SalePerson.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._purchaseHeadTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.PurchaseHead.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._salePersonTableAdapter.Update(addedRows));
+                    result = (result + this._purchaseHeadTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -1296,13 +1235,13 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateDeletedRows(DataSetSalePerson dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(DataSetCouponUsed dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._salePersonTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.SalePerson.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._purchaseHeadTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.PurchaseHead.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._salePersonTableAdapter.Update(deletedRows));
+                    result = (result + this._purchaseHeadTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -1338,15 +1277,15 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public virtual int UpdateAll(DataSetSalePerson dataSet) {
+        public virtual int UpdateAll(DataSetCouponUsed dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
             if ((dataSet.HasChanges() == false)) {
                 return 0;
             }
-            if (((this._salePersonTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._salePersonTableAdapter.Connection) == false))) {
+            if (((this._purchaseHeadTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._purchaseHeadTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -1382,13 +1321,13 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
             try {
                 // ---- Prepare for update -----------
                 //
-                if ((this._salePersonTableAdapter != null)) {
-                    revertConnections.Add(this._salePersonTableAdapter, this._salePersonTableAdapter.Connection);
-                    this._salePersonTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._salePersonTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._salePersonTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._salePersonTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._salePersonTableAdapter.Adapter);
+                if ((this._purchaseHeadTableAdapter != null)) {
+                    revertConnections.Add(this._purchaseHeadTableAdapter, this._purchaseHeadTableAdapter.Connection);
+                    this._purchaseHeadTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._purchaseHeadTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._purchaseHeadTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._purchaseHeadTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._purchaseHeadTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -1449,9 +1388,9 @@ namespace POSSystem.Report.DataSet.DataSetSalePersonTableAdapters {
                 if (workConnOpened) {
                     workConnection.Close();
                 }
-                if ((this._salePersonTableAdapter != null)) {
-                    this._salePersonTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._salePersonTableAdapter]));
-                    this._salePersonTableAdapter.Transaction = null;
+                if ((this._purchaseHeadTableAdapter != null)) {
+                    this._purchaseHeadTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._purchaseHeadTableAdapter]));
+                    this._purchaseHeadTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

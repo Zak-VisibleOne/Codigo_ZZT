@@ -6,21 +6,7 @@
             $('.mail-list > a').removeClass('selectedActive');
             $(this).addClass('selectedActive');
         });
-        getCustomerList();
-        getSupplierList();
-
-        $('.customerFilter').hide();
-        $('.supplierFilter').hide();
-
-        //$('.researchAreaFilter').hide();
-        //$('.disciplineFilter').hide();
-        //$('.courseLeaderFilter').hide();
-
-
-        $('.positionFilter').hide();
-        $('.categoryFilter').hide();
-        $('.reportViewByfilter').hide();
-        $('.mail-list').hide();
+        $('.mail-list').show();
         $('.previewBtn').hide();
     });
     function getReportList() {
@@ -46,57 +32,12 @@
     }
     function changeMainReport() {
         $('.previewBtn').hide();
-        $('.customerFilter').hide();
+        $('.memberFilter').hide();
         var selected = $('#filterMainReport').val();
-        if (selected == "") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.courseLeaderFilter').hide();
-            $('.positionFilter').hide();
-            $('.categoryFilter').hide();
-            $('.reportViewByfilter').hide();
-            $('.mail-list').hide();
-            $('.previewBtn').hide();
-        }
-        else if (selected == "Setup") {
-            $('.customerFilter').show();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.courseLeaderFilter').hide();
-            $('.positionFilter').hide();
-            $('.categoryFilter').hide();
-            $('.reportViewByfilter').hide();
+        if (selected == "Coupon") {
             $('.mail-list').show();
             $('.previewBtn').show();
         }
-        else if (selected == "Sale") {
-            $('.customerFilter').hide();
-            $('.positionFilter').show();
-            $('.researchAreaFilter').show();
-            $('.disciplineFilter').show();
-            $('.courseLeaderFilter').hide();
-            $('.positionFilter').hide();
-            $('.categoryFilter').hide();
-            $('.reportViewByfilter').show();
-            $('.mail-list').show();
-            $('.previewBtn').show();
-        }
-        else if (selected == "Purchase") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.courseLeaderFilter').show(); 
-            $('.positionFilter').hide();
-            $('.categoryFilter').hide();
-            $('.reportViewByfilter').hide();
-            $('.mail-list').show();
-            $('.previewBtn').show();
-        }
-       
         var html = '';
         var filter = reportList.find(r => r.find(rp => rp.MainReport == selected));
         if (filter !== null || filter !== undefined) {
@@ -132,150 +73,12 @@
                 }
             });
         });
-        //$('.customerFilter').show();
-        if (filter == "Customer") {
-            $('.customerFilter').hide();
-            $('.positionFilter').show();
-            $('.researchAreaFilter').show();
-            $('.disciplineFilter').show();
-            $('.reportViewByfilter').show();
-        }
-        else if (filter == "Supplier") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.reportViewByfilter').hide();
-        }
-        else if (filter == "Sale Person") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.reportViewByfilter').hide();
-            $('.courseLeaderFilter').show();
-        }
-        else if (filter == "Stock") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.reportViewByfilter').hide();
-            $('.courseLeaderFilter').show();
-        }
-        else if (filter == "Warehouse") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.reportViewByfilter').hide();
-            $('.courseLeaderFilter').show();
-        }
-        else if (filter == "Sale Summary") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.reportViewByfilter').hide();
-            $('.courseLeaderFilter').show();
-        }
-        else if (filter == "Sale Detail") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.reportViewByfilter').hide();
-            $('.courseLeaderFilter').show();
-        }
-        else if (filter == "Purchase Summary") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.reportViewByfilter').hide();
-            $('.courseLeaderFilter').show();
-        }
-        else if (filter == "Purchase Detail") {
-            $('.customerFilter').hide();
-            $('.positionFilter').hide();
-            $('.researchAreaFilter').hide();
-            $('.disciplineFilter').hide();
-            $('.reportViewByfilter').hide();
-            $('.courseLeaderFilter').show();
-        }
-        //if (filter.includes('Date')) {
-        //    $('.dateFilter').show();
-        //    $('.customerFilter').hide();
-        //}
-        //else if (filter.includes('User')) {
-        //    $('.dateFilter').hide();
-        //    $('.userFilter').show();
-        //}
         $('#selectedSubReport').val(filter);
     }
     function previewReport(url) {
-        //var fromDate = $('#fromDateFilter').val();
-        //var toDate = $('#toDateFilter').val();
         var subReport = $('#selectedSubReport').val();
-        //var course_examiner = $('#ddlCourseLeader').val();
-        //if (subReport == "'Staff Detail'" || subReport == "Staff Detail" ) {
-        //    if (course_examiner == '-1') {
-        //        toastr.info('Please select course leader!', "Info");
-        //        return;
-        //    }
-        //}
-        //if (course_examiner == '-1') {
-        //    course_examiner = '';
-        //}
-        var customer = $('#ddlCustomerFilter').val();
-        //var reportType = $('#filterMainReport').val();
-        var supplier = $('#ddlSupplierFilter').val();
-
-
-        //var group = $('#ddlResearchArea').val();
-        //var discipline = $('#ddlDiscipline').val();
-        //var cat = $('#ddlCategory').val();
-        //url = url + "ReportType=" + reportType + "&FromDate=" + fromDate + "&ToDate=" + toDate + "&SubReport=" + subReport + "&User=" + user;
-
-
-        //if (subReport == "Course Detail" || subReport == "Course SYL") {
-        //    if (customer == "") {
-        //        toastr.info('Please select course!', "Info");
-        //        return;
-        //    }
-        //}
-           
-        //url = url + "subreport=" + subReport + "&customer=" + customer + "&supplier=" + supplier + "&people_group=" + group + "&discipline=" + discipline + "&examiner=" + course_examiner + "&cat=" + cat;
-        url = url + "subreport=" + subReport + "&customer=" + customer + "&supplier=" + supplier;
+        //var member = $('#ddlMemberFilter').val();
+        url = url + "subreport=" + subReport;//+ "&member=" + member
         window.open(url, '_blank');
     }
-    function getCustomerList() {
-        $.ajax({
-            type: "GET",
-            url: "/Reporting/GetCustomerList",
-            data: "{}",
-            success: function (data) {
-                var s = '<option value="">select customer</option>';
-                for (var i = 0; i < data.length; i++) {
-                    s += '<option value="' + data[i].ID + '">' + data[i].Name + '</option>';
-                }
-                $("#ddlCustomerFilter").html(s);
-            }
-        });
-    }
-    function getSupplierList() {
-        $.ajax({
-            type: "GET",
-            url: "/Reporting/GetSupplierList",
-            data: "{}",
-            success: function (data) {
-                var s = '<option value="">select supplier</option>';
-                for (var i = 0; i < data.length; i++) {
-                    s += '<option value="' + data[i].ID + '">' + data[i].Name + '</option>';
-                }
-                $("#ddlSupplierFilter").html(s);
-            }
-        });
-    }
-    
 </script>
