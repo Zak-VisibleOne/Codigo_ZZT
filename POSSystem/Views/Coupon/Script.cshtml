@@ -13,17 +13,23 @@
                     targets: [1], name: 'name', className: 'left', sWidth: '10%',
                 },
                 {
-                    targets: [2], name: 'startdate', className: 'left', sWidth: '10%',
+                    targets: [2], name: 'qty', className: 'left', sWidth: '10%',
                 },
                 {
-                    targets: [3], name: 'enddate', className: 'left', sWidth: '10%',
+                    targets: [3], name: 'startdate', className: 'left', sWidth: '10%',
                 },
                 {
-                    targets: [4], name: 'action', className: 'left', sWidth: '10%', orderable: false,
+                    targets: [4], name: 'enddate', className: 'left', sWidth: '10%',
+                },
+                {
+                    targets: [5], name: 'disamount', className: 'left', sWidth: '10%',
+                },
+                {
+                    targets: [6], name: 'action', className: 'left', sWidth: '10%', orderable: false,
                     editor: { type: 'action', required: false, class: '' }, render: _RenderContentButton
                 },
                 {
-                    targets: [5], name: 'ID', className: 'center', sWidth: '0%',
+                    targets: [7], name: 'ID', className: 'center', sWidth: '0%',
                 }
             ]
         });
@@ -34,14 +40,14 @@
             e.preventDefault();
             var pos = dtCoupon.fnGetPosition($(this).closest('tr')[0]);
             var data = dtCoupon.fnGetData(pos);
-            var id = data[0];
+            var id = data[7];
             editCoupon(id);
         });
         dtCoupon.on('click', '.remove', function (e) {
             e.preventDefault();
             var pos = dtCoupon.fnGetPosition($(this).closest('tr')[0]);
             var data = dtCoupon.fnGetData(pos);
-            var id = data[0];
+            var id = data[7];
             DeleteCoupon(id);
         });
         LoadCouponTable();
@@ -138,6 +144,13 @@
         $('#CouponModal').modal('hide');
     }
     function AddNewCoupon() {
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        $('#dtpStartDate').val(today);
+        $('#dtpEndDate').val(today);
+
         $('#hidID').val('');
         $('#txtCouponCode').val('');
         $('#txtCouponName').val('');

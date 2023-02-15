@@ -2511,6 +2511,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\waves.min.js" />
+    <Content Include="SQL\Coupon\GetCouponByID.sql" />
     <Content Include="SQL\login\auth.sql" />
     <Content Include="SQL\login\CheckCurrentLogin.sql" />
     <Content Include="SQL\login\isLoggedIn.sql" />

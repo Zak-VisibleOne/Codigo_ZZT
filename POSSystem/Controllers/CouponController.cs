@@ -6,6 +6,7 @@ using System.Collections.Generic;
 //using System.Data.Entity.Validation;
 using System;
 using System.Data;
+using POSSystem.Utils;
 
 namespace POSSystem.Controllers
 {
@@ -56,6 +57,7 @@ namespace POSSystem.Controllers
                        ,Convert.ToDateTime(l.EndDate).ToString("dd/MM/yyyy")
                        ,l.DiscountAmount
                        , ""
+                       ,l.ID
                     });
                 }
             }
@@ -71,8 +73,14 @@ namespace POSSystem.Controllers
         }
         public JsonResult GetCouponByID(int ID)
         {
-            var data = Context.Coupons.Where(x => x.ID == ID).FirstOrDefault();
+            var data = CouponByID(ID);
             return Json(new { data }, JsonRequestBehavior.AllowGet);
+        }
+        public ViewModelCoupon CouponByID(int ID)
+        {
+            sqlDescriptor sd = new sqlDescriptor();
+            var result = sd.GetDataByQuery<ViewModelCoupon>("Coupon/GetCouponByID", new object[] { ID }).FirstOrDefault();
+            return result;
         }
         public JsonResult DeleteCoupontByID(int ID)
         {
@@ -86,7 +94,7 @@ namespace POSSystem.Controllers
             }
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult SaveUpdateDepartment(ViewModelCoupon m)
+        public JsonResult SaveUpdateCoupon(ViewModelCoupon m)
         {
             ResultMessage result = new ResultMessage();
             if (m.Method == "add")
