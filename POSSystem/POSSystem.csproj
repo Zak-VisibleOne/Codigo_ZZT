@@ -189,12 +189,8 @@
     <Compile Include="Controllers\CMSApiController.cs" />
     <Compile Include="Controllers\PointSystemApiController.cs" />
     <Compile Include="Controllers\POSSystemApiController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
-    <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
@@ -2042,10 +2038,6 @@
     <Content Include="plugins\x-editable\js\bootstrap-editable.min.js" />
     <Content Include="plugins\x-editable\js\editable-datatable.js" />
     <Content Include="ReportViewerWebForm.aspx" />
-    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
-    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
-    <Content Include="Rotativa\wkhtmltoimage.exe" />
-    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -2402,8 +2394,6 @@
     <Content Include="SQL\Sale\GetSaleList.sql" />
     <Content Include="SQL\Sale\GetSalePersonList.sql" />
     <Content Include="SQL\Sale\GetSaleHeader.sql" />
-    <Content Include="Staticpage\Footer.html" />
-    <Content Include="Staticpage\Header.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2428,8 +2418,6 @@
     <Content Include="Scripts\umd\popper.js.flow" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Views\Category\Index.cshtml" />
-    <Content Include="Views\Category\Script.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Dashboard\Script.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
@@ -2465,17 +2453,8 @@
     <Content Include="Views\ThemeSetting\Theme.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Script.cshtml" />
-    <Content Include="Views\Department\Index.cshtml" />
-    <Content Include="Views\Department\Script.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
     <Content Include="Views\Supplier\Script.cshtml" />
-    <Content Include="Views\Stock\Index.cshtml" />
-    <Content Include="Views\Stock\Script.cshtml" />
-    <Content Include="Views\Purchase\Index.cshtml" />
-    <Content Include="Views\Purchase\ModalPopup.cshtml" />
-    <Content Include="Views\Purchase\Script.cshtml" />
-    <Content Include="Views\StockClass\Index.cshtml" />
-    <Content Include="Views\StockClass\Script.cshtml" />
     <Content Include="Views\Coupon\Index.cshtml" />
     <Content Include="Views\Coupon\Script.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />

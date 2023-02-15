@@ -12,7 +12,7 @@ namespace POSSystem.Controllers
 {
     public class CouponController : Controller
     {
-        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(DepartmentController));
+        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(CouponController));
         private POSSystemEntities Context { get; set; }
         //Index page
         public ActionResult Index()

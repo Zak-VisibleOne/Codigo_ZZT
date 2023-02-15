@@ -56,15 +56,15 @@ namespace POSSystem.Controllers
             switch (rptName)
             {
                 case "Coupon Used":
-                    CustomerListing dsCust = new CustomerListing();
+                    DataSetCouponUsed dsCoupon = new DataSetCouponUsed();
                     SQLs = "SELECT dbo.PurchaseHead.* FROM dbo.PurchaseHead";
                     //if (member != "")
                     //{
                     //    SQLs += " and MemberCode ='" + member + "'";
                     //}
                     SqlDataAdapter adp = new SqlDataAdapter(SQLs, conx);
-                    adp.Fill(dsCust, dsCust.Customer.TableName);
-                    reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSetCouponUsed", dsCust.Tables[0]));
+                    adp.Fill(dsCoupon, dsCoupon.PurchaseHead.TableName);
+                    reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSetCouponUsed", dsCoupon.Tables[0]));
                     reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"\Report\ReportCouponUsed.rdlc";
                     break;
                 default:
