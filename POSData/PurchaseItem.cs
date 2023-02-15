@@ -15,6 +15,7 @@ namespace POSData
     public partial class PurchaseItem
     {
         public int ID { get; set; }
+        public Nullable<int> HeadID { get; set; }
         public string ItemName { get; set; }
         public Nullable<double> Price { get; set; }
         public Nullable<int> Qty { get; set; }

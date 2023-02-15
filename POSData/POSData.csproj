@@ -51,46 +51,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseData.cs" />
-    <Compile Include="Category.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="City.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="CommonData.cs" />
-    <Compile Include="Company.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Coupon.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Customer.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Department.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DiscountType.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DocumentID.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Globalconfig.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="IBaseData.cs" />
-    <Compile Include="InvoiceType.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ipAddressLog.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Location.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MediaInfo.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Member.cs">
@@ -112,13 +82,7 @@
       <DependentUpon>POSModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PurchaseDetail.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="PurchaseHead.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PurchaseHeader.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PurchaseItem.cs">
@@ -127,31 +91,10 @@
     <Compile Include="ReportMaintenance.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="SaleDetail.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SaleHeader.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SalePerson.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="SiteInformation.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Stock.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StockClass.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Supplier.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ThemeSetting.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Township.cs">
+    <Compile Include="sysdiagram.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TwoFactorData.cs">

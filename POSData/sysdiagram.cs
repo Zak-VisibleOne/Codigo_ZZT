@@ -12,15 +12,12 @@ namespace POSData
     using System;
     using System.Collections.Generic;
     
-    public partial class InvoiceType
+    public partial class sysdiagram
     {
-        public int InvoiceTypeID { get; set; }
-        public string InvoiceTypeCode { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string DeleteStatus { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

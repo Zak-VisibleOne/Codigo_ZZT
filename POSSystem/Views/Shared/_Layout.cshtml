@@ -222,17 +222,8 @@
                 </div>
                 <div class="container-fluid">
                     <div class="row">
-                        <input type="hidden" id="hidDBName" name="hidDName" value="0">
                         <input type="hidden" id="method" name="method" value="0">
                         <input type="hidden" id="hidID" name="hidID" value="0">
-                        <input type="hidden" id="hidSrNo" name="hidSrNo" value="0">
-                        <input type="hidden" id="hidSetImageUrl" name="hidSetImageUrl" value="0">
-                        <input type="hidden" id="hidSelectContentName" name="hidSelectContentName" value="0">
-                        <input type="hidden" id="ActiveTab" name="ActiveTab" value="0">
-
-                        <input type="hidden" id="hidDetailID" name="hidDetailID" value="0">
-                        <input type="hidden" id="hidHeaderID" name="hidHeaderID" value="0">
-                        <input type="hidden" id="hidStockID" name="hidStockID" value="0">
                         <input type="hidden" id="methodDetail" name="methodDetail" value="add">
                         <div class="col-sm-12">
                             <div class="page-title-box">
@@ -243,7 +234,6 @@
                 </div>
                 @Html.Partial("_PartialSetImageModal")
                 @Html.Partial("_PartialUserProfileModal")
-                @Html.Partial("_PartialPreviewMeidaImageModal")
                 @Html.Partial("_Footer")
             </div>
         </div>
@@ -301,10 +291,6 @@
     <script src="~/Scripts/pages/lightbox.js"></script>
 
     <script src="~/plugins/mutiselect/js/bundle.min.js"></script>
-
-    <!--<script src="https://www.google.com/recaptcha/api.js?render=6LcHpYoUAAAAAITt2G2PEeawHQ8vdvRvUyIf8cKT"></script>
-        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>-->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     @Html.Partial("_PartialRenderBtnScript")
     @Html.Partial("_PartialSetIMediaImageScript")
