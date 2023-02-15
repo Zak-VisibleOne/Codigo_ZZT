@@ -189,7 +189,6 @@
     <Compile Include="Controllers\CMSApiController.cs" />
     <Compile Include="Controllers\PointSystemApiController.cs" />
     <Compile Include="Controllers\POSSystemApiController.cs" />
-    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -199,7 +198,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
-    <Compile Include="Controllers\ModelController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
     <Compile Include="Controllers\ReportViewController.cs" />
     <Compile Include="Controllers\SystemManagerController.cs" />
@@ -290,7 +288,6 @@
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\typicons.css" />
-    <Content Include="DbScript\DBScript.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\dripicons-v2.svg" />
     <Content Include="fonts\fa-brands-400.svg" />
@@ -2517,8 +2514,6 @@
     <Content Include="SQL\login\isLoggedIn.sql" />
     <Content Include="SQL\login\UpdateLog.sql" />
     <Content Include="SQL\login\UpdateState.sql" />
-    <Content Include="SQL\Media\GeMediaByID.sql" />
-    <Content Include="SQL\Media\GetMediaList.sql" />
     <Content Include="SQL\Purchase\GetPurchaseHead.sql" />
     <Content Include="SQL\Purchase\GetSupplierList.sql" />
     <Content Include="SQL\Purchase\GetPurchaseHeader.sql" />
@@ -2526,8 +2521,6 @@
     <Content Include="SQL\Purchase\GetSalePersonList.sql" />
     <Content Include="SQL\Sale\GetInvoiceDetail.sql" />
     <Content Include="SQL\Sale\GetInvoiceHeader.sql" />
-    <Content Include="SQL\Stock\GetStockByID.sql" />
-    <Content Include="SQL\Stock\GetVehicleList.sql" />
     <Content Include="SQL\SystemManager\GetColumnName.sql" />
     <Content Include="SQL\SystemManager\GetTableName.sql" />
     <Content Include="SQL\SystemManager\GetUserGroupListing.sql" />
@@ -2620,7 +2613,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="logs\" />
-    <Folder Include="Mediafolder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -76,7 +76,7 @@ namespace POSSystem.Controllers
             ResultMessage result = new ResultMessage();
             using (var context = new POSSystemEntities())
             {
-                context.Database.ExecuteSqlCommand(@"Delete Member where ID = {0}", new object[] { id });
+                context.Database.ExecuteSqlCommand(@"Delete Member where ID = {0}", new object[] { ID });
                 context.SaveChanges();
                 result.message = "Data successfully deleted";
                 result.result = "success";
