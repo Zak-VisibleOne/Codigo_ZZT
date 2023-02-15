@@ -36,7 +36,6 @@ namespace POSData
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TwoFactorData> TwoFactorDatas { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
-        public virtual DbSet<UserPermission> UserPermissions { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

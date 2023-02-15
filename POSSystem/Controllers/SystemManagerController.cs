@@ -184,21 +184,7 @@ namespace POSSystem.Controllers
             }
             return Json(systemManager.SaveNewUser(user), JsonRequestBehavior.AllowGet);
         }
-        public JsonResult getUserPermissionbyID(int ID)
-        {
-            ResultMessage result = new ResultMessage();
-            var userdata = Context.UserPermissions.Where(x => x.UserID == ID).FirstOrDefault();
-            if (userdata != null)
-            {
-                result.result = "success";
-                result.data = userdata;
-            }
-            else
-            {
-                result.result = "error";
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        
         public JsonResult getUserbyID(int ID)
         {
             var userdata = systemManager.UsersList().Find(x => x.Id.Equals(ID));
@@ -244,54 +230,7 @@ namespace POSSystem.Controllers
             public Nullable<bool> AllowUpdateUserGroup { get; set; }
             public Nullable<bool> AllowDeleteUserGroup { get; set; }
         }
-        public JsonResult UpdateUserPermission(PermissionUser user)
-        {
-            ResultMessage result = new ResultMessage();
-            var userObj = Context.UserPermissions.FirstOrDefault(x => x.UserID == user.UserID);
-            if (userObj != null)
-            {
-                userObj.AllowCreateDepartment = user.AllowCreateDepartment ?? false;
-                userObj.AllowUpdateDepartment = user.AllowUpdateDepartment ?? false;
-                userObj.AllowDeleteDepartment = user.AllowDeleteDepartment ?? false;
-                userObj.AllowCreateCategory = user.AllowCreateCategory ?? false;
-                userObj.AllowUpdateCategory = user.AllowUpdateCategory ?? false;
-                userObj.AllowDeleteCategory = user.AllowDeleteCategory ?? false;
-                userObj.AllowCreateUser = user.AllowCreateUser ?? false;
-                userObj.AllowUpdateUser = user.AllowUpdateUser ?? false;
-                userObj.AllowDeleteUser = user.AllowDeleteUser ?? false;
-                userObj.AllowCreateUserGroup = user.AllowCreateUserGroup ?? false;
-                userObj.AllowUpdateUserGroup = user.AllowUpdateUserGroup ?? false;
-                userObj.AllowDeleteUserGroup = user.AllowDeleteUserGroup ?? false;
-                userObj.CreatedDate = DateTime.Now;
-                userObj.ModifiedDate = DateTime.Now;
-                Context.SaveChanges();
-                result.message = "User permission has been updated.";
-                result.result = "success";
-            }
-            else
-            {
-                UserPermission per = new UserPermission();
-                per.UserID = user.UserID;
-                per.AllowCreateDepartment = user.AllowCreateDepartment ?? false;
-                per.AllowUpdateDepartment = user.AllowUpdateDepartment ?? false;
-                per.AllowDeleteDepartment = user.AllowDeleteDepartment ?? false;
-                per.AllowCreateCategory = user.AllowCreateCategory ?? false;
-                per.AllowUpdateCategory = user.AllowUpdateCategory ?? false;
-                per.AllowDeleteCategory = user.AllowDeleteCategory ?? false;
-                per.AllowCreateUser = user.AllowCreateUser ?? false;
-                per.AllowUpdateUser = user.AllowUpdateUser ?? false;
-                per.AllowDeleteUser = user.AllowDeleteUser ?? false;
-                per.AllowCreateUserGroup = user.AllowCreateUserGroup ?? false;
-                per.AllowUpdateUserGroup = user.AllowUpdateUserGroup ?? false;
-                per.AllowDeleteUserGroup = user.AllowDeleteUserGroup ?? false;
-                per.ModifiedDate = DateTime.Now;
-                Context.UserPermissions.Add(per);
-                Context.SaveChanges();
-                result.message = "User permission has been added.";
-                result.result = "success";
-            }
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
-        }
+    
         public JsonResult UpdateUser(User user)
         {
             using (var db = new POSSystemEntities())
@@ -1070,47 +1009,8 @@ namespace POSSystem.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult ShowHideMenuPermission(User user)
-        {
-            var result = new ResultMessage();
-            var data = Context.Users.FirstOrDefault(x => x.Id == user.Id);
-            if (data != null)
-            {
-                data.ShowSetupCategory = user.ShowSetupCategory ?? data.ShowSetupCategory;
-                data.ShowSetupDepartment = user.ShowSetupDepartment ?? data.ShowSetupDepartment;
-                data.ShowReportMenu = user.ShowReportMenu ?? data.ShowReportMenu;
-                data.ShowUser = user.ShowUser ?? data.ShowUser;
-                data.ShowUserGroup = user.ShowUserGroup ?? data.ShowUserGroup;
-                data.ShowLogMenu = user.ShowLogMenu ?? data.ShowLogMenu;
-                data.ShowThemeMenu = user.ShowThemeMenu ?? data.ShowThemeMenu;
-                data.ShowMediaMenu = user.ShowMediaMenu ?? data.ShowMediaMenu;
-                data.ShowSitePermissionMenu = user.ShowSitePermissionMenu ?? data.ShowSitePermissionMenu;
-                Context.SaveChanges();
-                result.result = "success";
-                result.message = "Updated successfully .";
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult GetPermissionListByID(int ID)
-        {
-            var result = new ResultMessage();
-            var userinfo = new User();
-            var data = Context.Users.FirstOrDefault(x => x.Id == ID);
-            if (data != null)
-            {
-                userinfo.ShowSetupCategory = data.ShowSetupCategory ?? data.ShowSetupCategory;
-                userinfo.ShowSetupDepartment = data.ShowSetupDepartment ?? data.ShowSetupDepartment;
-                userinfo.ShowReportMenu = data.ShowReportMenu ?? data.ShowReportMenu;
-                userinfo.ShowUser = data.ShowUser ?? data.ShowUser;
-                userinfo.ShowUserGroup = data.ShowUserGroup ?? data.ShowUserGroup;
-                userinfo.ShowLogMenu = data.ShowLogMenu ?? data.ShowLogMenu;
-                userinfo.ShowThemeMenu = data.ShowThemeMenu ?? data.ShowThemeMenu;
-                userinfo.ShowMediaMenu = data.ShowMediaMenu ?? data.ShowMediaMenu;
-                userinfo.ShowSitePermissionMenu = data.ShowSitePermissionMenu ?? data.ShowSitePermissionMenu;
-            }
-            result.data = userinfo;
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        
+       
         public ActionResult UpdateStatusComponent(int UserID, bool Status)
         {
             var result = new ResultMessage();
@@ -1215,24 +1115,8 @@ namespace POSSystem.Controllers
             }
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetApprovalSetting()
-        {
-            var data = ApprovalSetting();
-            return Json(new { data }, JsonRequestBehavior.AllowGet);
-        }
-        public UserPermission ApprovalSetting()
-        {
-            string User = (Session["User"] ?? "").ToString();
-            var userObj = Context.Users.Where(x => x.UserCode == User).FirstOrDefault();
-            UserPermission result = new UserPermission();
-            if (userObj != null)
-            {
-                result = Context.UserPermissions.Where(x => x.UserID == userObj.Id).FirstOrDefault();
-            }
-            //sqlDescriptor sd = new sqlDescriptor();
-            //var result = sd.GetDataByQuery<UserPermission>("SystemManager/GetApprovalSettingByUserCode", new object[] { User }).FirstOrDefault();
-            return result;
-        }
+       
+       
         public JsonResult IsCheckPermission()
         {
             bool data = false;
@@ -1279,54 +1163,6 @@ namespace POSSystem.Controllers
                     }, JsonRequestBehavior.AllowGet
             );
         }
-        public JsonResult AllowAllAction(int UserID, bool SetAll)
-        {
-            ResultMessage result = new ResultMessage();
-            if (SetAll == true)
-            {
-                var userObj = Context.UserPermissions.FirstOrDefault(x => x.UserID == UserID);
-                if (userObj != null)
-                {
-                    userObj.AllowCreateDepartment = true;
-                    userObj.AllowUpdateDepartment = true;
-                    userObj.AllowDeleteDepartment = true;
-                    userObj.AllowCreateCategory = true;
-                    userObj.AllowUpdateCategory = true;
-                    userObj.AllowDeleteCategory = true;
-                    userObj.AllowCreateUser = true;
-                    userObj.AllowUpdateUser = true;
-                    userObj.AllowDeleteUser = true;
-                    userObj.AllowCreateUserGroup = true;
-                    userObj.AllowUpdateUserGroup = true;
-                    userObj.AllowDeleteUserGroup = true;
-                    Context.SaveChanges();
-                    result.message = "User permission has been updated.";
-                    result.result = "success";
-                }
-            }
-            else
-            {
-                var userObj = Context.UserPermissions.FirstOrDefault(x => x.UserID == UserID);
-                if (userObj != null)
-                {
-                    userObj.AllowCreateDepartment = false;
-                    userObj.AllowUpdateDepartment = false;
-                    userObj.AllowDeleteDepartment = false;
-                    userObj.AllowCreateCategory = false;
-                    userObj.AllowUpdateCategory = false;
-                    userObj.AllowDeleteCategory = false;
-                    userObj.AllowCreateUser = false;
-                    userObj.AllowUpdateUser = false;
-                    userObj.AllowDeleteUser = false;
-                    userObj.AllowCreateUserGroup = false;
-                    userObj.AllowUpdateUserGroup = false;
-                    userObj.AllowDeleteUserGroup = false;
-                    Context.SaveChanges();
-                    result.message = "User permission has been updated.";
-                    result.result = "success";
-                }
-            }
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
-        }
+       
     }
 }

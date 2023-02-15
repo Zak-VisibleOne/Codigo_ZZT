@@ -20,5 +20,8 @@ namespace POSData
         public string MobileNumber { get; set; }
         public Nullable<int> TotalPoint { get; set; }
         public Nullable<double> TotalPurchaseAmount { get; set; }
+        public string OTPCode { get; set; }
+        public Nullable<bool> IsVerify { get; set; }
+        public Nullable<bool> IsExchangeMember { get; set; }
     }
 }

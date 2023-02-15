@@ -106,9 +106,6 @@
     <Compile Include="UserGroup.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserPermission.cs">
-      <DependentUpon>POSModel.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

@@ -34,15 +34,6 @@ namespace POSData
         public Nullable<System.DateTime> LastLogin { get; set; }
         public int IsLogin { get; set; }
         public Nullable<int> IsLoginLimit { get; set; }
-        public Nullable<bool> ShowSetupCategory { get; set; }
-        public Nullable<bool> ShowSetupDepartment { get; set; }
-        public Nullable<bool> ShowReportMenu { get; set; }
-        public Nullable<bool> ShowUser { get; set; }
-        public Nullable<bool> ShowUserGroup { get; set; }
-        public Nullable<bool> ShowLogMenu { get; set; }
-        public Nullable<bool> ShowThemeMenu { get; set; }
-        public Nullable<bool> ShowMediaMenu { get; set; }
-        public Nullable<bool> ShowSitePermissionMenu { get; set; }
         public Nullable<bool> DeletedStatus { get; set; }
     }
 }
