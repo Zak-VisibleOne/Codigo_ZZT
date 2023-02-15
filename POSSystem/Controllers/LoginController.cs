@@ -94,31 +94,6 @@ namespace POSSystem.Controllers
                         using (var db = new POSSystemEntities())
                         {
                             rm.result = "true";
-                            //var userData = db.TwoFactorDatas.FirstOrDefault(x => x.User == username);
-                            //if (userData != null)
-                            //{
-                            //    if (userData.TFAGoogle ?? false)
-                            //    {
-                            //        TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
-                            //        var dbkey = userData.GoogleTwoFactorKey == null ? "" : userData.GoogleTwoFactorKey;
-                            //        var setupInfo = tfa.GenerateSetupCode("TwoFactor", username, key, false, 300);
-                            //        //ViewBag.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
-                            //        //ViewBag.SetupCode = setupInfo.ManualEntryKey;
-                            //        userData.TFAGoogleQRUrl = SaveAuthenticationQRCode(setupInfo.QrCodeSetupImageUrl);
-                            //        userData.TFAGoogleCode = setupInfo.ManualEntryKey;
-                            //        db.SaveChanges();
-                            //        rm.result = "twoFactorEnable";
-                            //        rm.data = new
-                            //        {
-                            //            BarcodeImageUrl = SaveAuthenticationQRCode(setupInfo.QrCodeSetupImageUrl),
-                            //            SetupCode = setupInfo.ManualEntryKey,
-                            //        };
-                            //    }
-                            //    if (userData.TFAEmail ?? false)
-                            //    {
-                            //        rm.result = "twoFactorEnable";
-                            //    }
-                            //}
                         }
                         rm.message = "Login success";
                     }
@@ -168,40 +143,6 @@ namespace POSSystem.Controllers
                 newPassword = newPassword + ((Encoding.ASCII.GetBytes(Password.ToString().Substring(i, 1))[0] - pLen + i + 1) * ((i + 1) * (i + 1) * (i + 1)));
             }
             return newPassword;
-        }
-        private string SaveAuthenticationQRCode(string qrcodeText)
-        {
-            var base64 = qrcodeText.Split(',')[1];
-            string folderPath = Server.MapPath("~/MediaFolder/AuthenticatorQR/");
-            string imagePath = "/MediaFolder/AuthenticatorQR/";
-            byte[] imageBytes = Convert.FromBase64String(base64);
-            if (!Directory.Exists(folderPath))
-            {
-                Directory.CreateDirectory(folderPath);
-            }
-            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
-            ms.Write(imageBytes, 0, imageBytes.Length);
-            System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
-            var imgName = "2FA.jpg";
-            string path = folderPath + imgName;
-            image.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
-            return imagePath + imgName;
-        }
-        public ActionResult Verify2FA(string googleTwoFactorKey, string passcode)
-        {
-            var result = new ResultMessage();
-            //TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
-            //bool isValid = tfa.ValidateTwoFactorPIN(key, passcode, false);
-            //if (isValid)
-            //{
-            //    Session["IsValid2FA"] = true;
-            //    result.result = "success";
-            //}
-            //else
-            //{
-            //    result.result = "error";
-            //}
-            return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

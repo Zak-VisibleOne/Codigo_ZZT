@@ -163,25 +163,6 @@ namespace POSSystem.Controllers
         }
         public JsonResult SaveUser(ViewModelUserInfo user)
         {
-            using (var db = new POSSystemEntities())
-            {
-                var twoFactor = db.TwoFactorDatas.FirstOrDefault(x => x.User == user.UserCode);
-                if (twoFactor != null)
-                {
-                    twoFactor.Email = user.Email;
-                }
-                else
-                {
-                    twoFactor = new TwoFactorData();
-                    twoFactor.User = user.UserCode;
-                    twoFactor.Email = user.Email;
-                    twoFactor.TwoFactorEnabled = false;
-                    twoFactor.TFAEmail = false;
-                    twoFactor.TFAGoogle = false;
-                    db.TwoFactorDatas.Add(twoFactor);
-                }
-                db.SaveChanges();
-            }
             return Json(systemManager.SaveNewUser(user), JsonRequestBehavior.AllowGet);
         }
         
@@ -190,68 +171,8 @@ namespace POSSystem.Controllers
             var userdata = systemManager.UsersList().Find(x => x.Id.Equals(ID));
             return Json(userdata, JsonRequestBehavior.AllowGet);
         }
-        public partial class PermissionUser
-        {
-            public int UserID { get; set; }
-            public Nullable<bool> AllowCreateCourse { get; set; }
-            public Nullable<bool> AllowUpdateCourse { get; set; }
-            public Nullable<bool> AllowDeleteCourse { get; set; }
-            public Nullable<bool> AllowCreateDiscipline { get; set; }
-            public Nullable<bool> AllowUpdateDiscipline { get; set; }
-            public Nullable<bool> AllowDeleteDiscipline { get; set; }
-            public Nullable<bool> AllowCreateLevel { get; set; }
-            public Nullable<bool> AllowUpdateLevel { get; set; }
-            public Nullable<bool> AllowDeleteLevel { get; set; }
-            public Nullable<bool> AllowCreateDepartment { get; set; }
-            public Nullable<bool> AllowUpdateDepartment { get; set; }
-            public Nullable<bool> AllowDeleteDepartment { get; set; }
-            public Nullable<bool> AllowCreateCategory { get; set; }
-            public Nullable<bool> AllowUpdateCategory { get; set; }
-            public Nullable<bool> AllowDeleteCategory { get; set; }
-            public Nullable<bool> AllowCreateSemester { get; set; }
-            public Nullable<bool> AllowUpdateSemester { get; set; }
-            public Nullable<bool> AllowDeleteSemester { get; set; }
-            public Nullable<bool> AllowCreatePublication { get; set; }
-            public Nullable<bool> AllowUpdatePublication { get; set; }
-            public Nullable<bool> AllowDeletePublication { get; set; }
-            public Nullable<bool> AllowCreateStaffView { get; set; }
-            public Nullable<bool> AllowUpdateStaffView { get; set; }
-            public Nullable<bool> AllowDeleteStaffView { get; set; }
-            public Nullable<bool> AllowCreatePosition { get; set; }
-            public Nullable<bool> AllowUpdatePosition { get; set; }
-            public Nullable<bool> AllowDeletePosition { get; set; }
-            public Nullable<bool> AllowCreateResearchArea { get; set; }
-            public Nullable<bool> AllowUpdateResearchArea { get; set; }
-            public Nullable<bool> AllowDeleteResearchArea { get; set; }
-            public Nullable<bool> AllowCreateUser { get; set; }
-            public Nullable<bool> AllowUpdateUser { get; set; }
-            public Nullable<bool> AllowDeleteUser { get; set; }
-            public Nullable<bool> AllowCreateUserGroup { get; set; }
-            public Nullable<bool> AllowUpdateUserGroup { get; set; }
-            public Nullable<bool> AllowDeleteUserGroup { get; set; }
-        }
-    
         public JsonResult UpdateUser(User user)
         {
-            using (var db = new POSSystemEntities())
-            {
-                var twoFactor = db.TwoFactorDatas.FirstOrDefault(x => x.User == user.UserCode);
-                if (twoFactor != null)
-                {
-                    twoFactor.Email = user.Email;
-                }
-                else
-                {
-                    twoFactor = new TwoFactorData();
-                    twoFactor.User = user.UserCode;
-                    twoFactor.Email = user.Email;
-                    twoFactor.TwoFactorEnabled = false;
-                    twoFactor.TFAEmail = false;
-                    twoFactor.TFAGoogle = false;
-                    db.TwoFactorDatas.Add(twoFactor);
-                }
-                db.SaveChanges();
-            }
             return Json(systemManager.UpdateUser(user), JsonRequestBehavior.AllowGet);
         }
         public JsonResult DeleteUser(int ID)
@@ -430,26 +351,7 @@ namespace POSSystem.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
         #endregion
-        #region update all media url and api url
-        public JsonResult SaveChangesSiteInfo(ConfigModel m)
-        {
-            ResultMessage result = new ResultMessage();
-            using (var context = new POSSystemEntities())
-            {
-                var siteInfo = context.SiteInformations.FirstOrDefault();
-                if (siteInfo != null)
-                {
-                    siteInfo.FrontSiteUrl = m.FrontSiteUrl ?? "";
-                    siteInfo.SiteUrl = m.SiteUrl ?? "";
-                    context.SaveChanges();
-                }
-                result.message = "Frontend site url has been updated successfully.";
-                result.result = "success";
-                logger.Info("Frontend site url has been updated successfully.");
-            }
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
+        
         #region Password Action
         public JsonResult UpdatePassword(UserCential m)
         {
@@ -727,60 +629,7 @@ namespace POSSystem.Controllers
             var result = sd.GetDataByQuery<ViewModalUserProfile>("User/GetUserProfileDataByCode", new object[] { User.ToString() }).FirstOrDefault();
             return result;
         }
-        #region Menu CMS Show Hide
-        public JsonResult ShowHideCMSMenu(User m)
-        {
-            ResultMessage result = new ResultMessage();
-            string user = (Session["User"] ?? "").ToString();
-            var checkAdmin = Context.Users.Where(x => x.UserCode == user).FirstOrDefault();
-            if (checkAdmin != null)
-            {
-                if (checkAdmin.UserGroupCode == "Admin")
-                {
-                    var UserInfo = Context.Users.Where(x => x.Id == m.Id).FirstOrDefault();
-                    if (UserInfo != null)
-                    {
-                        //UserInfo.ShowPageMenu = m.ShowPageMenu ?? false;
-                        Context.SaveChanges();
-                        result.message = "Show/hide CMS menu data successfully. ";
-                        result.result = "success";
-                    }
-                    else
-                    {
-                        result.message = "User not found";
-                        result.result = "info";
-                    }
-                }
-                else
-                {
-                    result.message = "Permission denied!. The cms menu can change only admin role.";
-                    result.result = "error";
-                }
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult ShowHideRptMenu(int ID)
-        {
-            ResultMessage result = new ResultMessage();
-            string user = (Session["User"] ?? "").ToString();
-            var chkObj = Context.ReportMaintenances.Where(x => x.ID == ID).FirstOrDefault();
-            if (chkObj != null)
-            {
-                if ((chkObj.Deleted ?? false) == false)
-                {
-                    chkObj.Deleted = true;
-                }
-                else
-                {
-                    chkObj.Deleted = false;
-                }
-                Context.SaveChanges();
-                result.message = "Show/hide CMS menu data successfully. ";
-                result.result = "success";
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
+        
         public JsonResult GetLogData()
         {
             string from = Request.Params["LogFDate"];
@@ -877,99 +726,7 @@ namespace POSSystem.Controllers
                     }, JsonRequestBehavior.AllowGet
             );
         }
-        public JsonResult SaveDashboardSettings()
-        {
-            var result = new ResultMessage();
-            string[] imgExtensions = { ".bmp", ".jpg", ".gif", ".png", ".jpeg", ".tiff", ".png", ".PNG", ".ico", ".svg" };
-            var BackgroundColor = System.Web.HttpContext.Current.Request.Form["BackgroundColor"];
-            var LogoImage = System.Web.HttpContext.Current.Request.Form["LogoImage"];
-            var LogoFile = System.Web.HttpContext.Current.Request.Files["LogoFile"];
-            var TableBgColor = System.Web.HttpContext.Current.Request.Form["TableBgColor"];
-            var TableBgTitleColor = System.Web.HttpContext.Current.Request.Form["TableBgTitleColor"];
-            var HoverColor = System.Web.HttpContext.Current.Request.Form["HoverColor"];
-            var FontColor = System.Web.HttpContext.Current.Request.Form["FontColor"];
-            var LoginBgColor = System.Web.HttpContext.Current.Request.Form["LoginBgColor"];
-            var LoginDescription = System.Web.HttpContext.Current.Request.Form["LoginDescription"];
-            var LoginLogo = System.Web.HttpContext.Current.Request.Files["LoginLogo"];
-            var folder = System.Web.HttpContext.Current.Server.MapPath("~/images/logo/");
-            var path = "/images/logo/";
-            if (LoginLogo != null && LoginLogo.ContentLength > 0)
-            {
-                string extension = Path.GetExtension(LogoFile.FileName);
-                if (imgExtensions.Contains(extension))
-                {
-                    if (!Directory.Exists(folder))
-                    {
-                        Directory.CreateDirectory(folder);
-                    }
-                    //check file size less than 5M
-                    LoginLogo.SaveAs(folder + LoginLogo.FileName.Split('/').LastOrDefault());
-                }
-            }
-            if (LogoFile != null && LogoFile.ContentLength > 0)
-            {
-                string extension = Path.GetExtension(LogoFile.FileName);
-                if (imgExtensions.Contains(extension))
-                {
-                    if (!Directory.Exists(folder))
-                    {
-                        Directory.CreateDirectory(folder);
-                    }
-                    //check file size less than 5M
-                    LogoFile.SaveAs(folder + LogoFile.FileName.Split('/').LastOrDefault());
-                    using (var db = new POSSystemEntities())
-                    {
-                        var config = db.Globalconfigs.FirstOrDefault();
-                        if (config != null)
-                        {
-                            config.DashboardColor = BackgroundColor;
-                            config.LogoImage = path + LogoFile.FileName.Split('/').LastOrDefault();
-                            config.TableBgTitleColor = TableBgTitleColor;
-                            config.TableBgColor = TableBgColor;
-                            config.HoverColor = HoverColor;
-                            config.FontColor = FontColor;
-                            config.LoginBgColor = LoginBgColor;
-                            config.LoginDescription = LoginDescription;
-                            config.LoginLogo = path + LoginLogo.FileName.Split('/').LastOrDefault(); ;
-                            db.SaveChanges();
-                            result.result = "success";
-                            result.message = "Save successfully .";
-                        }
-                    }
-                }
-                else
-                {
-                    result.result = "error";
-                    result.message = "Unsupported file format, please upload image file";
-                }
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult GetDashboardSettings()
-        {
-            var result = new ResultMessage();
-            using (var db = new POSSystemEntities())
-            {
-                var config = db.Globalconfigs.FirstOrDefault();
-                if (config != null)
-                {
-                    result.data = new
-                    {
-                        BackgroundColor = config.DashboardColor,
-                        LogoImage = config.LogoImage,
-                        TableBgColor = config.TableBgColor,
-                        TableBgTitleColor = config.TableBgTitleColor,
-                        HoverColor = config.HoverColor,
-                        FontColor = config.FontColor,
-                        LoginLogo = config.LoginLogo,
-                        LoginDescription = config.LoginDescription,
-                        LoginBgColor = config.LoginBgColor
-                    };
-                    result.result = "success";
-                }
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+      
         public JsonResult GetUserData()//string User
         {
             var result = new ResultMessage();
@@ -1009,24 +766,7 @@ namespace POSSystem.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
-       
-        public ActionResult UpdateStatusComponent(int UserID, bool Status)
-        {
-            var result = new ResultMessage();
-            using (var db = new POSSystemEntities())
-            {
-                var user = db.Users.FirstOrDefault(x => x.Id == UserID);
-                if (user != null)
-                {
-                    user.DeletedStatus = !Status;
-                    db.SaveChanges();
-                    result.result = "success";
-                    result.message = "Updated successful .";
-                }
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+  
         public JsonResult DeleteMultipleUser(List<int> Ids)
         {
             ResultMessage result = new ResultMessage();
@@ -1073,30 +813,6 @@ namespace POSSystem.Controllers
             }
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult SaveUserGroupPermission(User user)
-        {
-            ResultMessage result = new ResultMessage();
-            using (var context = new POSSystemEntities())
-            {
-                var userList = context.Users.Where(x => x.UserGroupCode == user.UserGroupCode).ToList();
-                if (userList.Count > 0)
-                {
-                    foreach (var userObj in userList)
-                    {
-                        //userObj.AllowCreatePage = user.AllowCreatePage ?? false;
-                        context.SaveChanges();
-                    }
-                    result.message = "User group permission has been updated successfully.";
-                    result.result = "success";
-                }
-                else
-                {
-                    result.message = "There is no link user for this group.";
-                    result.result = "info";
-                }
-            }
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
-        }
         public JsonResult GetUserAccessByUserGroup(string UserGroup)
         {
             ResultMessage result = new ResultMessage();
@@ -1116,7 +832,6 @@ namespace POSSystem.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
        
-       
         public JsonResult IsCheckPermission()
         {
             bool data = false;
@@ -1127,42 +842,5 @@ namespace POSSystem.Controllers
             }
             return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetPerRptList()
-        {
-            var data = new List<object[]>();
-            var list = Context.ReportMaintenances.ToList();
-            var list_count = list.Count;
-            string chkRpt;
-            if (list.Count > 0)
-            {
-                foreach (ReportMaintenance l in list)
-                {
-                    if ((l.Deleted ?? false) == false)
-                    {
-                        chkRpt = "Tchk" + l.ID;//T = true
-                    }
-                    else
-                    {
-                        chkRpt = "Fchk" + l.ID;//F = false
-                    }
-                    data.Add(new object[] {
-                        chkRpt
-                       ,l.SubReport
-                       ,l.MainReport
-                       ,l.ID
-                    });
-                }
-            }
-            return Json(
-                    new
-                    {
-                        //draw = draw,
-                        recordsTotal = list_count,
-                        recordsFiltered = list_count,
-                        data = data
-                    }, JsonRequestBehavior.AllowGet
-            );
-        }
-       
     }
 }
