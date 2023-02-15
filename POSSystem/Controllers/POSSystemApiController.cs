@@ -42,6 +42,45 @@ namespace POSSystem.Controllers
             public double TotalPrice { get; set; }
         }
         [HttpGet]
+        public HttpResponseMessage IsCouponAvailable()
+        {
+            var code = HttpContext.Current.Request.Params["couponcode"];
+            ReturnMsg msg = new ReturnMsg();
+            try
+            {
+                using (var context = new POSSystemEntities())
+                {
+                    var cObj = context.Coupons.Where(x => x.CouponCode == code).FirstOrDefault();
+                    if (cObj != null)
+                    {
+                        if (cObj.AvailableQty < 30)
+                        {
+                            msg.msg = "Coupon available";
+                            msg.eflag = "Available";
+                        }
+                        else
+                        {
+                            msg.msg = "Coupon not available";
+                            msg.eflag = "NotAvailable";
+                        }
+                    }
+                    else
+                    {
+                        msg.msg = "Coupon not found.";
+                        msg.eflag = "E";
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, msg);
+                }
+            }
+            catch (Exception e)
+            {
+                msg.msg = e.Message;
+                msg.eflag = "E";
+                return Request.CreateResponse(HttpStatusCode.BadRequest, msg);
+                throw;
+            }
+        }
+        [HttpGet]
         [ActionName("getpurchasedata")]
         public IEnumerable<ViewModelPurchase> GetPurchaseData()
         {

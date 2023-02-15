@@ -39,7 +39,7 @@ namespace POSSystem.Controllers
             public int Qty { get; set; }
             public double TotalPrice { get; set; }
         }
-        
+
         [HttpPost]
         public HttpResponseMessage CalculatePoint()
         {
@@ -91,7 +91,7 @@ namespace POSSystem.Controllers
                     var mObj = context.Members.Where(x => x.MemberCode == code).FirstOrDefault();
                     if (mObj != null)
                     {
-                        mObj.TotalPoint = 100;
+                        mObj.TotalPoint = Convert.ToInt32(point);
                         context.SaveChanges();
                         msg.msg = "Success";
                         msg.eflag = "S";

@@ -27,9 +27,5 @@ namespace POSSystem.Controllers
             public string msg { set; get; }
             public string eflag { set; get; }
         }
-
-       
-        
-      
     }
 }
