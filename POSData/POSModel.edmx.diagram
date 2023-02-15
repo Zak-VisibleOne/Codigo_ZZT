@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a78a323590fc4a5082b26e323674cebf" Name="Diagram1">
+        <EntityTypeShape EntityType="POSSystemModel.Category" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="POSSystemModel.City" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="POSSystemModel.Company" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="POSSystemModel.Customer" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="POSSystemModel.Department" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="POSSystemModel.DiscountType" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="POSSystemModel.Globalconfig" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="POSSystemModel.InvoiceType" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="POSSystemModel.ipAddressLog" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="POSSystemModel.Location" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="POSSystemModel.MediaInfo" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="POSSystemModel.PurchaseDetail" Width="1.5" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="POSSystemModel.PurchaseHeader" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="POSSystemModel.ReportMaintenance" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="POSSystemModel.SaleDetail" Width="1.5" PointX="10.75" PointY="9.75" />
+        <EntityTypeShape EntityType="POSSystemModel.SaleHeader" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="POSSystemModel.SalePerson" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="POSSystemModel.SiteInformation" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="POSSystemModel.Stock" Width="1.5" PointX="12.75" PointY="4.75" />
+        <EntityTypeShape EntityType="POSSystemModel.StockClass" Width="1.5" PointX="12.75" PointY="9.75" />
+        <EntityTypeShape EntityType="POSSystemModel.Supplier" Width="1.5" PointX="12.75" PointY="12.75" />
+        <EntityTypeShape EntityType="POSSystemModel.ThemeSetting" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="POSSystemModel.Township" Width="1.5" PointX="8.75" PointY="13.75" />
+        <EntityTypeShape EntityType="POSSystemModel.TwoFactorData" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="POSSystemModel.UserGroup" Width="1.5" PointX="14.75" PointY="4.75" />
+        <EntityTypeShape EntityType="POSSystemModel.UserPermission" Width="1.5" PointX="4.75" PointY="14.75" />
+        <EntityTypeShape EntityType="POSSystemModel.User" Width="1.5" PointX="14.75" PointY="7.75" />
+        <EntityTypeShape EntityType="POSSystemModel.DocumentID" Width="1.5" PointX="14.75" PointY="15.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
