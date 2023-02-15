@@ -21,7 +21,10 @@
                 {
                     targets: [4], name: 'action', className: 'left', sWidth: '10%', orderable: false,
                     editor: { type: 'action', required: false, class: '' }, render: _RenderContentButton
-                }
+                },
+                {
+                    targets: [5], name: 'id', className: 'left', visible: false, sWidth: '0%',
+                },
             ]
         });
         dtMember.on('draw.dt', function () {
@@ -31,14 +34,14 @@
             e.preventDefault();
             var pos = dtMember.fnGetPosition($(this).closest('tr')[0]);
             var data = dtMember.fnGetData(pos);
-            var id = data[0];
+            var id = data[5];
             editMember(id);
         });
         dtMember.on('click', '.remove', function (e) {
             e.preventDefault();
             var pos = dtMember.fnGetPosition($(this).closest('tr')[0]);
             var data = dtMember.fnGetData(pos);
-            var id = data[0];
+            var id = data[5];
             DeleteMember(id);
         });
         LoadMemberTable();
@@ -136,6 +139,7 @@
     }
     function AddNewMember() {
         $('#hidID').val('');
+        $('#method').val('add');
         $('#txtMemberCode').val('');
         $('#txtMemberName').val('');
         $('#txtMobileNo').val('');

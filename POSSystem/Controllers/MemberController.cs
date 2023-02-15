@@ -85,7 +85,6 @@ namespace POSSystem.Controllers
         }
         public JsonResult SaveUpdateMember(ViewModelMember m)
         {
-            string user = (Session["User"] ?? "").ToString();
             ResultMessage result = new ResultMessage();
             if (m.Method == "add")
             {

@@ -232,7 +232,6 @@
                     </div>
                     @RenderBody()
                 </div>
-                @Html.Partial("_PartialSetImageModal")
                 @Html.Partial("_PartialUserProfileModal")
                 @Html.Partial("_Footer")
             </div>
@@ -293,8 +292,6 @@
     <script src="~/plugins/mutiselect/js/bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     @Html.Partial("_PartialRenderBtnScript")
-    @Html.Partial("_PartialSetIMediaImageScript")
-    @Html.Partial("CommonScript")
     @{
         int LoginLimit = (Session["IsLoginLimit"] != null) ? Convert.ToInt32(Session["IsLoginLimit"].ToString()) : 1;
         Session["SITE_URL"] = "";
