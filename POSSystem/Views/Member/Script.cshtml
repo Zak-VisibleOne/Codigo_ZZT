@@ -1,0 +1,225 @@
+﻿<script>
+    var dtDepartment;
+    jQuery(document).ready(function () {
+        dtDepartment = $('#dtDepartment').dataTable({
+            lengthMenu: [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, 'All']],
+            columnDefs: [
+                {
+                    targets: [0], name: 'ID', className: 'center', orderable: true, sWidth: '5%',
+                },
+                {
+                    targets: [1], name: 'DepName', className: 'left', sWidth: '10%', orderable: false, render: function (data, type, row, meta) {
+                        return '<span class="badge badge-pill badge-secondary edit" style="font-size: 13px;">' + data + '</span>';
+                    }
+                },
+                {
+                    targets: [2], name: 'DepLocation', className: 'left', orderable: true, sWidth: '10%',
+                },
+                {
+                    targets: [3], name: 'action', className: 'left', sWidth: '10%', orderable: false,
+                    editor: { type: 'action', required: false, class: '' }, render: _RenderContentButton
+                }
+            ]
+        });
+        dtDepartment.on('draw.dt', function () {
+            $('#dtDepartment .tooltips').tooltip();
+        });
+        dtDepartment.on('click', '.edit', function (e) {
+            e.preventDefault();
+            var pos = dtDepartment.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtDepartment.fnGetData(pos);
+            var id = data[0];
+            var approval = GetApproval();
+            if (approval != null) {
+                if (approval.AllowUpdateDepartment) {
+                    editDepartment(id);
+                }
+                else {
+                    toastr.error("System does not allow to update department.", "Warning");
+                }
+            }
+        });
+        dtDepartment.on('click', '.remove', function (e) {
+            e.preventDefault();
+            var pos = dtDepartment.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtDepartment.fnGetData(pos);
+            var id = data[0];
+            var approval = GetApproval();
+            if (approval != null) {
+                if (approval.AllowDeleteDepartment) {
+                    DeleteDepartment(id);
+                }
+                else {
+                    toastr.error("System does not allow to delete department.", "Warning");
+                }
+            }
+        });
+        LoadDepartmentTable();
+    });
+    function LoadDepartmentTable() {
+        var data = GetDepartment();
+        dtDepartment.api().clear().rows.add(data).draw();
+    }
+    function GetDepartment() {
+        var request = $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: SITE_URL + "/Department/GetDepartmentList",
+            data: {
+            }, success: function (data) {
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function editDepartment(id) {
+        $('#hidID').val(id);
+        $('#method').val('edit');
+        var data = GetDepartmentByID(id);
+        $('#txtDepName').val(data.DepName);
+        $('#txtDepLocation').val(data.DepLocation);
+        $('#DepartmentModal').modal('show');
+    }
+    function GetDepartmentByID(id) {
+        var request = $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: SITE_URL + '/Department/GetDepartmentByID',
+            data: {
+                ID: id
+            }, success: function (data) {
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function DeleteDepartment(id) {
+        swal({
+            title: 'Are you sure?',
+            //text: "Are you sure you want to delete this Time table?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger m-l-10',
+            confirmButtonText: 'Yes'
+        }).then(function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: SITE_URL + '/Department/DeleteDepartmentByID',
+                data: {
+                    ID: id
+                }, beforeSend: function () {
+                    //return true;
+                }, success: function (data) {
+                    var res = data.result;
+                    if (res.result == "success") {
+                        toastr.success(res.message, "Success");
+                        $('#DepartmentModal').modal('hide');
+                        LoadDepartmentTable();
+                    } else {
+                        toastr.warning(res.message, "Error");
+                    }
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    show_ajax_error(jqXHR, textStatus, errorThrown);
+                }
+            });
+        })
+    }
+    function closeDepartment() {
+        $('#txtDepName').val('');
+        $('#txtDepLocation').val('');
+        $('#DepartmentModal').modal('hide');
+    }
+    function onClick_AddNewDepartment() {
+        var approval = GetApproval();
+        if (approval != null) {
+            if (approval.AllowCreateDepartment) {
+                $('#hidID').val('');
+                $('#txtDepName').val('');
+                $('#txtDepLocation').val('');
+                $('#method').val('add');
+                $('#DepartmentModal').modal('show');
+            }
+            else {
+                toastr.error("System does not allow to create department.", "Warning");
+            }
+        }
+    }
+    function multipleDeleteDep() {
+        var depArr = new Array();
+        $('input:checkbox[name=chkTable]:checked').each(function () {
+            depArr.push($(this).val())
+        })
+        var obj = {
+            DepIds: depArr
+        };
+        $.ajax({
+            url: SITE_URL + '/Department/DeleteMultipleDep',
+            contentType: 'application/json; charset=utf-8',
+            type: 'POST',
+            data: JSON.stringify(obj),
+            cache: false,
+            success: function (data) {
+                var res = data.result;
+                if (res.result == "success") {
+                    toastr.success(res.message, "Info");
+                    LoadDepartmentTable();
+                }
+                else {
+                    toastr.warning(res.message, "Error");
+                }
+            },
+            error: function (xhr, status, error) {
+                toastr.warning(res.message, "Error");
+            }
+        });
+    }
+    function saveDepartment() {
+        var id = $('#hidID').val();
+        var name = $('#txtDepName').val();
+        var dep = $('#txtDepLocation').val();
+        var method = $('#method').val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: SITE_URL + "/Department/SaveUpdateDepartment",
+            data: {
+                ID: id,
+                DepName: name,
+                DepLocation: dep,
+                Method: method
+            }, success: function (data) {
+                var res = data.result;
+                if (res.result == "success") {
+                    toastr.success(res.message, "Info");
+                    $('#DepartmentModal').modal('hide');
+                    LoadDepartmentTable();
+                }
+                else {
+                    toastr.warning(res.message, "Error");
+                }
+            }
+        });
+    }
+    function previewDept() {
+        var url = SITE_URL + "/ReportView?subreport='Department'&code=&people_post=''&people_group=''&discipline=''";
+        window.open(url, '_blank');
+    }
+    function exportCSV() {
+        window.location = SITE_URL + "/ExportImport/exportCSV?name=Department";
+    }
+    function exportExcel() {
+        window.location = SITE_URL + "/ExportImport/exportExcel?name=Department";
+    }
+</script>

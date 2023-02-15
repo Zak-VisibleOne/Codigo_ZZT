@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "coupon";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <h4 class="mt-0 header-title titleCor">Coupon listing</h4>
+                <div class="btn-toolbar p-3" role="toolbar">
+                    <div class="btn-group mo-mb-2">
+                        <button type="button" class="btn btn-primary waves-light waves-effect" onclick="AddNewCoupon()" data-toggle="tooltip" data-placement="top" title="Add new"><i class="fas fa-plus-circle"></i> New</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive">
+                    <table id="dtCoupon" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead class="thead-ful">
+                            <tr>
+                                <th style="text-align:center;">ID</th>
+                                <th style="text-align:center;">Coupon Code</th>
+                                <th style="text-align:center;">Coupon Name</th>
+                                <th style="text-align:center;">Start Date</th>
+                                <th style="text-align:center;">End Date</th>
+                                <th style="text-align:center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-lg" id="CouponModal" tabindex="-1" role="dialog" aria-labelledby="CouponModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="CouponModalLabel">Coupon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card m-b-20">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="txtCouponCode" class="col-sm-3 col-form-label AlignRight">Code</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="txtCouponCode">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="txtCouponName" class="col-sm-3 col-form-label AlignRight">Name</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="txtCouponName">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="txtAvailableQty" class="col-sm-3 col-form-label AlignRight">Available Qty</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="txtAvailableQty">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="dtpStartDate" class="col-sm-3 col-form-label AlignRight">Start Date</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="date" value="2020-08-18" id="dtpStartDate">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="dtpEndDate" class="col-sm-3 col-form-label AlignRight">End Date</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="date" value="2020-08-18" id="dtpEndDate">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="txtDiscountAmount" class="col-sm-3 col-form-label AlignRight">Discount Amount</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="txtDiscountAmount">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="closeCoupon()" class="btn btn-secondary waves-effect">
+                    <i class="fa fa-times" aria-hidden="true"></i> Close
+                </button>
+                <button type="button" onclick="saveCoupon()" class="btn btn-primary waves-effect waves-light">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Html.Partial("Script")
+}

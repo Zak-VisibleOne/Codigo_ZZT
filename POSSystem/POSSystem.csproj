@@ -183,6 +183,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Contants\Menu.cs" />
+    <Compile Include="Controllers\CouponController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\MobileApiController.cs" />
+    <Compile Include="Controllers\CMSApiController.cs" />
     <Compile Include="Controllers\PointSystemApiController.cs" />
     <Compile Include="Controllers\POSSystemApiController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
@@ -2607,13 +2611,15 @@
     <Content Include="Views\Purchase\Script.cshtml" />
     <Content Include="Views\StockClass\Index.cshtml" />
     <Content Include="Views\StockClass\Script.cshtml" />
+    <Content Include="Views\Coupon\Index.cshtml" />
+    <Content Include="Views\Coupon\Script.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Member\Script.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="logs\" />
     <Folder Include="Mediafolder\" />
-    <Folder Include="Views\Coupon\" />
-    <Folder Include="Views\Member\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
