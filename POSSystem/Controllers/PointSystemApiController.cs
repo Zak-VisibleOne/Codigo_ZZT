@@ -32,11 +32,10 @@ namespace POSSystem.Controllers
         }
 
         //Calculate Point
-      
 
 
         [HttpPost]
-        [Route("api/form/addpointtomemer")]
+        //[Route("api/pointsystemapi/addpointtomemer")]
         public HttpResponseMessage AddPointToMember()
         {
             var code = HttpContext.Current.Request.Params["membercode"];
@@ -46,32 +45,19 @@ namespace POSSystem.Controllers
             {
                 using (var context = new POSSystemEntities())
                 {
-                    //var scodeObj = context.StoreCodes.Where(x => x.Code == code).FirstOrDefault();
-                    //if (scodeObj == null)
-                    //{
-                    //    StoreCode data = new StoreCode();
-                    //    data.Code = code;
-                    //    data.Name = name;
-                    //    data.Location = location;
-                    //    data.Status = status;
-                    //    data.Remark = "FromClient";
-                    //    data.CreatedDate = DateTime.Now;
-                    //    context.StoreCodes.Add(data);
-                    //    context.SaveChanges();
-                    //    msg.msg = "Success";
-                    //    msg.eflag = "S";
-                    //}
-                    //else
-                    //{
-                    //    scodeObj.Code = code;
-                    //    scodeObj.Name = name;
-                    //    scodeObj.Location = location;
-                    //    scodeObj.Status = status;
-                    //    scodeObj.UpdatedDate = DateTime.Now;
-                    //    context.SaveChanges();
-                    //    msg.msg = "Success";
-                    //    msg.eflag = "S";
-                    //}
+                    var mObj = context.Members.Where(x => x.MemberCode == code).FirstOrDefault();
+                    if (mObj != null)
+                    {
+                        mObj.TotalPoint = 100;
+                        context.SaveChanges();
+                        msg.msg = "Success";
+                        msg.eflag = "S";
+                    }
+                    else
+                    {
+                        msg.msg = "Member not found.";
+                        msg.eflag = "E";
+                    }
                     return Request.CreateResponse(HttpStatusCode.OK, msg);
                 }
             }

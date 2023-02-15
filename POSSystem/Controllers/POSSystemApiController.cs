@@ -36,6 +36,10 @@ namespace POSSystem.Controllers
             public string MemberCode { get; set; }
             public string CouponCode { get; set; }
             public string ReceiptNumber { get; set; }
+            public string ItemName { get; set; }
+            public double Price { get; set; }
+            public int Qty { get; set; }
+            public double TotalPrice { get; set; }
         }
         [HttpGet]
         [ActionName("getpurchasedata")]
