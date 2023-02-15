@@ -11,7 +11,7 @@ namespace POSSystem.Controllers
 {
     public class MemberController : Controller
     {
-        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(DepartmentController));
+        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(MemberController));
         private POSSystemEntities Context { get; set; }
         //Index page
         public ActionResult Index()
@@ -27,27 +27,32 @@ namespace POSSystem.Controllers
         {
             Context = new POSSystemEntities();
         }
-        public class ViewModelDepartment
+        public class ViewModelMember
         {
             public int ID { get; set; }
-            public string DepName { get; set; }
-            public string DepLocation { get; set; }
+            public string MemberCode { get; set; }
+            public string MemberName { get; set; }
+            public string MobileNumber { get; set; }
+            public Nullable<int> TotalPoint { get; set; }
+            public Nullable<double> TotalPurchaseAmount { get; set; }
             public string Method { get; set; }
         }
-        public JsonResult GetDepartmentList()
+        public JsonResult GetMemberList()
         {
             var data = new List<object[]>();
-            var list = Context.Departments.ToList();
+            var list = Context.Members.ToList();
             var list_count = list.Count;
             if (list.Count > 0)
             {
-                foreach (Department l in list)
+                foreach (Member l in list)
                 {
                     data.Add(new object[] {
-                        l.ID
-                       ,l.DepName
-                       ,l.DepLocation
+                        l.MemberCode
+                       ,l.MemberName
+                       ,l.MobileNumber
+                       ,l.TotalPoint
                        , ""
+                       ,l.ID
                     });
                 }
             }
@@ -61,33 +66,24 @@ namespace POSSystem.Controllers
                     }, JsonRequestBehavior.AllowGet
             );
         }
-        public JsonResult GetDepartmentByID(int ID)
+        public JsonResult GetMemberByID(int ID)
         {
-            var data = Context.Departments.Where(x => x.ID == ID).FirstOrDefault();
+            var data = Context.Members.Where(x => x.ID == ID).FirstOrDefault();
             return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult DeleteDepartmentByID(int ID)
+        public JsonResult DeleteMemberByID(int ID)
         {
             ResultMessage result = new ResultMessage();
-            result.result = "success";
-            result = DelDepartmentByID(ID);
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
-        }
-        public ResultMessage DelDepartmentByID(int id)
-        {
-            ResultMessage rm = new ResultMessage();
             using (var context = new POSSystemEntities())
             {
-                context.Database.ExecuteSqlCommand(@"Delete ace_report.Department where ID = {0}", new object[] { id });
+                context.Database.ExecuteSqlCommand(@"Delete Member where ID = {0}", new object[] { id });
                 context.SaveChanges();
-                rm.message = "Data successfully deleted";
-                rm.result = "success";
-                string user = (Session["User"] ?? "").ToString();
-                logger.Info("Delete department with id no " + id + " by " + user);
+                result.message = "Data successfully deleted";
+                result.result = "success";
             }
-            return rm;
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult SaveUpdateDepartment(ViewModelDepartment m)
+        public JsonResult SaveUpdateMember(ViewModelMember m)
         {
             string user = (Session["User"] ?? "").ToString();
             ResultMessage result = new ResultMessage();
@@ -95,32 +91,33 @@ namespace POSSystem.Controllers
             {
                 using (var context = new POSSystemEntities())
                 {
-                    Department dep = new Department();
-                    dep.DepName = m.DepName ?? "";
-                    dep.DepLocation = m.DepLocation ?? "";
-                    dep.CreatedDate = DateTime.Now;
-                    dep.CreatedUser = (Session["User"] ?? "").ToString();
-                    context.Departments.Add(dep);
+                    Member member = new Member();
+                    member.MemberCode = m.MemberCode ?? "";
+                    member.MemberName = m.MemberName ?? "";
+                    member.MobileNumber = m.MobileNumber ?? "";
+                    member.TotalPoint = m.TotalPoint;
+                    member.TotalPurchaseAmount = m.TotalPurchaseAmount;
+                    context.Members.Add(member);
                     context.SaveChanges();
-                    logger.Info("Department( " + m.DepName + ") created by user " + user + " in " + DateTime.Now.ToString());
                 }
-                result.message = "New department data save successfully.";
+                result.message = "New member data save successfully.";
                 result.result = "success";
             }
             else
             {
                 using (var context = new POSSystemEntities())
                 {
-                    Department dep = new Department();
-                    dep = context.Departments.Where(x => x.ID == m.ID).FirstOrDefault();
-                    if (dep != null)
+                    var data = context.Members.Where(x => x.ID == m.ID).FirstOrDefault();
+                    if (data != null)
                     {
-                        dep.DepName = m.DepName ?? "";
-                        dep.DepLocation = m.DepLocation ?? "";
+                        data.MemberCode = m.MemberCode ?? "";
+                        data.MemberName = m.MemberName ?? "";
+                        data.MobileNumber = m.MobileNumber ?? "";
+                        data.TotalPoint = m.TotalPoint;
+                        data.TotalPurchaseAmount = m.TotalPurchaseAmount;
                         context.SaveChanges();
-                        result.message = "Department has been updated successfully.";
+                        result.message = "Member has been updated successfully.";
                         result.result = "success";
-                        logger.Info("System user: " + user + " add update department with id no " + m.ID + ".");
                     }
                     else
                     {
