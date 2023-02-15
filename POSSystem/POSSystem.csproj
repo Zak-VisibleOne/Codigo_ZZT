@@ -191,7 +191,6 @@
     <Compile Include="Controllers\StockOpeningController.cs" />
     <Compile Include="Controllers\StockInoutController.cs" />
     <Compile Include="Controllers\PaymentReceiveController.cs" />
-    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\StockClassController.cs" />
     <Compile Include="Controllers\DiscountTypeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
@@ -2617,27 +2616,13 @@
     <Content Include="Views\Department\Script.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
     <Content Include="Views\Supplier\Script.cshtml" />
-    <Content Include="Views\SalePerson\Index.cshtml" />
-    <Content Include="Views\SalePerson\Script.cshtml" />
     <Content Include="Views\Stock\Index.cshtml" />
     <Content Include="Views\Stock\Script.cshtml" />
     <Content Include="Views\Purchase\Index.cshtml" />
     <Content Include="Views\Purchase\ModalPopup.cshtml" />
     <Content Include="Views\Purchase\Script.cshtml" />
-    <Content Include="Views\Location\Index.cshtml" />
-    <Content Include="Views\Location\Script.cshtml" />
-    <Content Include="Views\Currency\Index.cshtml" />
-    <Content Include="Views\Currency\Script.cshtml" />
     <Content Include="Views\StockClass\Index.cshtml" />
     <Content Include="Views\StockClass\Script.cshtml" />
-    <Content Include="Views\Company\Index.cshtml" />
-    <Content Include="Views\Company\Script.cshtml" />
-    <Content Include="Views\StockInout\Index.cshtml" />
-    <Content Include="Views\StockInout\Script.cshtml" />
-    <Content Include="Views\InvoiceType\Index.cshtml" />
-    <Content Include="Views\InvoiceType\Script.cshtml" />
-    <Content Include="Views\PurchaseOrder\Index.cshtml" />
-    <Content Include="Views\PurchaseOrder\Script.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
