@@ -1,0 +1,1 @@
+﻿select SupId as ID,SupName as [Name] from Supplier

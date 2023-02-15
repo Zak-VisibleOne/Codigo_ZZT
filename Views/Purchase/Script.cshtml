@@ -1,0 +1,636 @@
+﻿<script>
+    var dtPurchaseList;
+    var dtPurchaseDetail;
+    var dtStockList;
+    jQuery(document).ready(function () {
+        dtPurchaseList = $('#dtPurchaseList').dataTable({
+            lengthMenu: [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, 'All']],
+            columnDefs: [
+                {
+                    targets: [0], name: 'invoiceno', className: 'left', sWidth: '5%', orderable: false, render: function (data) {
+                        return '<span class="badge badge-pill badge-secondary edit" style="font-size: 13px;">' + data + '</span>';
+                    }
+                },
+                {
+                    targets: [1], name: 'supplier', className: 'left', orderable: false, sWidth: '5%',
+                },
+                {
+                    targets: [2], name: 'date', className: 'left', orderable: false, sWidth: '5%',
+                },
+                {
+                    targets: [3], name: 'amount', className: 'rightAmt', sWidth: '5%', orderable: false, render: function (data) {
+                        return '<span class="badge badge-pill badge-secondary edit" style="font-size: 13px;">' + data + '</span>';
+                    }
+                },
+                {
+                    targets: [4], name: 'action', className: 'left', sWidth: '5%', orderable: false,
+                    editor: { type: 'action', required: false, class: '' }, render: _RenderContentButton
+                },
+                {
+                    targets: [5], name: 'headerid', className: 'left', visible: false, sWidth: '0%',
+                }
+            ]
+        });
+        dtPurchaseList.on('draw.dt', function () {
+            $('#dtPurchaseList .tooltips').tooltip();
+        });
+        dtPurchaseList.on('dblclick', 'tr', function (e) {
+            var pos = dtPurchaseList.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtPurchaseList.fnGetData(pos);
+            $('#hidHeaderID').val(data[5]);
+            $('#method').val('edit');
+            $('.headerid').text(data[5]);
+            oneditPurchase(data[5]);
+        });
+        dtPurchaseList.on('click', '.edit', function (e) {
+            e.preventDefault();
+            var pos = dtPurchaseList.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtPurchaseList.fnGetData(pos);
+            $('#hidHeaderID').val(data[5]);
+            $('#method').val('edit');
+            $('.headerid').text(data[5]);
+            //$('.headertitlepage').text('Edit page.');
+            var id = data[5];
+            oneditPurchase(id);
+        });
+        dtPurchaseList.on('click', '.remove', function (e) {
+            e.preventDefault();
+            var pos = dtPurchaseList.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtPurchaseList.fnGetData(pos);
+            var id = data[5];
+            DeletePurchase(id);
+        });
+        dtPurchaseList.on('click', '.remove', function (e) {
+            e.preventDefault();
+            var pos = dtPurchaseList.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtPurchaseList.fnGetData(pos);
+            $('#hidHeaderID').val(data[5]);
+            var id = data[5];
+            if (id) {
+                swal({
+                    title: 'Are you sure?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger m-l-10',
+                    confirmButtonText: 'Yes'
+                }).then(function () {
+                    DeletePurchase(id);
+                })
+            }
+            else {
+                toastr.warning("There is no exit blog data for delete!.", "Warning");
+            }
+        });
+
+        dtPurchaseDetail = $('#dtPurchaseDetail').dataTable({
+            lengthMenu: [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, 'All']],
+            pageLength: 25,
+            //ordering: false,
+            bPaginate: false,
+            //"bLengthChange": false,
+            //bFilter: true,
+            searching: false,
+            //bInfo: false,
+            columnDefs: [
+                {
+                    targets: [0], name: 'srno', className: 'left', sWidth: '5%', orderable: false,
+                },
+                {
+                    targets: [1], name: 'code', className: 'left', sWidth: '5%', orderable: false, render: function (data, type, row, meta) {
+                        return '<span class="badge badge-pill badge-secondary edit" style="font-size: 13px;">' + data + '</span>';
+                    }
+                },
+                {
+                    targets: [2], name: 'description', className: 'left', sWidth: '10%', orderable: false,
+                },
+                {
+                    targets: [3], name: 'qty', className: 'rightAmt', sWidth: '5%', orderable: false,
+                },
+                {
+                    targets: [4], name: 'Purchaseprice', className: 'rightAmt', sWidth: '5%', orderable: false,
+                },
+                {
+                    targets: [5], name: 'amount', className: 'rightAmt', sWidth: '5%', orderable: false,
+                },
+                {
+                    targets: [6], name: 'action', className: 'center', sWidth: '5%', orderable: false
+                    , editor: { type: 'action', required: false, class: '' }, render: _RenderContentButton
+                },
+                {
+                    targets: [7], name: 'id', visible: false, sWidth: '0%',
+                },
+                {
+                    targets: [8], name: 'stockid', visible: false, sWidth: '0%',
+                },
+                {
+                    targets: [9], name: 'refheaderid', visible: false, sWidth: '0%',
+                }
+            ]
+        });
+        dtPurchaseDetail.on('click', '.edit', function (e) {
+            e.preventDefault();
+            var pos = dtPurchaseDetail.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtPurchaseDetail.fnGetData(pos);
+            $('#hidDetailID').val(data[7]);
+            $('#hidStockID').val(data[8]);
+            $('#txtCode').val(data[1]);
+            $('#txtCodeDesc').val(data[2]);
+            $('#txtQty').val(data[3]);
+            $('#txtPurchasePrice').val(data[4]);
+            $('#txtAmount').val(data[5]);
+            editPurchaseDetail();
+        });
+        dtPurchaseDetail.on('dblclick', 'tr', function (e) {
+            e.preventDefault();
+            var pos = dtPurchaseDetail.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtPurchaseDetail.fnGetData(pos);
+            $('#hidDetailID').val(data[7]);
+            $('#hidStockID').val(data[8]);
+            $('#txtCode').val(data[1]);
+            $('#txtCodeDesc').val(data[2]);
+            $('#txtQty').val(data[3]);
+            $('#txtPurchasePrice').val(data[4]);
+            $('#txtAmount').val(data[5]);
+            editPurchaseDetail();
+        });
+        dtPurchaseDetail.on('click', '.remove', function (e) {
+            e.preventDefault();
+            var pos = dtPurchaseDetail.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtPurchaseDetail.fnGetData(pos);
+            var id = data[7];
+            if (id) {
+                swal({
+                    title: 'Are you sure?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger m-l-10',
+                    confirmButtonText: 'Yes'
+                }).then(function () {
+                    DeletePurchaseDetail(id);
+                })
+            }
+            else {
+                toastr.info("No delete any data.", "Info");
+            }
+        });
+
+        dtStockList = $('#dtStockList').dataTable({
+            lengthMenu: [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, 'All']],
+            pageLength: 25,
+            //ordering: false,
+            columnDefs: [
+                {
+                    targets: [0], name: 'code', className: 'left', sWidth: '5%', orderable: false,
+                },
+                {
+                    targets: [1], name: 'stockdesc', className: 'left', sWidth: '10%', orderable: false, render: function (data, type, row, meta) {
+                        return '<span class="badge badge-pill badge-secondary edit" style="font-size: 13px;">' + data + '</span>';
+                    }
+                },
+                {
+                    targets: [2], name: 'Purchaseprice', className: 'rightAmt', sWidth: '5%', orderable: false,
+                },
+                {
+                    targets: [3], name: 'purchaseprice', className: 'rightAmt', sWidth: '5%', orderable: false,
+                },
+                {
+                    targets: [4], name: 'category', className: 'right', sWidth: '5%', orderable: false,
+                },
+                {
+                    targets: [5], name: 'action', className: 'center', sWidth: '5%', orderable: false
+                    , editor: { type: 'action', required: false, class: '' }, render: _RenderStockBtn
+                },
+                {
+                    targets: [6], name: 'id', visible: false, sWidth: '0%',
+                }
+            ]
+        });
+        dtStockList.on('click', '.select', function (e) {
+            e.preventDefault();
+            var pos = dtStockList.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtStockList.fnGetData(pos);
+            var Purchaseamt = data[2];
+            var id = data[6];
+            $('#hidDetailID').val(0);
+            $('#methodDetail').val('add');
+            SavePurchaseDetail(id, 1, Purchaseamt, Purchaseamt);
+        });
+
+        bindSupplierDDL();
+        //bindSalePersonDDL();
+        LoadPurchaseList();
+    });
+    function GenerateInvoiceNo() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                //$.blockUI();
+                return true;
+            },
+            url: '/Purchase/GenerateInvoice',
+            data: {
+            }, success: function (data) {
+                $('#txtInvoiceNo').val(data.InvoiceNo);
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+    function bindSupplierDDL() {
+        $.ajax({
+            type: "GET",
+            url: "/Purchase/getSupplier",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="-1">Select</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].ID + '">' + data[i].Name + '</option>';
+                }
+                $("#ddlSupplier").html(s);
+            }
+        });
+    }
+    function bindPurchasePersonDDL() {
+        $.ajax({
+            type: "GET",
+            url: "/Purchase/getPurchasePerson",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="-1">Select</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].ID + '">' + data[i].Name + '</option>';
+                }
+                $("#ddlPurchasePerson").html(s);
+            }
+        });
+    }
+    function onchangeSupplier() {
+        var data = GetSupplierByID();
+        $('#txtSupName').val(data.SupName);
+    }
+    function GetSupplierByID() {
+        var id = $('#ddlSupplier').val();
+        var request = $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                //$.blockUI();
+                return true;
+            },
+            url: '/Purchase/GetSupplierByID',
+            data: {
+                ID: id
+            }, success: function (data) {
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function LoadPurchaseList() {
+        var data = GetPurchaseList();
+        dtPurchaseList.api().clear().rows.add(data).draw();
+    }
+    function GetPurchaseList() {
+        var request = $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: "/Purchase/GetPurchaseList",
+            data: {
+            }, success: function (data) {
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function AddNewPurchase() {
+        //$('.header-title').text('Create new page.');
+        GenerateInvoiceNo();
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        $('#PurchaseDate').val(today);
+        $('#txtPaidAmount').text(0);
+        $('.headerid').text(0);
+        $('#method').val('add');
+        $('#ddlSupplier').val('');
+        //$('#txtSupName').val('');
+        $('#ddlPurchasePerson').val('');
+        $('#hidHeaderID').val(0);
+        $('#hidDetailID').val(0);
+        linedetaildata = [];
+        $('#dtPurchaseDetail').dataTable().fnClearTable();
+        $('.CB_LIST').hide();
+        $('.CB_FORM').show();
+    }
+    function ClosePurchase() {
+        $('#method').val('add');
+        $('#methodDetail').val('add');
+        $('#hidID').val(0);
+        $('#hidHeaderID').val(0);
+        $('#hidDetailID').val(0);
+        //$('#txtDocNo').val('');
+        $('#txtTotalAmount').val(0);
+        $('#txtDeposit').val(0);
+        $('#txtBalance').val(0);
+        $('#ddlSupplier').val('');
+        $('#ddlPurchasePerson').val('');
+        $('.CB_LIST').show();
+        $('.CB_FORM').hide();
+        LoadPurchaseList();
+    }
+    function savePurchaseHeader() {
+        var id = $('#hidHeaderID').val();
+        var date = $('#PurchaseDate').val();
+        var invno = $('#txtInvoiceNo').val();
+        var SupID = $('#ddlSupplier').val();
+        var salepersonid = $('#ddlSalePerson').val();
+        var amt = $('#txtTotalAmount').val();
+        var discount = $('#txtDiscount').val();
+        var paid = $('#txtPaidAmount').val();
+        var balance = $('#txtBalance').val();
+        var method = $('#method').val();
+        if (SupID == "-1") {
+            toastr.error("Please select supplier", "Info");
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "/Purchase/SavePurchaseHeader",
+            data: {
+                ID: id,
+                LocationID: 1,
+                InvoiceNo: invno,
+                PurchaseDate: date,
+                SupID: SupID,
+                SalePersonID: salepersonid,
+                TotalAmount: amt,
+                Discount: discount,
+                PaidAmount: paid,
+                Balance: balance,
+                Method: method
+            }, beforeSend: function () {
+                return true;
+            }, success: function (data) {
+                var res = data.result;
+                var ret = data.ret;
+                if (res.result == "success") {
+                    if (method == 'edit') {
+                        toastr.success(res.message, "Info");
+                    }
+                    else {
+                        var id = parseInt(ret.HeaderID);
+                        $('.headerid').text(id);
+                        $('#hidHeaderID').val(id);
+                        $('#method').val('edit');
+                        $('.headertitlepage').text('Edit Page');
+                        toastr.success(res.message, "Info");
+                    }
+                } else {
+                    toastr.info(res.message, "Info");
+                }
+            }
+        });
+    }
+    function oneditPurchase() {
+        $('.CB_LIST').hide();
+        $('.CB_FORM').show();
+
+        var data = GetPurchaseHeader();
+        RenderHeaderData(data);
+        bindPurchaseDetail();
+    }
+    function GetPurchaseHeader() {
+        var id = $('#hidHeaderID').val();
+        var request = $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                //$.blockUI();
+                return true;
+            },
+            url: '/Purchase/GetPurchaseHeader',
+            data: {
+                ID: id
+            }, success: function (data) {
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function RenderHeaderData(data) {
+        $('#txtInvoiceNo').val(data.InvoiceNo);
+        $('#PurchaseDate').val(data.PurchaseDate);
+        $('#ddlSupplier').val(data.SupID);
+        $('#ddlSalePerson').val(data.SalesPersonID);
+        $('#txtTotalAmount').val(data.TotalAmount);
+        $('#txtDiscount').val(data.Discount);
+        $('#txtPaidAmount').val(data.PaidAmount);
+        $('#txtBalance').val(data.Balance);
+    }
+    function bindPurchaseDetail() {
+        var data = GetPurchaseDetail();
+        dtPurchaseDetail.api().clear().rows.add(data).draw();
+    }
+    function GetPurchaseDetail() {
+        var refid = $('#hidHeaderID').val();
+        var request = $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: "/Purchase/GetPurchaseDetaiList",
+            data: {
+                HeaderID: refid
+            }, success: function (data) {
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function DeletePurchase(id) {
+        if (id) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Purchase/DeletePurchase',
+                data: {
+                    HeaderID: id
+                }, beforeSend: function () {
+                    return true;
+                }, success: function (data) {
+                    var res = data.result;
+                    if (res.result == "success") {
+                        swal(
+                            'Deleted!', 'Data has been deleted.', 'success'
+                        )
+                        LoadPurchaseList();
+                    } else {
+                        toastr.warning(res.message, "Error");
+                    }
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    show_ajax_error(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }
+    }
+    function DeletePurchaseDetail(id) {
+        if (id) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Purchase/DeletePurchaseDetail',
+                data: {
+                    ID: id,
+                }, beforeSend: function () {
+                    return true;
+                }, success: function (data) {
+                    var res = data.result;
+                    if (res.result == "success") {
+                        swal(
+                            'Deleted!', res.message, 'success'
+                        )
+                        bindPurchaseDetail();
+                        CalculateTotalAmount();
+                    } else {
+                        toastr.warning(res.message, "Error");
+                    }
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    show_ajax_error(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }
+    }
+    function AddStockItem() {
+        LoadStockList();
+        $('#StockListModel').modal('show');
+    }
+    function LoadStockList() {
+        var data = GetStockList();
+        dtStockList.api().clear().rows.add(data).draw();
+    }
+    function GetStockList() {
+        var request = $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            url: "/Purchase/GetStockList",
+            data: {
+            },
+            success: function (data) {
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function SavePurchaseDetail(stockid, qty, price, amt) {
+        var detailid = $('#hidDetailID').val();
+        var refid = $('#hidHeaderID').val();
+        var method = $('#methodDetail').val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "/Purchase/SavePurchaseDetail",
+            data: {
+                ID: detailid,
+                RefHeaderID: refid,
+                StockID: stockid,
+                Qty: qty,
+                PurchasePrice: price,
+                Amount: amt,
+                Method: method
+            }, beforeSend: function () {
+                return true;
+            }, success: function (data) {
+                var res = data.result;
+                if (res.result == "success") {
+                    toastr.success(res.message, "Info");
+                    bindPurchaseDetail();
+                    CalculateTotalAmount();
+                    $('#StockListModel').modal('hide');
+                }
+                else {
+                    toastr.warning(res.message, "Error");
+                }
+            }
+        });
+    }
+    function CalculateTotalAmount() {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "/Purchase/CalculateTotalAmount",
+            data: {
+                RefHeaderID: $('#hidHeaderID').val()
+            }, beforeSend: function () {
+                return true;
+            }, success: function (data) {
+                $('#txtTotalAmount').val(data.TotalAmount);
+                $('#txtBalance').val(data.Balance);
+            }
+        });
+    }
+    function discountChange() {
+        var subTotal = $('#txtSubTotal').val();
+        var discount = $('#txtDiscount').val();
+        var total = subTotal - discount;
+        $('#txtTotalAmount').val(total);
+    }
+    $('#txtDiscount').keyup(function () {
+        var total = $('#txtTotalAmount').val();
+        var discount = $('#txtDiscount').val();
+        var paid = $('#txtPaidAmount').val();
+        var num = parseInt(paid) || 0;
+        var balance = parseInt(total) - (parseInt(discount) + num);
+        $('#txtBalance').val(balance);
+    });
+    $('#txtPaidAmount').keyup(function () {
+        var total = $('#txtTotalAmount').val();
+        var discount = $('#txtDiscount').val();
+        var paid = $('#txtPaidAmount').val();
+        var num = parseInt(paid) || 0;
+        var balance = parseInt(total) - (parseInt(discount) + num);
+        $('#txtBalance').val(balance);
+    });
+    function editPurchaseDetail() {
+        $('#LineDetailModel').modal('show');
+    }
+    function saveLineDetail() {
+        var stockid = $('#hidStockID').val();
+        var qty = $('#txtQty').val();
+        var purprice = $('#txtPurchasePrice').val();
+        var amount = $('#txtAmount').val();
+        $('#methodDetail').val('edit');
+        SavePurchaseDetail(stockid, qty, purprice, amount);
+        $('#LineDetailModel').modal('hide');
+    }
+    $('#txtQty').keyup(function () {
+        totalAmount();
+    });
+    $('#txtPurchasePrice').keyup(function () {
+        totalAmount();
+    });
+    function totalAmount() {
+        var price = $('#txtPurchasePrice').val();
+        var qty = $('#txtQty').val();
+        var amt = price * qty;
+        $('#txtAmount').val(amt);
+    }
+</script>

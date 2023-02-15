@@ -1,0 +1,1 @@
+﻿select ID,SalePersonName as [Name] from SalePerson

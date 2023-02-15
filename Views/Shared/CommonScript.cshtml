@@ -1,0 +1,203 @@
+﻿<script>
+    var dtFAQTable;
+    var dtMediaListView;
+    jQuery(document).ready(function () {
+        dtMediaListView = $('#dtMediaListView').dataTable({
+            //scrollY: 200,
+            //information: true,
+            //scrollX: true,
+            lengthMenu: [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, 'All']],
+            columnDefs: [
+                {
+                    targets: [0], name: 'SrNo', className: 'center', sWidth: '3%',
+                },
+                {
+                    targets: [1], name: 'MediaUrl_enUS', className: 'center', sWidth: '10%', render: renderMediaImage
+                },
+                {
+                    targets: [2], name: 'MediaName_enUS', className: 'left', sWidth: '15%', orderable: false, render: function (data, type, row, meta) {
+                        return '<h5><span class="badge badge-light">' + data + '</span></h5>';
+                    }
+                },
+                {
+                    targets: [3], name: 'action', className: 'center', sWidth: '5%', orderable: false,
+                    editor: { type: 'action', required: false, class: '' }, render: _RenderMediaSetButton
+                },
+                {
+                    targets: [4], name: 'MediaUrl_enUS', visible: false, sWidth: '0%',
+                },
+                {
+                    targets: [5], name: 'ID', visible: false, sWidth: '0%',
+                }
+            ]
+        });
+        dtMediaListView.on('draw.dt', function () {
+            $('#dtMediaListView .tooltips').tooltip();
+        });
+        dtMediaListView.on('click', '.select', function (e) {
+            e.preventDefault();
+            var pos = dtMediaListView.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtMediaListView.fnGetData(pos);
+            var mediaID = data[5];
+            onClickSetImageFormMediaGallery(mediaID);
+        });
+        dtMediaListView.on('click', '.preview', function (e) {
+            e.preventDefault();
+            var pos = dtMediaListView.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtMediaListView.fnGetData(pos);
+            var img = data[4];
+            $("#imgPhotoPreview").attr('src', img);
+            var mediaName = data[2];
+            $('#lblPreviewPhoto').text(mediaName);
+            $('#PreviewPhotoModal').modal('show');
+        });
+        dtMediaListView.on('click', '.remove', function (e) {
+            e.preventDefault();
+            var pos = dtMediaListView.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtMediaListView.fnGetData(pos);
+            var id = data[5];
+            if (id) {
+                DeleteMediaListViewByID(id);
+            }
+            else {
+                toastr.warning("There is no data.", "Warning");
+            }
+        });
+    });
+    //for set image
+    function LoadMediaSetImageListView() {
+        var data = Get_MediaSetImageList();
+        dtMediaListView.api().clear().rows.add(data).draw();
+    }
+    function Get_MediaSetImageList() {
+        var request = $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            url: SITE_URL + "/Media/Get_MediaSetImageList",
+            data: {
+                //RowCount: $('#hidMediaRow').val()
+            },
+            success: function (data) {
+                //$.unblockUI();
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function DeleteMediaListViewByID(ID) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: SITE_URL + '/Media/DeleteMediaByID',
+            data: {
+                MediaID: ID
+            }, beforeSend: function () {
+                return true;
+            }, success: function (data) {
+                var res = data.result;
+                if (res.result == "success") {
+                    toastr.success('Media file deleted succefully.', "Success");
+                    LoadMediaSetImageListView();
+                } else {
+                    toastr.warning(res.message, "Error");
+                }
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+    function LoadTotal() {
+        $.ajax({
+            url: SITE_URL + "/SystemManager/SiteInfoList",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var data = item.Data;
+                    if (item.Name == 'TotalCourse') {
+                        $('#lblTotalCourse').text(data);
+                    }
+                    else if (item.Name == 'TotalStaff') {
+                        $('#lblTotalStaff').text(data);
+                    }
+                    else if (item.Name == 'TotalCat') {
+                        $('#lblTotalCat').text(data);
+                    }
+                    else if (item.Name == 'TotalDiscipline') {
+                        $('#lblTotalDiscipline').text(data);
+                    }
+                    else if (item.Name == 'TotalPosition') {
+                        $('#lblTotalPosition').text(data);
+                    }
+                    else if (item.Name == 'TotalResearchArea') {
+                        $('#lblTotalResearchArea').text(data);
+                    }
+                    else if (item.Name == 'TotalPublication') {
+                        $('#lblTotalPublication').text(data);
+                    }
+                    else if (item.Name == 'TotalDepartment') {
+                        $('#lblTotalDepartment').text(data);
+                    }
+                    else if (item.Name == 'TotalLevel') {
+                        $('#lblTotalLevel').text(data);
+                    }
+                    else if (item.Name == 'TotalSemester') {
+                        $('#lblTotalSemester').text(data);
+                    }
+                    else if (item.Name == 'TotalUser') {
+                        $('#lblUserCount').text(data);
+                    }
+                    else if (item.Name == 'TotalUserGroup') {
+                        $('#lblUserGroupCount').text(data);
+                    }
+                });
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    //Get approval
+    function GetApproval() {
+        var request = $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                //$.blockUI();
+                return true;
+            },
+            url: SITE_URL + "/systemmanager/GetApprovalSetting",
+            data: {
+
+            }, success: function (data) {
+                //$.unblockUI();
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                //$.unblockUI();
+                //show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function IsCheckPermission() {
+        var request = $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: SITE_URL + "/systemmanager/IsCheckPermission",
+            data: {
+
+            }, success: function (data) {
+            }, error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+</script>

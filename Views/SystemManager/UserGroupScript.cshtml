@@ -1,0 +1,337 @@
+﻿<script>
+    var dtUserGroup;
+    jQuery(document).ready(function () {
+        $('ul.navbar-nav > li').click(function (e) {
+            $('ul.navbar-nav > li')
+                .removeClass('active');
+            $(this).addClass('active');
+        });
+        dtUserGroup = $('#dtUserGroup').dataTable({
+            lengthMenu: [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, 'All']],
+            pageLength: 100,
+            columnDefs: [
+                {
+                    targets: [0], name: 'SrNo', className: 'center', sWidth: '5%', orderable: true,
+                },
+                {
+                    targets: [1], name: 'Code', className: 'center', sWidth: '20%', orderable: false, render: function (data, type, row, meta) {
+                        return '<span class="badge badge-pill badge-secondary edit" style="font-size: 13px;">' + data + '</span>';
+                    }
+                },
+                {
+                    targets: [2], name: 'Name', className: 'center', sWidth: '30%', orderable: false,
+                },
+                {
+                    targets: [3], name: 'action', className: 'center', sWidth: '10%', orderable: false, editor: { type: 'action', required: false, class: '' }, render: _RenderContentButton
+                },
+                {
+                    targets: [4], name: 'ID', className: 'center', sWidth: '10%', orderable: true,
+                },
+            ],
+            serverSide: true,
+            ajax: {
+                url: "/SystemManager/GetUserGroupListing",
+                type: "POST",
+                data: function (data) {
+                    data.order = data.order[0].dir;
+                    data.search = data.search.value;
+                }
+
+            },
+        });
+        dtUserGroup.on('draw.dt', function () {
+            $('#dtUserGroup .tooltips').tooltip();
+        });
+        dtUserGroup.on('click', '.edit', function (e) {
+            e.preventDefault();
+            var pos = dtUserGroup.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtUserGroup.fnGetData(pos);
+            $('#hidID').val(data[4]);
+            var approval = GetApproval();
+            if (approval != null) {
+                if (approval.AllowUpdateUserGroup) {
+                    getUserGroupbyID(data[4]);
+                }
+                else {
+                    toastr.error("System does not allow to edit user group.", "Warning");
+                }
+            }
+        });
+        dtUserGroup.on('dblclick', 'tr', function (e) {
+            e.preventDefault();
+            var pos = dtUserGroup.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtUserGroup.fnGetData(pos);
+            $('#hidID').val(data[4]);
+            var approval = GetApproval();
+            if (approval != null) {
+                if (approval.AllowUpdateUserGroup) {
+                    getUserGroupbyID(data[4]);
+                }
+                else {
+                    toastr.error("System does not allow to edit user group.", "Warning");
+                }
+            }
+        });
+        dtUserGroup.on('click', '.remove', function (e) {
+            e.preventDefault();
+            var pos = dtUserGroup.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtUserGroup.fnGetData(pos);
+            $('#hidID').val(data[4]);
+            var ID = $('#hidID').val();
+            if (ID) {
+                var approval = GetApproval();
+                if (approval != null) {
+                    if (approval.AllowDeleteUserGroup) {
+                        swal({
+                            title: 'Are you sure?',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonClass: 'btn btn-success',
+                            cancelButtonClass: 'btn btn-danger m-l-10',
+                            confirmButtonText: 'Yes'
+                        }).then(function () {
+                            DeleleUserGroup(ID);
+                            swal(
+                                'Deleted!', 'Data has been deleted.', 'success'
+                            )
+                        })
+                    }
+                    else {
+                        toastr.error("System does not allow to delete user group.", "Warning");
+                    }
+                }
+            }
+            else {
+                toastr.warning("There is no id for delete!.", "Warning");
+            }
+        });
+        bindUserGroupListing();
+        //LoadUserGroupTable();
+    });
+    $("#dtUserGroup tbody tr").on('click', function (event) {
+        $("#dtUserGroup tbody tr").removeClass('row_selected');
+        $(this).addClass('row_selected');
+    });
+    $('#dtUserGroup tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            dtUserGroup.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+    function bindUserGroupListing() {
+        var data = GetUserGroupListing();
+        dtUserGroup.api().clear().rows.add(data).draw();
+    }
+    function GetUserGroupListing() {
+        var request = $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: "/SystemManager/GetUserGroupListing",
+            data: {
+            }, success: function (data) {
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function SaveUserGroup() {
+        var res = validate();
+        if (res == false) {
+            return false;
+        }
+        var UserGroupObj = {
+            Id: $('#ID').val(),
+            GroupCode: $('#GroupCode').val(),
+            GroupName: $('#GroupName').val(),
+        };
+        $.ajax({
+            url: "/SystemManager/AddUserGroup",
+            data: JSON.stringify(UserGroupObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //toastr.success("Save user group successfully.", "Success");
+                swal(
+                    {
+                        title: 'Success',
+                        text: 'Save user group successfully.',
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger m-l-10'
+                    }
+                )
+                bindUserGroupListing();
+                $('#ModelUserGroup').modal('hide');
+            },
+            error: function (errormessage) {
+                toastr.success(errormessage.responseText, "error");
+            }
+        });
+    }
+    function getUserGroupbyID(userGroupID) {
+        //$('#UserName').css('border-color', 'lightgrey');
+        //$('#Email').css('border-color', 'lightgrey');
+        $.ajax({
+            url: "/SystemManager/GetUserGroupbyID/" + userGroupID,
+            typr: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                $('#ID').val(result.ID);
+                $('#GroupCode').val(result.GroupCode);
+                $("#GroupCode").attr("disabled", "disabled");
+                $('#GroupName').val(result.GroupName);
+                $('#ModelUserGroup').modal('show');
+                $('#btnUpdate').show();
+                $('#btnAdd').hide();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    function Update() {
+        var res = validate();
+        if (res == false) {
+            return false;
+        }
+        var UserGroupObj = {
+            Id: $('#ID').val(),
+            GroupCode: $('#GroupCode').val(),
+            GroupName: $('#GroupName').val(),
+        };
+        $.ajax({
+            url: "/SystemManager/UpdateUsergroup",
+            data: JSON.stringify(UserGroupObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //toastr.success("Update user group successfully.", "Success");
+                swal(
+                    {
+                        title: 'Success.',
+                        text: 'Update user group successfully.',
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger m-l-10'
+                    }
+                )
+                bindUserGroupListing();
+                $('#ModelUserGroup').modal('hide');
+                $('#ID').val("");
+                $('#UserName').val("");
+                $('#Email').val("");
+            },
+            error: function (errormessage) {
+                toastr.success(errormessage.responseText, "error");
+            }
+        });
+    }
+    function DeleleUserGroup(ID) {
+        $.ajax({
+            url: "/SystemManager/DeleteUserGroup/" + ID,
+            type: "POST",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                swal(
+                    'Deleted!',
+                    'Delete user group successfully.',
+                    'success'
+                )
+                bindUserGroupListing();
+            },
+            error: function (errormessage) {
+                toastr.success(errormessage.responseText, "error");
+            }
+        });
+    }
+    function onClick_AddNewUserGroup() {
+        var approval = GetApproval();
+        if (approval != null) {
+            if (approval.AllowCreateUserGroup) {
+                $('#ID').val("");
+                $('#GroupCode').val("");
+                $("#GroupCode").removeAttr("disabled");
+                $('#GroupName').val("");
+                $('#btnUpdate').hide();
+                $('#btnAdd').show();
+                $('#GroupName').css('border-color', 'lightgrey');
+                $('#ModelUserGroup').modal('show');
+            }
+            else {
+                toastr.error("System does not allow to edit user group.", "Warning");
+            }
+        }
+    }
+    //Valdidation using jquery
+    function validate() {
+        var isValid = true;
+        if ($('#GroupName').val() == "") {
+            $('#GroupName').css('border-color', 'Red');
+            isValid = false;
+        }
+        else {
+            $('#GroupName').css('border-color', 'lightgrey');
+        }
+        return isValid;
+    }
+    //multiple action
+    function DeleteMultipleUserGroup() {
+        var groupArr = new Array();
+        $('input:checkbox[name=chkTable]:checked').each(function () {
+            groupArr.push($(this).val())
+        })
+        if (groupArr.length == 0) {
+            toastr.error("Please select at least one!", "Info");
+            return;
+        }
+        var obj = {
+            Ids: groupArr
+        };
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger m-l-10',
+            confirmButtonText: 'Yes'
+        }).then(function () {
+            $.ajax({
+                url: '/SystemManager/DeleteMultipleUserGroup',
+                contentType: 'application/json; charset=utf-8',
+                type: 'POST',
+                data: JSON.stringify(obj),
+                cache: false,
+                success: function (data) {
+                    var res = data.result;
+                    if (res.result == "success") {
+                        toastr.success(res.message, "Info");
+                        bindUserGroupListing();
+                    }
+                    else {
+                        toastr.warning(res.message, "Error");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.warning(res.message, "Error");
+                }
+            });
+        })
+    }
+    $("#chkAll").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+</script>

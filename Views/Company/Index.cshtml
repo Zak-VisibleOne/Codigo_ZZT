@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Company";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <h4 class="mt-0 header-title titleCor">Name</h4>
+                <div class="form-group row">
+                    <label for="txtCompName" class="col-sm-2 col-form-label AlignRight">Name</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="txtCompName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtCompTitle" class="col-sm-2 col-form-label AlignRight">Title</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="txtCompTitle">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtCompPhone" class="col-sm-2 col-form-label AlignRight">Phone</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="txtCompPhone">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtCompAddress" class="col-sm-2 col-form-label AlignRight">Address</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="txtCompAddress">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtCompEmail" class="col-sm-2 col-form-label AlignRight">Email</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="txtCompEmail">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtCompWebsite" class="col-sm-2 col-form-label AlignRight">Website</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="txtCompWebsite">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtCompNote" class="col-sm-2 col-form-label AlignRight">Note</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="txtCompNote">
+                    </div>
+                </div>
+                <div>
+                    <button type="button" onclick="saveCompany()" class="btn btn-primary waves-effect waves-light">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Html.Partial("Script")
+}

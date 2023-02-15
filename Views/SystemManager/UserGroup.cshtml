@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "UserGroup";
+}
+<style>
+    .navbar-nav > .active > a {
+        background-color: gray;
+        border-color: gray;
+        color: white;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <h4 class="mt-0 header-title">User group</h4>
+                <div class="btn-toolbar p-3" role="toolbar" style="display:none;">
+                    <div class="btn-group mo-mb-2">
+                        <button type="button" class="btn btn-primary waves-light waves-effect" onclick="onClick_AddNewUserGroup()" data-toggle="tooltip" data-placement="top" title="Add new user group"><i class="fas fa-plus-circle"></i></button>
+                        <button type="button" class="btn btn-primary waves-light waves-effect"><i class="fa fa-exclamation-circle"></i></button>
+                        <button type="button" class="btn btn-primary waves-light waves-effect" onclick="DeleteMultipleUserGroup()" data-toggle="tooltip" data-placement="top" title="Delete multiple user group"><i class="far fa-trash-alt"></i></button>
+                    </div>
+                </div>
+                <table id="dtUserGroup" class="table table-striped table-bordered mb-0">
+                    <thead class="thead-ful">
+                        <tr>
+                            <th style="text-align:center;">SrNo</th>
+                            <th style="text-align:center;">Code</th>
+                            <th style="text-align:center;">Name</th>
+                            <th style="text-align:center;">Action</th>
+                            <th style="text-align:center;">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-6 col-md-3 m-t-30">
+    <div class="modal fade bs-example-modal-lg" id="ModelUserGroup" tabindex="-1" role="dialog" aria-labelledby="ModelUserGroupLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0" id="ModelUserGroupLabel">UserGroup</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="display:none;">
+                        <label for="ID">ID</label>
+                        <input type="text" class="form-control" id="ID" placeholder="Id" />
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="GroupCode">Code</label>
+                                <input type="text" class="form-control" id="GroupCode" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="GroupName">Name</label>
+                                <input type="text" class="form-control" id="GroupName" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAdd" onclick="SaveUserGroup()">Save</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Html.Partial("UserGroupScript")
+}

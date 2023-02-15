@@ -1,0 +1,544 @@
+﻿<script>
+    var userPermissionsCount = 13;
+    //var SERVER_URL = SITE_URL + '//SystemManager';
+    var DeletedStatus = false;
+    $('#btnNewUser').prop('disabled', true);
+    // $('#btnUpdateUser').prop('disabled', true);
+    var dtUser;
+    jQuery(document).ready(function () {
+        $('ul.navbar-nav > li')
+            .click(function (e) {
+                $('ul.navbar-nav > li')
+                    .removeClass('active');
+                $(this).addClass('active');
+            });
+        dtUser = $('#dtUser').dataTable({
+            lengthMenu: [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, 'All']],
+            pageLength: 100,
+            columnDefs: [
+                {
+                    targets: [0], name: 'SrNo', className: 'center', sWidth: '5%', orderable: true,
+                },
+                {
+                    targets: [1], name: 'ImageUrl', className: 'center', sWidth: '10%', render: renderImgUser
+                },
+                {
+                    targets: [2], name: 'Code', className: 'center', sWidth: '10%', orderable: false, render: function (data, type, row, meta) {
+                        return '<span class="badge badge-pill badge-secondary edit" style="font-size: 13px;">' + data + '</span>';
+                    }
+                },
+                {
+                    targets: [3], name: 'Name', className: 'center', sWidth: '20%', orderable: false,
+                },
+                {
+                    targets: [4], name: 'Group', className: 'center', sWidth: '10%', orderable: false,
+                },
+                {
+                    targets: [5], name: 'Status', className: 'center', sWidth: '10%', orderable: false, render: function (data, type, row, meta) {
+                        var checked = "";
+                        if (!data) {
+                            checked = "checked";
+                        }
+                        var id = row[7];
+                        return '<span class="status"><input type="checkbox" id="switchActiveUser' + id + '" ' + checked + ' switch="success" /><label for="switchActiveUser' + id + '" data-on-label="Yes" data-off-label="No"></label></span>';
+                    }
+                },
+                {
+                    targets: [6], name: 'action', className: 'center', sWidth: '5%', orderable: false, editor: { type: 'action', required: false, class: '' }, render: _RenderContentButton
+                },
+                {
+                    targets: [7], name: 'ID', className: 'center', sWidth: '5%', orderable: true,
+                }
+            ],
+            serverSide: true,
+            ajax: {
+                url: "/SystemManager/GetUserListing",
+                type: "POST",
+                data: function (data) {
+                    data.order = data.order[0].dir;
+                    data.search = data.search.value;
+                    data.Code = $('#hideUserCodeID').val()
+                }
+            },
+        });
+        dtUser.on('draw.dt', function () {
+            $('#dtUser .tooltips').tooltip();
+        });
+        dtUser.on('click', '.edit', function (e) {
+            e.preventDefault();
+            var pos = dtUser.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtUser.fnGetData(pos);
+            $('#selectedUserID').val(data[7]);
+            $('#hidID').val(data[7]);
+            var approval = GetApproval();
+            if (approval != null) {
+                if (approval.AllowUpdateUser) {
+                    getbyID(data[7]);
+                }
+                else {
+                    toastr.error("System does not allow to edit user.", "Warning");
+                }
+            }
+        });
+        dtUser.on('click', '.status', function (e) {
+            e.preventDefault();
+            var pos = dtUser.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtUser.fnGetData(pos);
+            $('#selectedUserID').val(data[7]);
+            $('#hidID').val(data[7]);
+            //var approval = GetUserDataApproval('Update');
+            //if (approval.result == "success") {
+            $('#switchActiveUser' + data[7]).prop('checked', data[6]);
+            activeStatusChanged(data[7], data[5])
+            //}
+            //else {
+            //    toastr.error("System does not allow to edit!", "Warning");
+            //}
+        });
+        dtUser.on('dblclick', 'tr', function (e) {
+            e.preventDefault();
+            var pos = dtUser.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtUser.fnGetData(pos);
+            $('#selectedUserID').val(data[7]);
+            $('#hidID').val(data[7]);
+            var approval = GetApproval();
+            if (approval != null) {
+                if (approval.AllowCreateUser) {
+                    getbyID(data[7]);
+                }
+                else {
+                    toastr.error("System does not allow to edit user.", "Warning");
+                }
+            }
+        });
+        dtUser.on('click', '.remove', function (e) {
+            e.preventDefault();
+            var pos = dtUser.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtUser.fnGetData(pos);
+            $('#hidID').val(data[7]);
+            var UserID = $('#hidID').val();
+            if (UserID) {
+                var approval = GetApproval();
+                if (approval != null) {
+                    if (approval.AllowUpdateUser) {
+                        swal({
+                            title: 'Are you sure?',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonClass: 'btn btn-success',
+                            cancelButtonClass: 'btn btn-danger m-l-10',
+                            confirmButtonText: 'Yes'
+                        }).then(function () {
+                            DeleleUserData(UserID);
+                            swal(
+                                'Deleted!', 'Data has been deleted.', 'success'
+                            )
+                        }, function (dismiss) {
+                            if (dismiss == 'cancel') {
+
+                            }
+                        })
+                    }
+                    else {
+                        toastr.error("System does not allow to edit user.", "Warning");
+                    }
+                }
+            }
+            else {
+                toastr.warning("There is no id for delete!.", "Warning");
+            }
+        });
+        bindUserListing();
+        //bindUserGroup();
+        bindSearchUserGroup();
+    });
+    $("#dtUser tbody tr").on('click', function (event) {
+        $("#dtUser tbody tr").removeClass('row_selected');
+        $(this).addClass('row_selected');
+    });
+    $('#dtUser tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            dtUser.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+    function activeStatusChanged(id, status) {
+        swal({
+            title: 'Are you sure you want to change?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger m-l-10',
+            confirmButtonText: 'Yes'
+        }).then(function () {
+            UpdateStatusComponent(status);
+        }, function (dismiss) {
+            if (dismiss == 'cancel') {
+                $('#switchActiveUser' + id).prop('checked', true);
+            }
+        });
+    }
+    function UpdateStatusComponent(status) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "/SystemManager/UpdateStatusComponent",
+            data: {
+                UserID: $('#selectedUserID').val(),
+                Status: status
+            }, beforeSend: function () {
+                return true;
+            }, success: function (data) {
+                if (data.result == "success") {
+                    toastr.success(data.message, "Success");
+                } else {
+                    toastr.warning(data.message, "Error");
+                }
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+    function bindSearchUserGroup() {
+        $.ajax({
+            type: "GET",
+            url: "/SystemManager/getUserGroup",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="">select user group</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].Code + '">' + data[i].Name + '</option>';
+                }
+                $("#ddlUserGroup").html(s);
+                $("#GroupUser").html(s);
+            }
+        });
+    }
+    $("#ddlUserGroup").change(function () {
+        var code = this.value;
+        $('#hidID').val(code);
+        $('#hideUserCodeID').val(code);
+        bindUserListing();
+    });
+    function bindUserListing() {
+        $('#hidID').val("");
+        var data = GetUserListing();
+        dtUser.api().clear().rows.add(data).draw();
+    }
+    function GetUserListing() {
+        var request = $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: "/SystemManager/GetUserListing",
+            data: {
+                Code: $('#hidID').val()
+            }, success: function (data) {
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function matchComfirmPassword() {
+        var password = $('#txtUserPassword').val();
+        var confirmPwd = $('#txtUserConfirmPassword').val();
+        if (password == confirmPwd) {
+            $('#confirmMsg').text("");
+            $('#useSaveMsg').text("");
+            $('#btnNewUser').prop('disabled', false);
+            //$('#btnUpdateUser').prop('disabled', false);
+        } else {
+            $('#useSaveMsg').text("Password and confirm password are not match. ");
+            $('#confirmMsg').text("Password and confirm password are not match. ");
+            $('#useSaveMsg').addClass('confirmPwd');
+            $('#confirmMsg').addClass('confirmPwd');
+            $('#btnNewUser').prop('disabled', true);
+            //$('#btnUpdateUser').prop('disabled', true);
+        }
+    }
+    function checkPassword() {
+        let timeout;
+        var password = $('#txtUserPassword').val();
+        let message = $('#passwordDesc').val();
+        let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
+        let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
+        if (strongPassword.test(password)) {
+            matchComfirmPassword();
+            $('#passwordDesc').text('');
+            //$('#btnNewUser').prop('disabled', false);
+            //$('#btnUpdateUser').prop('disabled', false);
+        } else if (mediumPassword.test(password)) {
+            matchComfirmPassword();
+            $('#passwordDesc').addClass('passwordStrong');
+            $('#passwordDesc').text('Fair password');
+            //$('#btnNewUser').prop('disabled', false);
+            //$('#btnUpdateUser').prop('disabled', false);
+        } else {
+            $('#passwordDesc').addClass('passwordWeak');
+            $('#passwordDesc').text('Weak password!!! password contains characters, numbers, signs . ');
+            $('#btnNewUser').prop('disabled', true);
+            //$('#btnUpdateUser').prop('disabled', true);
+        }
+    }
+    function onclickSaveUser() {
+        var res = validate();
+        if (res == false) {
+            return false;
+        }
+        //for page
+        var userObj = {
+            id: $('#ID').val(),
+            UserCode: $('#UserCode').val(),
+            UserName: $('#UserName').val(),
+            //UserGroupCode: $('#Usergroup').select2('val'),
+            UserGroupCode: $('#GroupUser').val(),
+            Email: $('#Email').val(),
+            Password: $('#txtUserPassword').val(),
+            ImageUrl: $('#txtUser_ImageUrl').val(),
+        };
+        $.ajax({
+            url: "/SystemManager/SaveUser",
+            data: JSON.stringify(userObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //toastr.success("Add new user successfully.", "Success");
+                swal(
+                    {
+                        title: 'Success',
+                        text: 'Add new user successfully.',
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger m-l-10'
+                    }
+                )
+                bindUserListing();
+                $('#UserModal').modal('hide');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    function getbyID(userID) {
+        $('#UserCode').css('border-color', 'lightgrey');
+        $('#UserName').css('border-color', 'lightgrey');
+        $('#Email').css('border-color', 'lightgrey');
+        $.ajax({
+            url: "/SystemManager/getUserbyID/" + userID,
+            typr: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                $('.divPassword').hide();
+                $('#ID').val(result.Id);
+                $('#UserCode').val(result.UserCode);
+                $("#UserCode").attr("disabled", "disabled");
+                $('#UserName').val(result.UserName);
+                $('#Email').val(result.Email);
+                $("#img_UserImage").attr('src', result.ImageUrl);
+                $('#txtUser_ImageUrl').val(result.ImageUrl);
+                $('#txtLoginLimit').val(result.IsLoginLimit);
+                if (result.DeletedStatus) {
+                    $('#switchActiveUser').prop('checked', false);
+                }
+                else {
+                    $('#switchActiveUser').prop('checked', true);
+                }
+                //bindUserGroup();
+                //$('#Usergroup').select2('val', result.UserGroupCode);
+                $('#GroupUser').val(result.UserGroupCode);
+                $('#UserModal').modal('show');
+                $('#btnUpdateUser').show();
+                $('.modal-title').text('Edit User');
+                $('#btnNewUser').hide();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+        return false;
+    }
+    function ShowSetImageUserProfile() {
+        $("#hidSelectContentName").val('UserProfile');
+        ShowSetImage();
+    }
+    function UpdateUser() {
+        var res = validate();
+        //console.log(res)
+        if (res == false) {
+            return false;
+        }
+        if ($('#switchActiveUser').is(':checked')) {
+            DeletedStatus = false;
+        }
+        else {
+            DeletedStatus = true;
+        }
+        var userObj = {
+            Id: $('#ID').val(),
+            UserCode: $('#UserCode').val(),
+            UserName: $('#UserName').val(),
+            //UserGroupCode: $('#Usergroup').select2('val'),
+            UserGroupCode: $('#GroupUser').val(),
+            Email: $('#Email').val(),
+            ImageUrl: $('#txtUser_ImageUrl').val(),
+            IsLoginLimit: $('#txtLoginLimit').val(),
+            DeletedStatus: DeletedStatus
+        };
+        $.ajax({
+            url: "/SystemManager/UpdateUser",
+            data: JSON.stringify(userObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //toastr.success("Update user successfully.", "Success");
+                swal(
+                    {
+                        title: 'Success.',
+                        text: 'Update user successfully.',
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger m-l-10'
+                    }
+                )
+                $('#hidID').val("");
+                bindUserListing();
+                $('#UserModal').modal('hide');
+                $('#ID').val("");
+                $('#UserName').val("");
+                $('#Email').val("");
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    function DeleleUserData(ID) {
+        $.ajax({
+            url: "/SystemManager/DeleteUser/" + ID,
+            type: "POST",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                //toastr.success("Delete user successfully.", "Success");
+                swal(
+                    'Deleted!',
+                    'Delete user successfully.',
+                    'success'
+                )
+                bindUserListing();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    function onclickNewUserAdd() {
+        var approval = GetApproval();
+        if (approval != null) {
+            if (approval.AllowCreateUser) {
+                $('#ID').val("");
+                $('.divPassword').show();
+                $('#UserCode').val("");
+                $("#UserCode").removeAttr("disabled");
+                $('#UserName').val("");
+                $('#Email').val("");
+                $('#txtUser_ImageUrl').val("");
+                $('#btnUpdateUser').hide();
+                $('#btnNewUser').show();
+                $('.modal-title').text('Add User');
+                $('#UserCode').css('border-color', 'lightgrey');
+                $('#UserName').css('border-color', 'lightgrey');
+                $('#Email').css('border-color', 'lightgrey');
+                $('#UserModal').modal('show');
+            }
+            else {
+                toastr.error("System does not allow to edit user group.", "Warning");
+            }
+        }
+    }
+    function validate() {
+        var isValid = true;
+        if ($('#UserName').val() == "") {
+            $('#UserName').css('border-color', 'Red');
+            isValid = false;
+        }
+        else {
+            $('#UserName').css('border-color', 'lightgrey');
+        }
+        if ($('#Email').val().trim() == "") {
+            $('#Email').css('border-color', 'Red');
+            isValid = false;
+        }
+        else {
+            $('#Email').css('border-color', 'lightgrey');
+        }
+        return isValid;
+    }
+    function _RenderStautsUser(data, type, row, meta) {
+        return '<div style="text-align: center;display: flex;justify-content: center;" >'
+            + '<span class="mdi mdi-arrow-right-drop-circle text-danger mt-1"></span>'
+            + '</div>';
+    }
+    function renderImgUser(data, type, row, meta) {
+        return '<div style="width: 100px; margin: 0 auto;"><img src = "' + data + '" alt = "image" class="img-thumbnail edit" alt = "100x100" width = "100%" height="100%" data-holder-rendered="true" /></div>'
+    }
+    //multiple action
+    function DeleteMultipleUser() {
+        var userArr = new Array();
+        $('input:checkbox[name=chkTable]:checked').each(function () {
+            userArr.push($(this).val())
+        })
+        if (userArr.length == 0) {
+            toastr.error("Please select at least one!", "Info");
+            return;
+        }
+        var obj = {
+            Ids: userArr
+        };
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger m-l-10',
+            confirmButtonText: 'Yes'
+        }).then(function () {
+            $.ajax({
+                url: '/SystemManager/DeleteMultipleUser',
+                contentType: 'application/json; charset=utf-8',
+                type: 'POST',
+                data: JSON.stringify(obj),
+                cache: false,
+                success: function (data) {
+                    var res = data.result;
+                    if (res.result == "success") {
+                        toastr.success(res.message, "Info");
+                        bindUserListing();
+                    }
+                    else {
+                        toastr.warning(res.message, "Error");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.warning(res.message, "Error");
+                }
+            });
+        })
+    }
+    $("#chkAllUser").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+</script>

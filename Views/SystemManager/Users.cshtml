@@ -1,0 +1,238 @@
+﻿@{
+    ViewBag.Title = "User info";
+}
+<style>
+    .center {
+        text-align: center;
+    }
+
+    .passwordStrong {
+        color: green;
+    }
+
+    .passwordWeak {
+        color: red;
+    }
+
+    .confirmPwd {
+        color: red;
+    }
+
+    .navbar-nav li {
+        margin-top: 1em;
+    }
+
+    .navbar-nav > .active > a {
+        background-color: gray;
+        border-color: gray;
+        color: white;
+    }
+
+    .rowFlex {
+        display: flex;
+    }
+
+    .twoFactorLink {
+        padding: 0.8em;
+        background-color: darkslateblue;
+        color: white;
+        border-radius: 0.5em;
+    }
+
+        .twoFactorLink .active {
+            color: white;
+        }
+
+    a:hover {
+        color: white;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <h4 class="mt-0 header-title">User Listing</h4>
+                <input type="hidden" id="selectedUserID" />
+                <div class="form-group row" style="display:flex">
+                    <label for="ddlUserGroup" class="col-sm-2 col-form-label" style="text-align:right;">UserGroup</label>
+                    <div class="col-sm-4">
+                        <select class="custom-select" id="ddlUserGroup" name="ddlUserGroup"></select>
+                    </div>
+                </div>
+                <input id="hideUserCodeID" value="0" hidden />
+                <div class="button-items" style="display:none;">
+                    <button type="button" class="btn btn-outline-dark waves-effect waves-light" onclick="onclickNewUserAdd()"><i class="fa fa-plus"></i> Add</button>
+                </div>
+                <br />
+                <div class="table-responsive">
+                    <table id="dtUser" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead class="thead-ful">
+                            <tr>
+                                <th style="text-align:center;">SrNo</th>
+                                <th style="text-align:center;">Photo</th>
+                                <th style="text-align:center;">Code</th>
+                                <th style="text-align:center;">Name</th>
+                                <th style="text-align:center;">Group</th>
+                                <th style="text-align:center;">Active</th>
+                                <th style="text-align:center;">Action</th>
+                                <th style="text-align:center;">ID</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-lg" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="userModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="userModelLabel">Addnew</h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card m-b-30">
+                            <div class="card-body">
+                                <div class="">
+                                    <img id="img_UserImage" alt="image" class="img-thumbnail" src="/images/users/user-4.jpg" onclick="ShowSetImageUserProfile()" data-holder-rendered="true" />
+                                </div>
+                                <button class="btn btn-outline-dark btn-sm btn-block waves-effect tooltips" title="Edit Image" type="button" data-toggle="collapse" data-target="#collapseUserProfileImage"
+                                        aria-expanded="false" aria-controls="collapseUserProfileImage" onclick="ShowSetImageUserProfile()">
+                                    <i class="fa fa-edit"></i> EditImage
+                                </button>
+                                <div class="collapse" id="collapseUserProfileImage">
+                                    <div class="form-group">
+                                        <label>ImageUrl</label>
+                                        <input type="text" id="txtUser_ImageUrl" class="form-control form-control-sm" style="font-size: 10px;" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="switchActiveUser" class="col-sm-4 col-form-label">Active User</label>
+                                <div class="col-sm-8">
+                                    <input type="checkbox" id="switchActiveUser" switch="success" checked />
+                                    <label for="switchActiveUser" data-on-label="Yes" data-off-label="No"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group" style="display:none;">
+                            <label for="ID">ID</label>
+                            <input type="text" class="form-control" id="ID" placeholder="Id" />
+                        </div>
+                        <div class="form-group row">
+                            <label for="UserCode" class="col-sm-2 col-form-label">Code</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" id="UserCode">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="UserName" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" id="UserName">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Email" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" id="Email">
+                            </div>
+                        </div>
+                        <div class="form-group row divPassword">
+                            <label for="txtUserPassword" class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="password" id="txtUserPassword" onchange="checkPassword()">
+                                <span id="passwordDesc"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row divPassword">
+                            <label for="txtUserConfirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="password" id="txtUserConfirmPassword" onchange="matchComfirmPassword()">
+                                <span id="confirmMsg"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="GroupUser" class="col-sm-2 col-form-label">User Group</label>
+                            <div class="col-sm-8">
+                                <select class="custom-select GroupUser" id="GroupUser" name="GroupUser"></select>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="display:none;">
+                            <label for="txtLoginLimit" class="col-sm-2 col-form-label">timeout minutes</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="number" value="1" id="txtLoginLimit">
+                            </div>
+                        </div>
+                        <hr />
+                        <!-- Nav tabs -->
+                        <div style="display:none;">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item active">
+                                    <a class="nav-link" data-toggle="tab" href="#UserPassword" role="tab">Password</a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active p-3" id="UserPassword" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="p-3">
+                                            <h4 class="text-muted font-18 m-b-5 text-center">ChangePassword</h4>
+                                            <div class="form-group" style="display:none;">
+                                                <label for="useremail">UserID</label>
+                                                <input type="hidden" name="userId" value="@Session["User"]" />
+                                                <input type="text" class="form-control" id="userId" disabled>
+                                            </div>
+                                            <div class="form-group" style="display:none;">
+                                                <label for="username">UserName</label>
+                                                <input type="hidden" name="username" value="@Session["Uname"]" />
+                                                <input type="text" class="form-control" id="username" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="useremail">OldPassword</label>
+                                                <input type="password" class="form-control" placeholder="Enter Old Password" name="oldPassword" id="oldPassword">
+                                                <label id="lbloldpassword" style="color: #d2616a;"></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="username">NewPassword</label>
+                                                <input type="password" class="form-control" placeholder="Enter New Password" name="newPassword" id="newPassword">
+                                                <label id="lblnewpassword" style="color: #d2616a;"></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="userpassword">Comfirm Password</label>
+                                                <input type="password" class="form-control" placeholder="Enter Comfirm Password" name="confirmPassword" id="confirmPassword">
+                                                <label id="lblcomfirmpassword" style="color: #d2616a;"></label>
+                                            </div>
+                                            <div class="form-group row m-t-20">
+                                                <div class="col-12 text-right">
+                                                    <input type='button' onclick="onClick_UpdatePassword()" class="btn btn-primary waves-effect waves-light" value='Save' id='updatePasswordButton'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <span id="useSaveMsg"></span>
+                <button type="button" class="btn btn-primary" id="btnNewUser" onclick="onclickSaveUser()"> Save</button>
+                <button type="button" class="btn btn-primary" id="btnUpdateUser" onclick="UpdateUser()"> Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Html.Partial("UsersScript");
+    @Html.Partial("TwoFactorScript");
+}

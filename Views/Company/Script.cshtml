@@ -1,0 +1,67 @@
+﻿<script>
+    jQuery(document).ready(function () {
+        var data = GetCompanyData();
+        $('#txtCompName').val(data.Name);
+        $('#txtCompTitle').val(data.Title);
+        $('#txtCompPhone').val(data.Phone);
+        $('#txtCompAddress').val(data.Address);
+        $('#txtCompEmail').val(data.Email);
+        $('#txtCompWebsite').val(data.Website);
+        $('#txtCompNote').val(data.Note);
+        $('#txtCompImageUrl').val(data.ImageUrl);
+    });
+    function GetCompanyData(id) {
+        var request = $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: SITE_URL + '/Company/GetCompanyData',
+            data: {
+                ID: id
+            }, success: function (data) {
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function saveCompany() {
+        var id = $('#hidID').val();
+        var compname = $('#txtCompName').val();
+        var title = $('#txtCompTitle').val();
+        var phone = $('#txtCompPhone').val();
+        var address = $('#txtCompAddress').val();
+        var email = $('#txtCompEmail').val();
+        var website = $('#txtCompWebsite').val();
+        var note = $('#txtCompNote').val();
+        var imgurl = $('#txtCompImageUrl').val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: SITE_URL + "/Company/SaveUpdateCompany",
+            data: {
+                ID: id,
+                Name: compname,
+                Title: title,
+                Phone: phone,
+                Address: address,
+                Email: email,
+                Website: website,
+                Note: note,
+                ImageUrl: imgurl
+            }, success: function (data) {
+                var res = data.result;
+                if (res.result == "success") {
+                    toastr.success(res.message, "Info");
+                }
+                else {
+                    toastr.warning(res.message, "Error");
+                }
+            }
+        });
+    }
+</script>

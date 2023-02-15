@@ -1,0 +1,495 @@
+﻿<script>
+    //var SERVER_URL = SITE_URL + '//SystemManager';
+    function getUserList() {
+        $.ajax({
+            type: "GET",
+            url: "/SystemManager/getUsersList",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="-1">select user</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].ID + '">' + data[i].Name + '</option>';
+                }
+                $("#ddlPerUser").html(s);
+            }
+        });
+    }
+    $('.perUser').change(function () {
+        var pid = $(this).val();
+        //alert(pid);
+        if (pid) {
+            onChangeUser();
+        }
+    });
+    function onChangeUser() {
+        var id = $('#ddlPerUser').val();
+        if (id > -1) {
+            getbyID(id);
+            //GetCoursePermissionData();
+        }
+    }
+    function getbyID(userID) {
+        $.ajax({
+            url: "/SystemManager/getUserPermissionbyID/" + userID,
+            typr: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.result == "success") {
+                    var per = data.data;
+                    if (per.AllowCreateCourse) {
+                        $('#switchAllowCreateCourse').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreateCourse').prop('checked', false);
+                    }
+                    if (per.AllowUpdateCourse) {
+                        $('#switchAllowUpdateCourse').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdateCourse').prop('checked', false);
+                    }
+                    if (per.AllowDeleteCourse) {
+                        $('#switchAllowDeleteCourse').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeleteCourse').prop('checked', false);
+                    }
+                    if (per.AllowCreateDiscipline) {
+                        $('#switchAllowCreateDiscipline').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreateDiscipline').prop('checked', false);
+                    }
+                    if (per.AllowUpdateDiscipline) {
+                        $('#switchAllowUpdateDiscipline').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdateDiscipline').prop('checked', false);
+                    }
+                    if (per.AllowDeleteDiscipline) {
+                        $('#switchAllowDeleteDiscipline').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeleteDiscipline').prop('checked', false);
+                    }
+                    if (per.AllowCreateLevel) {
+                        $('#switchAllowCreateLevel').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreateLevel').prop('checked', false);
+                    }
+                    if (per.AllowUpdateLevel) {
+                        $('#switchAllowUpdateLevel').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdateLevel').prop('checked', false);
+                    }
+                    if (per.AllowDeleteLevel) {
+                        $('#switchAllowDeleteLevel').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeleteLevel').prop('checked', false);
+                    }
+                    if (per.AllowCreateDepartment) {
+                        $('#switchAllowCreateDept').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreateDept').prop('checked', false);
+                    }
+                    if (per.AllowUpdateDepartment) {
+                        $('#switchAllowUpdateDept').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdateDept').prop('checked', false);
+                    }
+                    if (per.AllowDeleteDepartment) {
+                        $('#switchAllowDeleteDept').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeleteDept').prop('checked', false);
+                    }
+                    if (per.AllowCreateCategory) {
+                        $('#switchAllowCreateCategory').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreateCategory').prop('checked', false);
+                    }
+                    if (per.AllowUpdateCategory) {
+                        $('#switchAllowUpdateCategory').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdateCategory').prop('checked', false);
+                    }
+                    if (per.AllowDeleteCategory) {
+                        $('#switchAllowDeleteCategory').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeleteCategory').prop('checked', false);
+                    }
+                    if (per.AllowCreateSemester) {
+                        $('#switchAllowCreateSemester').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreateSemester').prop('checked', false);
+                    }
+                    if (per.AllowUpdateSemester) {
+                        $('#switchAllowUpdateSemester').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdateSemester').prop('checked', false);
+                    }
+                    if (per.AllowDeleteSemester) {
+                        $('#switchAllowDeleteSemester').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeleteSemester').prop('checked', false);
+                    }
+                    if (per.AllowCreatePublication) {
+                        $('#switchAllowCreatePublication').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreatePublication').prop('checked', false);
+                    }
+                    if (per.AllowUpdatePublication) {
+                        $('#switchAllowUpdatePublication').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdatePublication').prop('checked', false);
+                    }
+                    if (per.AllowDeletePublication) {
+                        $('#switchAllowDeletePublication').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeletePublication').prop('checked', false);
+                    }
+                    if (per.AllowCreateStaffView) {
+                        $('#switchAllowCreateStaffView').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreateStaffView').prop('checked', false);
+                    }
+                    if (per.AllowUpdateStaffView) {
+                        $('#switchAllowUpdateStaffView').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdateStaffView').prop('checked', false);
+                    }
+                    if (per.AllowDeleteStaffView) {
+                        $('#switchAllowDeleteStaffView').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeleteStaffView').prop('checked', false);
+                    }
+                    if (per.AllowCreatePosition) {
+                        $('#switchAllowCreatePosition').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreatePosition').prop('checked', false);
+                    }
+                    if (per.AllowUpdatePosition) {
+                        $('#switchAllowUpdatePosition').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdatePosition').prop('checked', false);
+                    }
+                    if (per.AllowDeletePosition) {
+                        $('#switchAllowDeletePosition').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeletePosition').prop('checked', false);
+                    }
+                    if (per.AllowCreateUser) {
+                        $('#switchAllowCreateUser').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreateUser').prop('checked', false);
+                    }
+                    if (per.AllowUpdateUser) {
+                        $('#switchAllowUpdateUser').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdateUser').prop('checked', false);
+                    }
+                    if (per.AllowDeleteUser) {
+                        $('#switchAllowDeleteUser').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeleteUser').prop('checked', false);
+                    }
+                    if (per.AllowCreateUserGroup) {
+                        $('#switchAllowCreateUserGroup').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowCreateUserGroup').prop('checked', false);
+                    }
+                    if (per.AllowUpdateUserGroup) {
+                        $('#switchAllowUpdateUserGroup').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowUpdateUserGroup').prop('checked', false);
+                    }
+                    if (per.AllowDeleteUserGroup) {
+                        $('#switchAllowDeleteUserGroup').prop('checked', true);
+                    }
+                    else {
+                        $('#switchAllowDeleteUserGroup').prop('checked', false);
+                    }
+                }
+                else {
+                    $('#switchAllowCreateCourse').prop('checked', false);
+                    $('#switchAllowUpdateCourse').prop('checked', false);
+                    $('#switchAllowDeleteCourse').prop('checked', false);
+                    $('#switchAllowCreateDiscipline').prop('checked', false);
+                    $('#switchAllowUpdateDiscipline').prop('checked', false);
+                    $('#switchAllowDeleteDiscipline').prop('checked', false);
+                    $('#switchAllowCreateLevel').prop('checked', false);
+                    $('#switchAllowUpdateLevel').prop('checked', false);
+                    $('#switchAllowDeleteLevel').prop('checked', false);
+                    $('#switchAllowCreateDept').prop('checked', false);
+                    $('#switchAllowUpdateDept').prop('checked', false);
+                    $('#switchAllowDeleteDept').prop('checked', false);
+                    $('#switchAllowCreateCategory').prop('checked', false);
+                    $('#switchAllowUpdateCategory').prop('checked', false);
+                    $('#switchAllowDeleteCategory').prop('checked', false);
+                    $('#switchAllowCreateSemester').prop('checked', false);
+                    $('#switchAllowUpdateSemester').prop('checked', false);
+                    $('#switchAllowDeleteSemester').prop('checked', false);
+                    $('#switchAllowCreatePublication').prop('checked', false);
+                    $('#switchAllowUpdatePublication').prop('checked', false);
+                    $('#switchAllowDeletePublication').prop('checked', false);
+                    $('#switchAllowCreateStaffView').prop('checked', false);
+                    $('#switchAllowUpdateStaffView').prop('checked', false);
+                    $('#switchAllowDeleteStaffView').prop('checked', false);
+                    $('#switchAllowCreatePosition').prop('checked', false);
+                    $('#switchAllowUpdatePosition').prop('checked', false);
+                    $('#switchAllowDeletePosition').prop('checked', false);
+                    $('#switchAllowCreateUser').prop('checked', false);
+                    $('#switchAllowUpdateUser').prop('checked', false);
+                    $('#switchAllowDeleteUser').prop('checked', false);
+                    $('#switchAllowCreateUserGroup').prop('checked', false);
+                    $('#switchAllowUpdateUserGroup').prop('checked', false);
+                    $('#switchAllowDeleteUserGroup').prop('checked', false);
+                }
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+        return false;
+    }
+
+    function UpdateUser() {
+        var userObj = {
+            UserID: $('#ddlPerUser').val(),
+            AllowCreateCourse: $('#switchAllowCreateCourse').is(':checked'),
+            AllowUpdateCourse: $('#switchAllowUpdateCourse').is(':checked'),
+            AllowDeleteCourse: $('#switchAllowDeleteCourse').is(':checked'),
+            AllowCreateDiscipline: $('#switchAllowCreateDiscipline').is(':checked'),
+            AllowUpdateDiscipline: $('#switchAllowUpdateDiscipline').is(':checked'),
+            AllowDeleteDiscipline: $('#switchAllowDeleteDiscipline').is(':checked'),
+            AllowCreateLevel: $('#switchAllowCreateLevel').is(':checked'),
+            AllowUpdateLevel: $('#switchAllowUpdateLevel').is(':checked'),
+            AllowDeleteLevel: $('#switchAllowDeleteLevel').is(':checked'),
+            AllowCreateDepartment: $('#switchAllowCreateDept').is(':checked'),
+            AllowUpdateDepartment: $('#switchAllowUpdateDept').is(':checked'),
+            AllowDeleteDepartment: $('#switchAllowDeleteDept').is(':checked'),
+            AllowCreateCategory: $('#switchAllowCreateCategory').is(':checked'),
+            AllowUpdateCategory: $('#switchAllowUpdateCategory').is(':checked'),
+            AllowDeleteCategory: $('#switchAllowDeleteCategory').is(':checked'),
+            AllowCreateSemester: $('#switchAllowCreateSemester').is(':checked'),
+            AllowUpdateSemester: $('#switchAllowUpdateSemester').is(':checked'),
+            AllowDeleteSemester: $('#switchAllowDeleteSemester').is(':checked'),
+            AllowCreatePublication: $('#switchAllowCreatePublication').is(':checked'),
+            AllowUpdatePublication: $('#switchAllowUpdatePublication').is(':checked'),
+            AllowDeletePublication: $('#switchAllowDeletePublication').is(':checked'),
+            AllowCreateStaffView: $('#switchAllowCreateStaffView').is(':checked'),
+            AllowUpdateStaffView: $('#switchAllowUpdateStaffView').is(':checked'),
+            AllowDeleteStaffView: $('#switchAllowDeleteStaffView').is(':checked'),
+            AllowCreatePosition: $('#switchAllowCreatePosition').is(':checked'),
+            AllowUpdatePosition: $('#switchAllowUpdatePosition').is(':checked'),
+            AllowDeletePosition: $('#switchAllowDeletePosition').is(':checked'),
+            AllowCreateUser: $('#switchAllowCreateUser').is(':checked'),
+            AllowUpdateUser: $('#switchAllowUpdateUser').is(':checked'),
+            AllowDeleteUser: $('#switchAllowDeleteUser').is(':checked'),
+            AllowCreateUserGroup: $('#switchAllowCreateUserGroup').is(':checked'),
+            AllowUpdateUserGroup: $('#switchAllowUpdateUserGroup').is(':checked'),
+            AllowDeleteUserGroup: $('#switchAllowDeleteUserGroup').is(':checked')
+        };
+        $.ajax({
+            url: "/SystemManager/UpdateUserPermission",
+            data: JSON.stringify(userObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var res = data.result;
+                if (res.result == "success") {
+                    toastr.success("User permission has been updated.", "Success");
+                }
+                else {
+                    toastr.success("Use not found.", "info");
+                }
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    function GetCoursePermissionData() {
+        $('.CoursePermission').show();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetDisciplinePermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').show();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetLevelPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').show();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetDeptPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').show();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetCategoryPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').show();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetSemesterPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').show();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetSemesterPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').show();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetPublicationPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').show();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetStaffViewPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').show();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetPositionPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').show();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').hide();
+    }
+    function GetUserPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').show();
+        $('.UserGroupPermission').hide();
+    }
+    function GetUserGroupPermissionData() {
+        $('.CoursePermission').hide();
+        $('.DisciplinePermission').hide();
+        $('.LevelPermission').hide();
+        $('.DepartmentPermission').hide();
+        $('.CategoryPermission').hide();
+        $('.SemesterPermission').hide();
+        $('.PublicationPermission').hide();
+        $('.StaffViewPermission').hide();
+        $('.PositionPermission').hide();
+        $('.UserPermission').hide();
+        $('.UserGroupPermission').show();
+    }
+</script>

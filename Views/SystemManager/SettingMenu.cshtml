@@ -1,0 +1,453 @@
+﻿@{
+    ViewBag.Title = "Permission";
+}
+<style>
+    .navbar-nav > .active > a {
+        background-color: gray;
+        border-color: gray;
+        color: white;
+    }
+
+    .leftAlign {
+        text-align: left;
+        padding-left: 20px;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <h4 class="mt-0 header-title">Permissions List</h4>
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#menuPermission" role="tab"><i class="fas fa-server" style="font-size:20px;color:#555797;"></i> Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#userPermission" role="tab"><i class="fas fa-user" style="font-size:20px;color:#d5538f"></i> User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#reportPermission" role="tab"><i class="fas fa-file-alt" style="font-size:20px;color:#7fbae1"></i> Report</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active p-3" id="menuPermission" role="tabpanel">
+                        <div class="card">
+                            <div class="row">
+                                <input id="userCodeID" hidden />
+                                <div class="col-lg-3" style="border: 1px solid #aaa;">
+                                    <h6 style="text-align:center">Users</h6>
+                                    <div class="userList"></div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <p class="text-muted m-b-30 ">
+                                        Please change 'YES' you want to the permission.
+                                    </p>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label AlignRight">Select all</label>
+                                        <div class="col-sm-10">
+                                            <div>
+                                                <input type="checkbox" id="switchAllowAllMenu" switch="warning" onchange="onchangeMenuAll()">
+                                                <label for="switchAllowAllMenu" data-on-label="Yes" data-off-label="No"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="permissionsList">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane p-3" id="userPermission" role="tabpanel">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-lg-3" style="border: 1px solid #aaa;">
+                                    <h6 style="text-align:center">Main Page</h6>
+                                    <ul class="navbar-nav" style="overflow-y:auto;height:48em;">
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetCoursePermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color:#ca2b2b;font-size:16px;"></i> Course</a>
+                                        </li>
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetDisciplinePermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color: #ca2b2b; font-size: 16px;"></i> Discipline</a>
+                                        </li>
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetLevelPermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color: #ca2b2b; font-size: 16px;"></i> Level</a>
+                                        </li>
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetDeptPermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color: #ca2b2b; font-size: 16px;"></i> Department</a>
+                                        </li>
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetCategoryPermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color: #ca2b2b; font-size: 16px;"></i> Category</a>
+                                        </li>
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetSemesterPermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color: #ca2b2b; font-size: 16px;"></i> Semester</a>
+                                        </li>
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetPublicationPermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color: #ca2b2b; font-size: 16px;"></i> Publication</a>
+                                        </li>
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetStaffViewPermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color: #ca2b2b; font-size: 16px;"></i> Staff View</a>
+                                        </li>
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetUserPermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color: #ca2b2b; font-size: 16px;"></i> User</a>
+                                        </li>
+                                        <li class="nav-item liBarSpace">
+                                            <a onclick="GetUserGroupPermissionData()" class="btn btn-outline-dark waves-effect waves-light btn-block leftAlign"><i class="mdi mdi-pin fontCss" style="color: #ca2b2b; font-size: 16px;"></i> User Group</a>
+                                        </li>
+                                    </ul>
+                                    <div class="row">
+                                        <div class="btnContainer"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9" style="border: 1px solid #aaa;">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card m-b-30">
+                                                <div class="card-body">
+                                                    <div class="form-group row">
+                                                        <label for="ddlPerUser" class="col-sm-2 col-form-label phLabel" style="text-align: right;">User</label>
+                                                        <div class="col-sm-4">
+                                                            <select class="custom-select perUser" id="ddlPerUser" name="ddlPerUser"></select>
+                                                        </div>
+                                                        <label class="col-sm-2 col-form-label AlignRight">Select all</label>
+                                                        <div class="col-sm-4">
+                                                            <div>
+                                                                <input type="checkbox" id="switchAllowAllAction" switch="warning" onchange="onchangeAllowAllAction()">
+                                                                <label for="switchAllowAllAction" data-on-label="Yes" data-off-label="No"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card-body CoursePermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create Course</h5>
+                                                        <input type="checkbox" id="switchAllowCreateCourse" switch="warning" checked />
+                                                        <label for="switchAllowCreateCourse" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update Course</h5>
+                                                        <input type="checkbox" id="switchAllowUpdateCourse" switch="warning" checked />
+                                                        <label for="switchAllowUpdateCourse" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete Course</h5>
+                                                        <input type="checkbox" id="switchAllowDeleteCourse" switch="warning" checked />
+                                                        <label for="switchAllowDeleteCourse" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body DisciplinePermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create Discipline</h5>
+                                                        <input type="checkbox" id="switchAllowCreateDiscipline" switch="warning" checked />
+                                                        <label for="switchAllowCreateDiscipline" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update Discipline</h5>
+                                                        <input type="checkbox" id="switchAllowUpdateDiscipline" switch="warning" checked />
+                                                        <label for="switchAllowUpdateDiscipline" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete Discipline</h5>
+                                                        <input type="checkbox" id="switchAllowDeleteDiscipline" switch="warning" checked />
+                                                        <label for="switchAllowDeleteDiscipline" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body LevelPermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create Level</h5>
+                                                        <input type="checkbox" id="switchAllowCreateLevel" switch="warning" checked />
+                                                        <label for="switchAllowCreateLevel" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update Level</h5>
+                                                        <input type="checkbox" id="switchAllowUpdateLevel" switch="warning" checked />
+                                                        <label for="switchAllowUpdateLevel" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete Blog</h5>
+                                                        <input type="checkbox" id="switchAllowDeleteLevel" switch="warning" checked />
+                                                        <label for="switchAllowDeleteLevel" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body DepartmentPermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create Department</h5>
+                                                        <input type="checkbox" id="switchAllowCreateDept" switch="warning" checked />
+                                                        <label for="switchAllowCreateDept" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update Department</h5>
+                                                        <input type="checkbox" id="switchAllowUpdateDept" switch="warning" checked />
+                                                        <label for="switchAllowUpdateDept" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete Department</h5>
+                                                        <input type="checkbox" id="switchAllowDeleteDept" switch="warning" checked />
+                                                        <label for="switchAllowDeleteDept" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body CategoryPermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create Category</h5>
+                                                        <input type="checkbox" id="switchAllowCreateCategory" switch="warning" checked />
+                                                        <label for="switchAllowCreateCategory" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update Category</h5>
+                                                        <input type="checkbox" id="switchAllowUpdateCategory" switch="warning" checked />
+                                                        <label for="switchAllowUpdateCategory" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete Category</h5>
+                                                        <input type="checkbox" id="switchAllowDeleteCategory" switch="warning" checked />
+                                                        <label for="switchAllowDeleteCategory" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body SemesterPermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create Semester</h5>
+                                                        <input type="checkbox" id="switchAllowCreateSemester" switch="warning" checked />
+                                                        <label for="switchAllowCreateSemester" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update Semester</h5>
+                                                        <input type="checkbox" id="switchAllowUpdateSemester" switch="warning" checked />
+                                                        <label for="switchAllowUpdateSemester" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete Semester</h5>
+                                                        <input type="checkbox" id="switchAllowDeleteSemester" switch="warning" checked />
+                                                        <label for="switchAllowDeleteSemester" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body PublicationPermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create Publication</h5>
+                                                        <input type="checkbox" id="switchAllowCreatePublication" switch="warning" checked />
+                                                        <label for="switchAllowCreatePublication" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update Publication</h5>
+                                                        <input type="checkbox" id="switchAllowUpdatePublication" switch="warning" checked />
+                                                        <label for="switchAllowUpdatePublication" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete Publication</h5>
+                                                        <input type="checkbox" id="switchAllowDeletePublication" switch="warning" checked />
+                                                        <label for="switchAllowDeletePublication" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body StaffViewPermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create StaffView</h5>
+                                                        <input type="checkbox" id="switchAllowCreateStaffView" switch="warning" checked />
+                                                        <label for="switchAllowCreateStaffView" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update StaffView</h5>
+                                                        <input type="checkbox" id="switchAllowUpdateStaffView" switch="warning" checked />
+                                                        <label for="switchAllowUpdateStaffView" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete StaffView</h5>
+                                                        <input type="checkbox" id="switchAllowDeleteStaffView" switch="warning" checked />
+                                                        <label for="switchAllowDeleteStaffView" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body PositionPermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create Position</h5>
+                                                        <input type="checkbox" id="switchAllowCreatePosition" switch="warning" checked />
+                                                        <label for="switchAllowCreatePosition" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update Position</h5>
+                                                        <input type="checkbox" id="switchAllowUpdatePosition" switch="warning" checked />
+                                                        <label for="switchAllowUpdatePosition" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete Position</h5>
+                                                        <input type="checkbox" id="switchAllowDeletePosition" switch="warning" checked />
+                                                        <label for="switchAllowDeletePosition" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body UserPermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create User</h5>
+                                                        <input type="checkbox" id="switchAllowCreateUser" switch="warning" checked />
+                                                        <label for="switchAllowCreateUser" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update User</h5>
+                                                        <input type="checkbox" id="switchAllowUpdateUser" switch="warning" checked />
+                                                        <label for="switchAllowUpdateUser" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete User</h5>
+                                                        <input type="checkbox" id="switchAllowDeleteUser" switch="warning" checked />
+                                                        <label for="switchAllowDeleteUser" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body UserGroupPermission" style="display:none;">
+                                        <div class="card m-b-20">
+                                            <div class="form-group row rowFlex">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Create User Group</h5>
+                                                        <input type="checkbox" id="switchAllowCreateUserGroup" switch="warning" checked />
+                                                        <label for="switchAllowCreateUserGroup" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Update User Group</h5>
+                                                        <input type="checkbox" id="switchAllowUpdateUserGroup" switch="warning" checked />
+                                                        <label for="switchAllowUpdateUserGroup" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <h5 class="mt-0 header-title" style="font-size: 13px;">Allow Delete User Group</h5>
+                                                        <input type="checkbox" id="switchAllowDeleteUserGroup" switch="warning" checked />
+                                                        <label for="switchAllowDeleteUserGroup" data-on-label="Yes" data-off-label="No"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="button-items">
+                                        <button type="button" class="btn btn-primary" id="btnUpdateUser" onclick="UpdateUser()">SaveChanges</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane p-3" id="reportPermission" role="tabpanel">
+                        <h4 class="mt-0 header-title">Report List</h4>
+                        <p>Please checked if you want to see in reporting system.</p>
+                        <table id="dtrpt" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead class="thead-ful">
+                                <tr>
+                                    <th style="text-align:center;">#</th>
+                                    <th style="text-align:center;">Report Name</th>
+                                    <th style="text-align:center;">Category</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Html.Partial("SettingMenuScript")
+    @Html.Partial("UserPermissionScript")
+}

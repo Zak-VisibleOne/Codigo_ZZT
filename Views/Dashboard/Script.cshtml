@@ -1,0 +1,72 @@
+﻿<style>
+    .filterView {
+        background-color: cadetblue;
+        padding: 0.5em;
+        color: white;
+    }
+
+    .filter {
+        background-color: black;
+    }
+
+    .log {
+        background-color: white;
+        max-height: 30em;
+        overflow-y: scroll;
+        line-height: 2em;
+    }
+
+    .seeMoreBtn {
+        color: blue;
+        border-color: blue;
+    }
+</style>
+<script>
+    jQuery(document).ready(function () {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = dd + '/' + mm + '/' + yyyy;
+        $('.currentdate').text(today);
+        var dname = '@Html.Raw(ViewData["DName"])';
+        $('#hidDName').val(dname);
+       
+        //GetActivitiesLog();
+        //LoadControlPanelTable();
+    });    
+    function goMemberByID(memberID) {
+        var url = '/member/register?id=' + memberID + '';
+        window.open(url, '_blank');
+    }
+    
+    function GetActivitiesLog() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/Dashboard/ActivitiesLog',
+            data: {
+            }, beforeSend: function () {
+                return true;
+            }, success: function (res) {
+                var html = '';
+                html += '<ul>';
+                $.each(res.data, function (key, item) {
+                    var backgroundColor = isOdd(key) ? "blanchedalmond" : "white";
+                    html += '<li style="list-style:none;background-color:' + backgroundColor + '"><b>' + item.LogDate + ' </b>&nbsp;&nbsp;&nbsp;&nbsp;'+item.LogAction+ '</li>';
+                });
+                html += '</ul>';
+                html += '<div style="float:right"><button type="button" class="btn btn-link waves-effect" onclick="goToLogPage()">See More ></button></div>';
+                $('#activitiesLogs').html(html);
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+    function isOdd(num) {
+        return num % 2 == 0 ? false : true;
+    }
+    function goToLogPage() {
+        window.location.href = "/systemmanager/systemlog";
+    }
+</script>

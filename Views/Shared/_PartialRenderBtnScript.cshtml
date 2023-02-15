@@ -1,0 +1,34 @@
+﻿<script>
+    function _RenderCheckBox(data) {
+        return '<label class="tableCheck">'
+            + '<input type="checkbox" id="' + data + '" value="' + data + '" name="chkTable" class="checkbox"/><span class="checkmark"></span></label >';
+    }
+    function _RenderContentButton(data, type, row, meta) {
+        return '<div class="button-items" style="text-align: center;">'
+            + '<button type="button" class="btn btn-sm btn-outline-info waves-effect edit"><i class="fa fa-edit"></i> Edit</button>'
+            + '<button type="button" class="btn btn-sm btn-outline-danger waves-effect remove"><i class="fas fa-trash-alt"></i></button>'
+            + '</div>';
+    }
+    function _RenderCourseInfo(data, type, row, meta) {
+        return '<div class="button-items" style="text-align: center;">'
+            + '<button type="button" class="btn btn-sm btn-outline-info waves-effect edit"><i class="fa fa-edit"></i> Edit</button>'
+            + '<button type="button" class="btn btn-sm btn-outline-danger waves-effect remove"><i class="fas fa-trash-alt"></i></button>'
+            //+ '<button type="button" class="btn btn-sm btn-outline-secondary waves-effect info tooltips" title="Course Information"><i class="fas fa-file-alt" style="font-size: 15px;"></i></button>'
+            + '</div>';
+    }
+    function renderMediaImage(data, type, row, meta) {
+        return '<img src = "' + data + '" alt = "image" class="card-img-top img-fluid preview"/></div>'
+    }
+    function _RenderMediaSetButton(data) {
+        return '<div class="button-items">'
+            + '<a class="btn btn-secondary btn-sm waves-effect waves-light select" data-id="' + data + '" href="javascript:;" title="Select image"><i class="far fa-arrow-alt-circle-right" style="font-size:14px;"></i> Set image</a>'
+            + '<button type="button" class="btn btn-sm btn-outline-secondary waves-effect preview"><i class="fas fa-search"></i> Preview</button>'
+            + '<button type="button" class="btn btn-sm btn-outline-secondary waves-effect remove"><i class="fas fa-trash-alt"></i></button>'
+            + '</div>';
+    }
+    function _RenderStockBtn(data, type, row, meta) {
+        return '<div class="button-items" style="text-align: center;">'
+            + '<button type="button" class="btn btn-sm btn-outline-info waves-effect select"><i class="fa fa-edit"></i> Select</button>'
+            + '</div>';
+    }
+</script>

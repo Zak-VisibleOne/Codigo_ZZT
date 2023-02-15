@@ -1,0 +1,377 @@
+﻿<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+@using POSData;
+@{
+    var classes = "";
+    var sidemenu1 = "";
+    var logobgColor = "";
+    var logoimg = "";
+    var smalllogoimg = "";
+    var hover = "";
+    var tableBgColor = "";
+    var tableTitleColor = "";
+    var fontColor = "#ffffff";
+    var SITE_URL = "";
+
+    classes = "background-color:#00a7b5";
+    sidemenu1 = "background-color:#00a7b5";
+    logobgColor = "background-color:#00a7b5";
+    logoimg = "logo1.png";
+    smalllogoimg = "apple-icon-57x57.png";
+}
+@{
+    string userCode = (Session["User"] != null) ? Session["User"].ToString() : "";
+    POSSystemEntities context = new POSSystemEntities();
+    var userInfo = context.Users.Where(x => x.UserCode == userCode).FirstOrDefault();
+    var config = context.Globalconfigs.FirstOrDefault();
+    if (config != null)
+    {
+        sidemenu1 = "background-color:" + config.DashboardColor + "";
+        classes = "background-color:" + config.DashboardColor + "";
+        logobgColor = "background-color:" + config.DashboardColor + "";
+        smalllogoimg = config.LogoImage;
+        logoimg = config.LogoImage;
+        hover = config.HoverColor;
+        tableBgColor = config.TableBgColor;
+        tableTitleColor = config.TableBgTitleColor;
+        fontColor = config.FontColor;
+    }
+}
+<script>
+    $('.topbar').hide();
+    var currentUrl = window.location.href;
+    $(document).ready(function () {
+        //GetDashboardColor();
+    });
+    function GetDashboardColor() {
+        var color = $('#dashboardBackgroundColor').val();
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: SITE_URL + '/SystemManager/GetDashboardColor',
+            data: {
+                BackgroundColor: color,
+            },
+            beforeSend: function () {
+                //$.blockUI({ boxed: true });
+                return true;
+            },
+            success: function (data) {
+                if (data != null) {
+                    $(".side-menu").css("background-color", data.data);
+                    $(".navbar-custom").css("background-color", data.data);
+                    $(".topbar-left").css("background-color", data.data);
+                    $('.topbar').show();
+                }
+            }
+        });
+    }
+</script>
+<style>
+    .table .thead-ful th {
+        background-color: @tableBgColor;
+        color:@tableTitleColor;
+    }
+    @*#sidebar-menu > ul > li > a.active, #sidebar-menu > ul > li > a:hover {
+        background-color: @hover;
+    }
+    .submenu li a:hover {
+        background-color: @hover;
+    }
+    .submenu li a:active {
+        background-color: @hover;
+    }
+    .submenu li.active > a{
+        background-color: @hover;
+    }*@
+    .langWidth {
+        display: flex;
+        margin-right: 10px;
+        align-items: center;
+        justify-content: center;
+    }
+    .langWidth img {
+        width: auto;
+        height: 100%;
+    }
+    .langWidth > a > div {
+        margin-right: 2px;
+        width: auto;
+        height: 100%;
+    }
+    .langWidth a {
+        font-size: 12px;
+        width: auto;
+        height: 15px;
+        display: flex;
+        flex-direction: row;
+        margin-right: 10px;
+    }
+    .d-none-sidebar {
+        display: none;
+    }
+    .fontCss {
+    }
+    .iconColor {
+        color: #13ca49;
+    }
+    .submenu li:active span,
+    .submenu li:hover span {
+        color: #218ffd !important;
+    }
+    #sidebar-menu > ul > li > a.active, #sidebar-menu > ul > li > a:hover,
+    .submenu .active > a,
+    .submenu .active i,
+    .submenu li:hover i {
+        color: #218ffd !important;
+    }
+    #sidebar-menu > ul > li > a.active, #sidebar-menu > ul > li > a:hover,
+    .submenu li.active > a,
+    .submenu .active,
+    .submenu li:hover {
+        background-color: #fff !important;
+    }
+    .submenu .active a{
+        font-weight:bold;
+    }
+        .submenu .active .badge,
+        .submenu li:hover .badge {
+            background-color: #8b2153 !important;
+            color: #fff !important;
+        }
+
+</style>
+<div class="topbar">
+    <!-- LOGO -->
+    <div class="topbar-left" style="background-color:white">
+        <a href="@SITE_URL/programcourse" class="logo">
+            <span>
+                <img src="@logoimg" alt="" height="40">
+            </span>
+            <i>
+                <img src="@smalllogoimg" alt="" height="40" style="background-color:white;width:100%;">
+            </i>
+        </a>
+    </div>
+    <nav class="navbar-custom" id="test" style=@classes>
+        <ul class="navbar-right d-flex list-inline float-right mb-0">
+            <li class="dropdown notification-list">
+                <div class="dropdown notification-list nav-pro-img">
+                    <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <img src="~/images/users/user.jpg" alt="user" class="rounded-circle">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                        <a class="dropdown-item" id="lblLoginUser" onclick="onClickProfile()"><i class="mdi mdi-account-circle m-r-5" style=@hover></i>Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@SITE_URL/systemmanager/changepassword"><i class="mdi mdi-lock-open-outline m-r-5" style=@hover></i>ChangePassword</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="@SITE_URL/login/Logout"><i class="mdi mdi-power text-danger" style=@hover></i>Logout</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="list-inline menu-left mb-0">
+            <li class="float-left d-none-sidebar">
+                <button class="button-menu-mobile open-left waves-effect">
+                    <i class="mdi mdi-menu" style=@hover></i>
+                </button>
+            </li>
+            <li class="d-none d-sm-block">
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="left side-menu" style=@sidemenu1>
+    <div class="slimscroll-menu" id="remove-scroll">
+        <div id="sidebar-menu">
+            <ul class="metismenu" id="side-menu">
+                <li class="menu-title">Dashboard</li>
+                <li class="fontCss">
+                    <a href="@SITE_URL/dashboard" class="waves-effect fontCss">
+                        <i class="mdi mdi-pin iconColor"></i>
+                        <span class="fontCss"> DASHBOARD</span>
+                    </a>
+                </li>
+                @if (userInfo != null)
+                {
+                    <li class="menu-title">Setup</li>
+
+                    <li class="menu-title">Setup</li>
+                    <li class="fontCss">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-pin iconColor"></i><span class="fontCss">SETUP<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                        <ul class="submenu">
+                            <li class="fontCss">
+                                <a href="@SITE_URL/location">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">LOCATION</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/township">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">TOWNSHIP</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/city">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">CITY</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/customer">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">CUSTOMER</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/supplier">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">SUPPLIER</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/saleperson">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">SALE PERSON</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/category">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">CATEGORY</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/stock">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">STOCK</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/discounttype">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">DISCOUNT TYPE</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/currency">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">CURRENCY</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/stockclass">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">CLASS</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/company">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">COMPANY</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/warehouse">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">WAREHOUSE</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/invoicetype">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">INVOICE TYPE</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    if ((userInfo.ShowReportMenu ?? false) == true)
+                    {
+
+                    }
+                    <li class="menu-title">Reporting</li>
+                    <li class="fontCss">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="far fa-file iconColor"></i><span class="fontCss">Reports<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span></span></a>
+                        <ul class="submenu">
+                            <li><a href="@SITE_URL/reporting"><i class="far fa-file iconColor"></i><span class="fontCss">All Reports</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-title">OPERATION</li>
+                    <li class="fontCss">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-pin iconColor"></i><span class="fontCss">OPERATION<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                        <ul class="submenu">
+                            <li class="fontCss">
+                                <a href="@SITE_URL/purchase">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">PURCHASE</span>
+                                </a>
+                            </li>
+                            <li class="fontCss">
+                                <a href="@SITE_URL/sale">
+                                    <i class="mdi mdi-pin iconColor"></i>
+                                    <span class="fontCss">SALE</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-title">SYSTEM USER</li>
+                    <li class="fontCss">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-location iconColor"></i><span class="fontCss">System user<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                        <ul class="submenu">
+                            @if ((userInfo.ShowUser ?? false) == true)
+                            {
+                                <li class="fontCss">
+                                    <a href="@SITE_URL/systemmanager/users">
+                                        <i class="fas fa-user iconColor"></i>
+                                        <span class="fontCss"> USER</span>
+                                    </a>
+                                </li>
+                            }
+                            @if ((userInfo.ShowUserGroup ?? false) == true)
+                            {
+                                <li class="fontCss">
+                                    <a href="@SITE_URL/systemmanager/usergroup">
+                                        <i class="fas fa-users iconColor"></i>
+                                        <span class="fontCss"> USER GROUP</span>
+                                    </a>
+                                </li>
+                            }
+                            @if ((userInfo.ShowSitePermissionMenu ?? false) == true)
+                            {
+                                <li><a href="@SITE_URL/systemmanager/settingmenu"><i class="fas fa-user iconColor"></i><span class="fontCss">Site Permission</span></a></li>
+                            }
+                            @if ((userInfo.ShowLogMenu ?? false) == true)
+                            {
+                                <li class="fontCss"><a href="@SITE_URL/systemmanager/systemlog"><i class="mdi mdi-pin iconColor"></i><span class="fontCss">LOG</span></a></li>
+                            }
+                            @if ((userInfo.ShowThemeMenu ?? false) == true)
+                            {
+                                <li class="fontCss"><a href="@SITE_URL/themesetting/theme"><i class="mdi mdi-brush iconColor"></i><span class="fontCss">Theme</span></a></li>
+                            }
+                        </ul>
+                    </li>
+                    if ((userInfo.ShowMediaMenu ?? false) == true)
+                    {
+                        <li class="menu-title">FILE</li>
+                        <li class="fontCss">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-location iconColor"></i><span class="fontCss">File<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span></span></a>
+                            <ul class="submenu">
+                                <li class="fontCss">
+                                    <a href="@SITE_URL/media">
+                                        <i class="fas fa-user iconColor"></i>
+                                        <span class="badge badge-primary badge-pill float-right">
+                                            <label id="lblMediaCount" style="margin-bottom:.1rem;">0</label>
+                                        </span>
+                                        <span class="fontCss"> MEDIA</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div> 

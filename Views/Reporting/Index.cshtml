@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Reporting";
+}
+<style>
+    .alignli {
+        text-align: left;
+    }
+
+    .filter-line {
+        border-bottom: 0px;
+        border-top: 1px;
+        border-left: 1px;
+        border-right: 1px;
+        border-color: #80be8d;
+        border-style: solid;
+    }
+
+    .mail-list > a:last-child {
+        border-bottom: 1px;
+        border-color: #80be8d;
+        border-style: solid;
+    }
+
+    .selectedActive {
+        color: orangered;
+        font-weight: bold;
+        background-color: lightgrey;
+    }
+</style>
+<div class="row">
+    <div class="col-12">
+        <div class="card m-b-30">
+            <div class="card-body">
+                <h4 class="mt-0 header-title titleCor">Reporting</h4>
+                <div class="row">
+                    <div class="col-3">
+                        <input id="selectedSubReport" hidden />
+                        <div class="card m-b-20">
+                            <div class="card-body">
+                                <div class="reportList"></div><br />
+                                <div class="" style="text-align:center;background-color:white;">
+                                    <div class="mail-list" style="display:none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="card m-b-20">
+                            <div class="card-body">
+                                <h4 class="mt-0 header-title">Filter</h4>
+                                <div class="form-group row customerFilter">
+                                    <label for="ddlCustomerFilter" class="col-sm-2 col-form-label">Customer:</label>
+                                    <div class="col-sm-10">
+                                        <select class="select2 customerList" id="ddlCustomerFilter" name="ddlCustomerFilter"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group row supplierFilter">
+                                    <label for="ddlSupplierFilter" class="col-sm-2 col-form-label">Supplier:</label>
+                                    <div class="col-sm-10">
+                                        <select class="select2 supplierList" id="ddlSupplierFilter" name="ddlSupplierFilter"></select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group row researchAreaFilter">
+                                    <label for="ddlResearchArea" class="col-sm-2 col-form-label">Research Area:</label>
+                                    <div class="col-sm-10">
+                                        <select class="select2 researchArea" id="ddlResearchArea" name="ddlResearchArea"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group row disciplineFilter">
+                                    <label for="ddlDiscipline" class="col-sm-2 col-form-label">Discipline:</label>
+                                    <div class="col-sm-10">
+                                        <select class="select2 discipline" id="ddlDiscipline" name="ddlDiscipline"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group row courseLeaderFilter">
+                                    <label for="DDLCourseLeader" class="col-sm-2 col-form-label">Course Leader:</label>
+                                    <div class="col-sm-10">
+                                        <select class="select2 CourseLeader" id="ddlCourseLeader" name="ddlCourseLeader"></select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group row categoryFilter">
+                                    <label for="ddlCategory" class="col-sm-2 col-form-label">Category:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="ddlCategory">
+                                            <option value="">Select Category</option>
+                                            <option value="Laboratory">Laboratory</option>
+                                            <option value="Office">Office</option>
+                                            <option value="Research">Research</option>
+                                            <option value="Special">Special</option>
+                                            <option value="Student">Student</option>
+                                            <option value="Teaching">Teaching</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group previewBtn">
+                                    <button type="button" class="btn btn-secondary waves-effect" onclick="previewReport('/ReportView?')">Preview</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Html.Partial("Script")
+}

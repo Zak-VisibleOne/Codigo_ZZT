@@ -1,0 +1,419 @@
+﻿<script>
+    var userpermissions = [];
+    var dtrpt;
+    jQuery(document).ready(function () {
+        dtrpt = $('#dtrpt').dataTable({
+            lengthMenu: [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, 'All']],
+            pageLength: 25,
+            ordering: false,
+            columnDefs: [
+                {
+                    targets: [0], name: 'chk', className: 'center', orderable: false, sWidth: '3%',
+                    editor: { type: 'action', required: false, class: '' }, render: _RenderChkRpt
+                },
+                {
+                    targets: [1], name: 'subreport', className: 'left', sWidth: '10%', orderable: false,
+                },
+                {
+                    targets: [2], name: 'mainreport', className: 'left', sWidth: '10%', orderable: false,
+                },
+                {
+                    targets: [3], name: 'ID', sWidth: '0%', visible: false
+                }
+            ]
+        });
+        dtrpt.on('draw.dt', function () {
+            $('#dtrpt .tooltips').tooltip();
+        });
+        dtrpt.on('click', '.chkevent', function (e) {
+            e.preventDefault();
+            var pos = dtrpt.fnGetPosition($(this).closest('tr')[0]);
+            var data = dtrpt.fnGetData(pos);
+            var id = data[3];
+            changeChkRpt(id);
+        });
+
+        $("ul.navbar-nav li:first").addClass("active");
+        $('ul.navbar-nav > li')
+            .click(function (e) {
+                $('ul.navbar-nav > li').removeClass('active');
+                $(this).addClass('active');
+            });
+        ShowUserList();
+        getUserList();
+        LoadRprt();
+    });
+
+    function ShowUserList() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: "/SystemManager/GetUserList",
+            data: {
+
+            }, success: function (res) {
+                userpermissions = res.data;
+                if (res.data != null) {
+                    var html = '<ul class="navbar-nav">';
+                    $.each(res.data, function (key, item) {
+                        var user = "'" + item.UserCode + "'";
+                        html += '<li class="nav-item liBarSpace">';
+                        html += '<a onclick="GetPermisssionByUser(' + item.Id + ')" class="btn btn-outline-dark waves-effect waves-light btn-block" style=" text-align:left;padding-left: 20px;"><i class="fas fa-user fontCss" style="color:#ffb222"></i> ' + item.UserCode + '</a>';
+                        html += '</li>';
+                    });
+                    html += '</ul>';
+                    $('.userList').html(html);
+                    GetPermisssionByUser(res.data[0].Id);
+                }
+            }
+        });
+    }
+    function onchangeAllowMenu() {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: "/SystemManager/ShowHideMenuPermission",
+            data: {
+                Id: $('#userCodeID').val(),
+                ShowSetupCourse: $('#switchShowSetupCourse').is(':checked'),
+                ShowSetupPosition: $('#switchShowSetupPosition').is(':checked'),
+                ShowSetupStaff: $('#switchShowSetupStaff').is(':checked'),
+                ShowSetupCategory: $('#switchShowSetupCategory').is(':checked'),
+                ShowSetupDiscipline: $('#switchShowSetupDiscipline').is(':checked'),
+                ShowSetupResearchArea: $('#switchShowSetupResearchArea').is(':checked'),
+                ShowSetupPublication: $('#switchShowSetupPublication').is(':checked'),
+                ShowSetupDepartment: $('#switchShowSetupDepartment').is(':checked'),
+                ShowReportMenu: $('#switchShowReportMenu').is(':checked'),
+                ShowLevel: $('#switchShowLevel').is(':checked'),
+                ShowSemester: $('#switchShowSemester').is(':checked'),
+                ShowUser: $('#switchShowUser').is(':checked'),
+                ShowUserGroup: $('#switchShowUserGroup').is(':checked'),
+                ShowLogMenu: $('#switchShowLogMenu').is(':checked'),
+                ShowThemeMenu: $('#switchShowThemeMenu').is(':checked'),
+                ShowMediaMenu: $('#switchShowMediaMenu').is(':checked'),
+                ShowSitePermissionMenu: $('#switchShowSitePermissionMenu').is(':checked'),
+            }, success: function (res) {
+                if (res.result == "success") {
+                    toastr.success(res.message, "updated");
+                } else {
+                    toastr.error("Cannot updated .", "error");
+                }
+            }
+        });
+    }
+    function onchangeAllowAllAction() {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: "/SystemManager/AllowAllAction",
+            data: {
+                UserID: $('#ddlPerUser').val(),
+                SetAll: $('#switchAllowAllAction').is(':checked')
+            }, success: function (res) {
+                toastr.success('Change all success.', "Info");
+                onChangeUser();
+            }
+        });
+    }
+    function onchangeMenuAll() {
+        if ($('#switchAllowAllMenu').is(':checked')) {
+            $('#switchShowSetupCourse').prop('checked', true);
+            $('#switchShowSetupPosition').prop('checked', true);
+            $('#switchShowSetupStaff').prop('checked', true);
+            $('#switchShowSetupCategory').prop('checked', true);
+            $('#switchShowSetupDiscipline').prop('checked', true);
+            $('#switchShowSetupResearchArea').prop('checked', true);
+            $('#switchShowSetupPublication').prop('checked', true);
+            $('#switchShowSetupDepartment').prop('checked', true);
+            $('#switchShowReportMenu').prop('checked', true);
+            $('#switchShowLevel').prop('checked', true);
+            $('#switchShowSemester').prop('checked', true);
+            $('#switchShowUser').prop('checked', true);
+            $('#switchShowUserGroup').prop('checked', true);
+            $('#switchShowLogMenu').prop('checked', true);
+            $('#switchShowThemeMenu').prop('checked', true);
+            $('#switchShowMediaMenu').prop('checked', true);
+            $('#switchShowSitePermissionMenu').prop('checked', true);
+        }
+        else {
+            $('#switchShowSetupCourse').prop('checked', false);
+            $('#switchShowSetupPosition').prop('checked', false);
+            $('#switchShowSetupStaff').prop('checked', false);
+            $('#switchShowSetupCategory').prop('checked', false);
+            $('#switchShowSetupDiscipline').prop('checked', false);
+            $('#switchShowSetupResearchArea').prop('checked', false);
+            $('#switchShowSetupPublication').prop('checked', false);
+            $('#switchShowSetupDepartment').prop('checked', false);
+            $('#switchShowReportMenu').prop('checked', false);
+            $('#switchShowLevel').prop('checked', false);
+            $('#switchShowSemester').prop('checked', false);
+            $('#switchShowUser').prop('checked', false);
+            $('#switchShowUserGroup').prop('checked', false);
+            $('#switchShowLogMenu').prop('checked', false);
+            $('#switchShowThemeMenu').prop('checked', false);
+            $('#switchShowMediaMenu').prop('checked', false);
+            $('#switchShowSitePermissionMenu').prop('checked', false);
+        }
+        onchangeAllowMenu();
+    }
+    function renderPermissionView(UserCode, data) {
+        if (data != null) {
+            var ShowSetupCourse = data.ShowSetupCourse ? "checked" : "";
+            var ShowSetupPosition = data.ShowSetupPosition ? "checked" : "";
+            var ShowSetupStaff = data.ShowSetupStaff ? "checked" : "";
+            var ShowSetupCategory = data.ShowSetupCategory ? "checked" : "";
+            var ShowSetupDiscipline = data.ShowSetupDiscipline ? "checked" : "";
+            var ShowSetupResearchArea = data.ShowSetupResearchArea ? "checked" : "";
+            var ShowSetupPublication = data.ShowSetupPublication ? "checked" : "";
+            var ShowSetupDepartment = data.ShowSetupDepartment ? "checked" : "";
+            var ShowReportMenu = data.ShowReportMenu ? "checked" : "";
+            var ShowLevel = data.ShowLevel ? "checked" : "";
+            var ShowSemester = data.ShowSemester ? "checked" : "";
+            var ShowUser = data.ShowUser ? "checked" : "";
+            var ShowUserGroup = data.ShowUserGroup ? "checked" : "";
+            var ShowLogMenu = data.ShowLogMenu ? "checked" : "";
+            var ShowThemeMenu = data.ShowThemeMenu ? "checked" : "";
+            var ShowMediaMenu = data.ShowMediaMenu ? "checked" : "";
+            var ShowSitePermissionMenu = data.ShowSitePermissionMenu ? "checked" : "";
+            var html = '';
+            html += '<div class="' + UserCode + 'Permission" style="display:none" aria-labelledby="headingPerIPO" data-parent="#accordion">';
+            html += '<div class="card m-b-20">';
+            html += '<div class="card-body">';
+            html += '<div class="row" style="background-color:ghostwhite">';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Course</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowSetupCourse" switch="success" ' + ShowSetupCourse + '/>';
+            html += '<label for="switchShowSetupCourse" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Position</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowSetupPosition" switch="success" ' + ShowSetupPosition + '/>';
+            html += '<label for="switchShowSetupPosition" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Staff</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowSetupStaff" switch="success" ' + ShowSetupStaff + '/>';
+            html += '<label for="switchShowSetupStaff" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Category</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowSetupCategory" switch="success" ' + ShowSetupCategory + '/>';
+            html += '<label for="switchShowSetupCategory" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Discipline</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowSetupDiscipline" switch="success" ' + ShowSetupDiscipline + '/>';
+            html += '<label for="switchShowSetupDiscipline" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Research Area</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowSetupResearchArea" switch="success" ' + ShowSetupResearchArea + '/>';
+            html += '<label for="switchShowSetupResearchArea" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Publication</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowSetupPublication" switch="success" ' + ShowSetupPublication + '/>';
+            html += '<label for="switchShowSetupPublication" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Department</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowSetupDepartment" switch="success" ' + ShowSetupDepartment + '/>';
+            html += '<label for="switchShowSetupDepartment" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">ReportMenu</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowReportMenu" switch="success" ' + ShowReportMenu + '/>';
+            html += '<label for="switchShowReportMenu" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Level</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowLevel" switch="success" ' + ShowLevel + '/>';
+            html += '<label for="switchShowLevel" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Semester</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowSemester" switch="success" ' + ShowSemester + '/>';
+            html += '<label for="switchShowSemester" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">User</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowUser" switch="success" ' + ShowUser + '/>';
+            html += '<label for="switchShowUser" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">User Group</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowUserGroup" switch="success" ' + ShowUserGroup + '/>';
+            html += '<label for="switchShowUserGroup" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Log</h5>';
+            html += '<input type="checkbox" onchange="onchangeAllowMenu()" id="switchShowLogMenu" switch="success" ' + ShowLogMenu + '/>';
+            html += '<label for="switchShowLogMenu" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Theme</h5>';
+            html += '<input type="checkbox" id="switchShowThemeMenu" onchange="onchangeAllowMenu()" switch="success" ' + ShowThemeMenu + ' />';
+            html += '<label for="switchShowThemeMenu" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Media file</h5>';
+            html += '<input type="checkbox" id="switchShowMediaMenu" onchange="onchangeAllowMenu()" switch="success" ' + ShowMediaMenu + ' />';
+            html += '<label for="switchShowMediaMenu" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="col-lg-2">';
+            html += '<div class="form-group permission">';
+            html += '<h5 class="mt-0 header-title" style="font-size: 12px;">Site Permission</h5>';
+            html += '<input type="checkbox" id="switchShowSitePermissionMenu" onchange="onchangeAllowMenu()" switch="success" ' + ShowSitePermissionMenu + ' />';
+            html += '<label for="switchShowSitePermissionMenu" data-on-label="Yes" data-off-label="No"></label>';
+            html += '</div>';
+            html += '</div>';
+
+            html += '</div>';
+
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            $('.permissionsList').html(html)
+        }
+    }
+    function GetPermisssionByUser(userCode) {
+        var data = GetPermissionsByUser(userCode);
+        $('#userCodeID').val(userCode);
+        $.each(userpermissions, function (key, item) {
+            if (item.Id == userCode) {
+                renderPermissionView(item.Id, data)
+                $('.' + item.Id + 'Permission').show();
+
+            } else {
+                $('.' + item.Id + 'Permission').hide();
+            }
+        });
+    }
+    function GetPermissionsByUser(userCode) {
+        var request = $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: "/SystemManager/GetPermissionListByID",
+            data: {
+                Id: userCode,
+            }, success: function (data) {
+            }
+        });
+        return (request.responseJSON.data != null ? request.responseJSON.data : [])
+    }
+    function LoadRprt() {
+        var data = GetPerRpt();
+        dtrpt.api().clear().rows.add(data).draw();
+    }
+    function GetPerRpt() {
+        var request = $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            beforeSend: function () {
+                return true;
+            },
+            url: "/SystemManager/GetPerRptList",
+            data: {
+            }, success: function (data) {
+                //$.unblockUI();
+            }
+        });
+        var result = request.responseJSON;
+        return (result.data != null) ? result.data : [];
+    }
+    function _RenderChkRpt(data, type, row, meta) {
+        var checkedOrNot = data.substring(0, 1);
+        if (checkedOrNot == 'T') {
+            return '<label class="tableCheck">'
+                + '<input type="checkbox" id="' + data.slice(1) + '" class="checkbox chkevent" checked/><span class="checkmark"></span></label >';//onclick="handleActionCheckbox(this)"
+        }
+        else {
+            return '<label class="tableCheck">'
+                + '<input type="checkbox" id="' + data.slice(1) + '" class="checkbox chkevent"/><span class="checkmark"></span></label >';
+        }
+    }
+    $("#chkAllReport").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+    function changeChkRpt(id) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "/SystemManager/ShowHideRptMenu",
+            data: {
+                ID: id
+            }, success: function (data) {
+                if (data.result == "success") {
+                    toastr.success(data.message, "Message");
+                }
+                LoadRprt();
+            }
+        });
+    }
+</script>

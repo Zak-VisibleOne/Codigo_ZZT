@@ -1,0 +1,101 @@
+﻿<script>
+    jQuery(document).ready(function () {
+        //GetPrimaryEmail();
+        $('#oldPassword').change(function () {
+            $('#lbloldpassword').html('');
+            var userId = $("#userId").val();
+            var username = $("#username").val();
+            var oldPassword = $("#oldPassword").val();
+            $.ajax({
+                type: 'POST',
+                url: '/SystemManager/CheckOldPassword',
+                dataType: 'json',
+                data: { User: userId, UserName: username, Password: oldPassword },
+                success: function (data) {
+                    //alert(data.message);
+                    $('#lbloldpassword').html(data.message)
+                    if (data.message == 'Password does not match the old password.') {
+                        $("#updatePasswordButton").attr("disabled", true);
+                    }
+                    else {
+                        $('#updatePasswordButton').attr("disabled", false);
+                    }
+                },
+                error: function (ex) {
+                    alert('Failed.' + ex);
+                }
+            });
+        });
+
+        $('#newPassword').change(function () {
+            $('#newPassword').html('');
+            $.ajax({
+                type: 'POST',
+                url: '/SystemManager/CheckPassword',
+                dataType: 'json',
+                data: { password: $("#newPassword").val() },
+                success: function (data) {
+                    //alert(data.message);
+                    $('#lblnewpassword').html(data.message)
+                },
+                error: function (ex) {
+                    alert('Failed.' + ex);
+                }
+            });
+        });
+
+        $('#confirmPassword').change(function () {
+            $('#confirmPassword').html('');
+            $.ajax({
+                type: 'POST',
+                url: '/SystemManager/CheckPassword',
+                dataType: 'json',
+                data: { password: $("#confirmPassword").val() },
+                success: function (data) {
+                    //alert(data.message);
+                    $('#lblcomfirmpassword').html(data.message)
+                },
+                error: function (ex) {
+                    alert('Failed.' + ex);
+                }
+            });
+        });
+    });
+    function onClick_UpdatePassword() {
+        swal({
+            title: 'Are you sure change your password ?',
+            //text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger m-l-10',
+            confirmButtonText: 'Yes'
+        }).then(function () {
+            var userId = $('#userId').val();
+            var username = $('#username').val();
+            var oldPassword = $('#oldPassword').val();
+            var newPassword = $('#newPassword').val();
+            var confirmPassword = $('#confirmPassword').val();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "/SystemManager/UpdatePassword",
+                data: {
+                    UserID: userId,
+                    UserName: username,
+                    OldPassword: oldPassword,
+                    NewPassword: newPassword,
+                    ConfirmPassword: confirmPassword
+                }, success: function (data) {
+                    var res = data.result;
+                    if (res.result == "success") {
+                        toastr.success(res.message, "Info");
+                    }
+                    else {
+                        toastr.info(res.message, "Error");
+                    }
+                }
+            });
+        })
+    }
+</script>

@@ -1,0 +1,227 @@
+﻿@*<script src='https://www.google.com/recaptcha/api.js'></script>*@
+<script>
+    var Login = function () {
+        var handleLogin = function () {
+            $('.login-form').validate({
+                errorElement: 'span',
+                errorClass: 'help-block',
+                focusInvalid: false,
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    remember: {
+                        required: false
+                    }
+                },
+                messages: {
+                    username: {
+                        required: "Username is required."
+                    },
+                },invalidHandler: function (event, validator) { //display error alert on form submit
+                    $('.alert-danger span', $('.login-form')).text("Enter any username and password.");
+                    $('.alert-danger', $('.login-form')).show();
+
+                },highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+                },success: function (label) {
+                    label.closest('.form-group').removeClass('has-error');
+                    label.remove();
+                },errorPlacement: function (error, element) {
+                    error.insertAfter(element.closest('.input-icon'));
+                },submitHandler: function (form) {
+                    login();
+                }
+            });
+
+            $('.login-form input').keypress(function (e) {
+                if (e.which == 13) {
+                    if ($('.login-form').validate().form()) {
+                        login();
+                    }
+                    return false;
+                }
+            });
+        }
+        var handleForgetPassword = function () {
+            $('.forget-form').validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    }
+                }, messages: {
+                    email: {
+                        required: "Email is required."
+                    }
+                },invalidHandler: function (event, validator) { //display error alert on form submit
+
+                },highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+                },success: function (label) {
+                    label.closest('.form-group').removeClass('has-error');
+                    label.remove();
+                },errorPlacement: function (error, element) {
+                    error.insertAfter(element.closest('.input-icon'));
+                },submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+            $('.forget-form input').keypress(function (e) {
+                if (e.which == 13) {
+                    if ($('.forget-form').validate().form()) {
+                        $('.forget-form').submit();
+                    }
+                    return false;
+                }
+            });
+            jQuery('#forget-password').click(function () {
+                jQuery('.login-form').hide();
+                jQuery('.forget-form').show();
+            });
+            jQuery('#back-btn').click(function () {
+                jQuery('.login-form').show();
+                jQuery('.forget-form').hide();
+            });
+        }
+        return {
+            init: function () {
+                handleLogin();
+                //handleForgetPassword();
+            }
+        };
+    }();
+
+    jQuery(document).ready(function () {
+        var URL = "@HttpContext.Current.Request.Url";
+
+        Login.init();
+        $('.alert-danger', $('.login-form')).hide();
+        $('#site_statistics_loading').hide();
+        $('#username').val('Admin');
+        $('#username').focus();
+    });
+    @functions{
+        public string TokenHeaderValue()
+        {
+            string cookieToken, formToken;
+            AntiForgery.GetTokens(null, out cookieToken, out formToken);
+            return cookieToken + ":" + formToken;
+        }
+    }
+    function login() {
+        var username = $('#username').val();
+        //var rcres = grecaptcha.getResponse();
+        //var URLTest = "@HttpContext.Current.Request.Url";
+        //alert(URLTest);
+    	//var response = grecaptcha.getResponse();
+        var URL = "/Login";
+        let token = $('input[name="__RequestVerificationToken"]').val();
+        $.ajax({
+            method: "POST",
+            url: URL + "/auth",
+            data: {
+                username: username,
+                password: $('#password').val(),
+                //CaptchaText: $('#CaptchaText').val()
+                //CaptchaText: rcres,
+                CaptchaText: '',
+                __RequestVerificationToken: token
+            },
+            beforeSend: function () {
+                //$('.content').block({ message: 'Please wait', css: { border: '1px solid #E0E0E0' }});
+                $('#site_statistics_loading').show();
+                return true;
+            }, success: function (data) {
+                var res = data.rm;
+                if (res.result == "true") {
+                    window.location.href = "/Dashboard/Index";
+                    //window.location.href = "http://localhost:7900/Dashboard/Index";
+                    //alert('login success');
+                    //$('#lblLoginUser').val(res.data);
+                } else {
+                    $('.alert-danger span', $('.login-form')).text(res.message);
+                    $('.alert-danger', $('.login-form')).show();
+                    $('#CaptchaText').val('');
+                }
+                //$('.content').unblock();
+                //$('.alert-danger', $('.login-form')).hide();
+                $('#site_statistics_loading').hide();
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                //$('.content').unblock();
+                $('#site_statistics_loading').hide();
+            }
+        });
+    }
+    function forgetPassword() {
+        $('.login-form').hide();
+        $('#verifyViewForLogin').show();
+        var email = $('#username').val();
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/Security/VerifyEmailForTwoFactor',
+            data: {
+                Email: email
+            }, beforeSend: function () {
+                return true;
+            }, success: function (data) {
+                var res = data.result;
+                if (res.result == "success") {
+                    $('#emailStatus').text("Verify code sent, please check your email .");
+                } else {
+                }
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+    function GetGoogleAuthenticator(username) {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/Login/GetGoogleAuthenticator',
+            data: {
+                username: username
+            }, beforeSend: function () {
+                return true;
+            }, success: function (data) {
+                var res = data.result;
+                console.log(data)
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+    function verifyCodeForLogin() {
+        var code = $('#verifyCodeNumberLogin').val();
+        var user = $('#username').val();
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/Security/ConfirmVerifyCode',
+            data: {
+                Code: code,
+                Email: user
+            }, beforeSend: function () {
+                return true;
+            }, success: function (data) {
+                var res = data.result;
+                console.log(res)
+                if (res.result == "success") {
+                    window.location.href = "/systemmanager/changepassword?user=" + user;
+                    $('#verifyCodeNumberLoginMessage').hide();
+                } else {
+                    $('#verifyCodeNumberLoginMessage').show();
+                    $('#verifyCodeNumberLoginMessage').text(res.message);
+                }
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                show_ajax_error(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+</script>

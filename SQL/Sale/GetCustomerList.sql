@@ -1,0 +1,1 @@
+﻿select CustId as ID,CustName as [Name] from Customer

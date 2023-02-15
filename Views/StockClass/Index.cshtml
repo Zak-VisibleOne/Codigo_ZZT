@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Class";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <h4 class="mt-0 header-title titleCor">Stock class listing</h4>
+                <div class="btn-toolbar p-3" role="toolbar">
+                    <div class="btn-group mo-mb-2">
+                        <button type="button" class="btn btn-primary waves-light waves-effect" onclick="AddNewClass()" data-toggle="tooltip" data-placement="top" title="Add new course"><i class="fas fa-plus-circle"></i> New</button>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-dark waves-effect waves-light" onclick="previewClass()" data-toggle="tooltip" data-placement="top" title="Preview report" style="display:none;"> Export</button>
+                <br />
+                <div class="table-responsive">
+                    <table id="dtClass" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead class="thead-ful">
+                            <tr>
+                                <th style="text-align:center;">Alias</th>
+                                <th style="text-align:center;">Name</th>
+                                <th style="text-align:center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-lg" id="ClassModal" tabindex="-1" role="dialog" aria-labelledby="ClassModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="ClassModalLabel">Class</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card m-b-20">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="txtClassAlias" class="col-sm-2 col-form-label AlignRight">Alias</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" id="txtClassAlias">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="txtClassName" class="col-sm-2 col-form-label AlignRight">Name</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" id="txtClassName">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="closeClass()" class="btn btn-secondary waves-effect">
+                    <i class="fa fa-times" aria-hidden="true"></i> Close
+                </button>
+                <button type="button" onclick="saveClass()" class="btn btn-primary waves-effect waves-light">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Html.Partial("Script")
+}

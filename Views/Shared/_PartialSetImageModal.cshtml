@@ -1,0 +1,103 @@
+﻿<div class="modal fade bs-example-modal-lg" id="SetImageModal" tabindex="-1" role="dialog" aria-labelledby="SetImageModalLabel" aria-hidden="true" style="z-index:2048;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #FFB222;color: #fff;">
+                <h5 class="modal-title mt-0" id="SetImageModalLabel">Set image</h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#medialibrary" role="tab">Media library</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#uploadFile" role="tab">Upload Files</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active p-3" id="medialibrary" role="tabpanel">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#MediaListView" role="tab">Image List</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active p-3" id="MediaListView" role="tabpanel">
+                                            <div class="card card-body">
+                                                <div class="addScroll">
+                                                    <div class="card-body" style="overflow-x: auto;">
+                                                        <table id="dtMediaListView" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                            <thead class="thead-default">
+                                                                <tr>
+                                                                    <th style="text-align:center;">SrNo</th>
+                                                                    <th style="text-align:center;">Image</th>
+                                                                    <th style="text-align:center;">Name</th>
+                                                                    <th style="text-align:center;">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane p-3" id="uploadFile" role="tabpanel">
+                                    <div class="card card-body">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="">
+                                                    <img src="/images/small/img-2.jpg" class="img-fluid" alt="Responsive image" id="imgSetImgMedia">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-7">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <input type="file" class="filestyle" data-input="false" data-buttonname="btn-secondary" id="FileUpload_SetImgMedia">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <button type="button" onclick="onclickInsertImageToForm()" class="btn btn-outline-secondary waves-effect tooltips" title="Set"><i class="mdi mdi-file-import"></i>Set Image</button>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none;">
+                                                    <label>ImageUrl</label>
+                                                    <div>
+                                                        <input type="text" id="txtURL_SetImgMedia" class="form-control form-control-sm" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-lg" id="PreviewPhotoModal" tabindex="-1" role="dialog" aria-labelledby="PreviewPhotoModalLabel" aria-hidden="true" style="z-index:10000;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0">Photo Preview</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title"><span id="lblPreviewPhoto"></span></h4>
+                        <div class="">
+                            <img src="/images/small/img-2.jpg" id="imgPhotoPreview" class="img-fluid" alt="Responsive image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

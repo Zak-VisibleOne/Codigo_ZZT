@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+@section styles{
+    <link href="~/Content/style.css" rel="stylesheet" />
+}
+<style>
+    .pinClor {
+        color: #f2a759;
+    }
+
+    .pinLabel {
+        color: #2a3142;
+    }
+
+    .pinBoxColor {
+        border: 1px solid #f3f3f3;
+    }
+</style>
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="card mini-stat bg-secondary">
+            <div class="card-body mini-stat-img">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-account-card-details float-right"></i>
+                </div>
+                <div class="text-white">
+                    <h6 class="text-uppercase mb-3">Total Customer</h6>
+                    <h4 class="mb-4"><label id="lblTotalReg"></label></h4>
+                    <span class="badge badge-info currentdate"> 29/07/2021 </span><span class="ml-2"><a href="/member/register" class="card-link" style="color:#f8f9fa;">More Detail</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mini-stat bg-warning">
+            <div class="card-body mini-stat-img">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-account-star-variant float-right"></i>
+                </div>
+                <div class="text-white">
+                    <h6 class="text-uppercase mb-3">Total Supplier</h6>
+                    <h4 class="mb-4"><label id="lblIPOListed">10</label></h4>
+                    <span class="badge badge-danger currentdate"></span> <span class="ml-2"><a href="/ipo" class="card-link" style="color:#f8f9fa;">More Detail</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mini-stat bg-info">
+            <div class="card-body mini-stat-img">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-format-list-numbers float-right"></i>
+                </div>
+                <div class="text-white">
+                    <h6 class="text-uppercase mb-3">Today Sale</h6>
+                    <h4 class="mb-4"><label id="lblTotalIPOListing">0</label></h4>
+                    <span class="badge badge-warning currentdate"> </span> <span class="ml-2"><a href="/ipo" class="card-link" style="color:#f8f9fa;">More Detail</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mini-stat bg-primary">
+            <div class="card-body mini-stat-img">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-thumb-up-outline float-right"></i>
+                </div>
+                <div class="text-white">
+                    <h6 class="text-uppercase mb-3">Stock Balance</h6>
+                    <h4 class="mb-4"><label id="lblTotalSubscribe">10</label></h4>
+                    <span class="badge badge-info currentdate"> 29/07/2021 </span> <span class="ml-2"><a href="/subscribe" class="card-link" style="color:#f8f9fa;">More Detail</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+
+<div>
+    <div class="card-body log">
+        <h6>Activities log</h6>
+        <div id="activitiesLogs" style="line-height:3em">
+        </div>
+    </div>
+</div>
+@section scripts {
+    @Html.Partial("Script")
+}

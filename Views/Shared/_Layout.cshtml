@@ -1,0 +1,436 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    @{ var page = ViewBag.Title ?? ""; }
+
+    <title>POS | @page</title>
+    <meta content="Admin Dashboard" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <meta name='robots' content='noindex,  nofollow' />
+    <link rel="shortcut icon" href="~/images/logo/logo.png">
+    @RenderSection("styles", required: false)
+    @Styles.Render("~/Content/css")
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        @@media (max-width: 768px) {
+            nav .dropdown.notification-list.d-sm-block {
+                display: flex !important;
+                margin: 0 !important;
+            }
+
+            body.enlarged .left.side-menu {
+                margin-left: -250px;
+            }
+
+            li.d-none-sidebar {
+                display: block;
+            }
+
+            .side-menu .slimscroll-menu .sidebar-menu {
+                display: none;
+            }
+
+            .navbar-custom .navbar-right li {
+                display: none;
+            }
+
+            .left side-menu .slimscroll-menu .sidebar-menu {
+                display: none;
+            }
+        }
+
+        @@media (max-width: 432px) {
+            .d-none-sidebar .button-menu-mobile {
+                width: 70px !important;
+                height: 40px !important;
+            }
+
+            .side-menu .slimscroll-menu .sidebar-menu {
+                display: none;
+            }
+
+            .navbar-custom .navbar-right li {
+                display: none;
+            }
+
+            .left side-menu .slimscroll-menu .sidebar-menu {
+                display: none;
+            }
+        }
+
+        @@media (max-width: 419px) {
+            .d-none-sidebar .button-menu-mobile {
+                width: 70px !important;
+                height: 70px !important;
+            }
+
+            .side-menu .slimscroll-menu .sidebar-menu {
+                display: none;
+            }
+
+            .navbar-custom .navbar-right li {
+                display: none;
+            }
+
+            .left side-menu .slimscroll-menu .sidebar-menu {
+                display: none;
+            }
+        }
+
+        .ui-sortable-handle .center {
+            text-align: center;
+        }
+
+        .badge {
+            white-space: normal !important;
+        }
+
+        .modal {
+            overflow-y: auto;
+        }
+
+        .table .thead-ful th {
+            color: #333;
+            font-weight: 600;
+            background-color: #fdf2d9;
+            border-color: #fdf2d9;
+        }
+
+        .addScroll {
+            overflow-y: auto;
+            height: 500px;
+        }
+
+        tr.selected td {
+            background-color: #d5edf1 !important;
+        }
+
+        .titleText {
+            font-weight: bold;
+        }
+
+        .BtnAlignRight {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .urlColor {
+            color: #041382;
+            font-weight: 600;
+        }
+
+        .pagecontainer {
+            display: block;
+            position: relative;
+            padding-left: 23px;
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            .pagecontainer input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        .pagecheckmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        .pagecontainer:hover input ~ .pagecheckmark {
+            background-color: #ccc;
+        }
+
+        .pagecontainer input:checked ~ .pagecheckmark {
+            background-color: #2196F3;
+        }
+
+        .pagecheckmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .pagecontainer input:checked ~ .pagecheckmark:after {
+            display: flex;
+        }
+
+        .pagecontainer .pagecheckmark:after {
+            top: 7px;
+            left: 7px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .displayBlock {
+            display: block;
+        }
+
+        .AlignRight {
+            text-align: right;
+        }
+
+        .table thead th {
+            padding: 7px;
+        }
+
+        table td p {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body style="font-family: 'Open Sans', sans-serif;">
+    <div class="wrapper">
+        @Html.Partial("_Header")
+        <div class="content-page">
+            <div class="content">
+                <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="iddle_msgLabel" id="iddle_msg" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title mt-0" id="iddle_msgLabel">System Info</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    You have idle for some times. <br>System will logout on 50 second.
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <input type="hidden" id="hidDBName" name="hidDName" value="0">
+                        <input type="hidden" id="method" name="method" value="0">
+                        <input type="hidden" id="hidID" name="hidID" value="0">
+                        <input type="hidden" id="hidSrNo" name="hidSrNo" value="0">
+                        <input type="hidden" id="hidSetImageUrl" name="hidSetImageUrl" value="0">
+                        <input type="hidden" id="hidSelectContentName" name="hidSelectContentName" value="0">
+                        <input type="hidden" id="ActiveTab" name="ActiveTab" value="0">
+
+                        <input type="hidden" id="hidDetailID" name="hidDetailID" value="0">
+                        <input type="hidden" id="hidHeaderID" name="hidHeaderID" value="0">
+                        <input type="hidden" id="hidStockID" name="hidStockID" value="0">
+                        <input type="hidden" id="methodDetail" name="methodDetail" value="add">
+                        <div class="col-sm-12">
+                            <div class="page-title-box">
+                            </div>
+                        </div>
+                    </div>
+                    @RenderBody()
+                </div>
+                @Html.Partial("_PartialSetImageModal")
+                @Html.Partial("_PartialUserProfileModal")
+                @Html.Partial("_PartialPreviewMeidaImageModal")
+                @Html.Partial("_Footer")
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
+    <!-- DataTables -->
+    <link href="~/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet" />
+    <link href="~/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/plugins/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+    <link href="~/plugins/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+    <link href="~/Content/CustomStyle.css" rel="stylesheet" />
+    <script src="~/Scripts/app.js"></script>
+    <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
+    <script src="~/Scripts/pages/sweet-alert.init.js"></script>
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/general.js"></script>
+    <script src="~/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/plugins/parsleyjs/parsley.min.js"></script>
+
+    <!-- Required datatable js -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="~/plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables/jszip.min.js"></script>
+    <script src="~/plugins/datatables/pdfmake.min.js"></script>
+    <script src="~/plugins/datatables/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="~/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables/responsive.bootstrap4.min.js"></script>
+    <!-- Datatable init js -->
+    <script src="~/Scripts/pages/datatables.init.js"></script>
+    <script src="~/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    <script src="~/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/plugins/select2/js/select2.min.js"></script>
+    <script src="~/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>
+    <script src="~/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="~/Scripts/pages/form-advanced.js"></script>
+    <script src="~/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="~/Scripts/pages/lightbox.js"></script>
+
+    <script src="~/plugins/mutiselect/js/bundle.min.js"></script>
+
+    <!--<script src="https://www.google.com/recaptcha/api.js?render=6LcHpYoUAAAAAITt2G2PEeawHQ8vdvRvUyIf8cKT"></script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    @Html.Partial("_PartialRenderBtnScript")
+    @Html.Partial("_PartialSetIMediaImageScript")
+    @Html.Partial("CommonScript")
+    @{
+        int LoginLimit = (Session["IsLoginLimit"] != null) ? Convert.ToInt32(Session["IsLoginLimit"].ToString()) : 1;
+        Session["SITE_URL"] = "";
+    }
+    <script type="text/javascript">
+                    var totalCount = 0;
+                    var totalMsg = [];
+                    @*var SITE_URL = "@SITE_URL";*@
+                    var SITE_URL = "";
+                    //var SITE_URL = "http://localhost:7900/";
+                    //var IsLoginLimit = parseInt('@LoginLimit') * 60;
+                    var IsLoginLimit = 0;
+                    var IDLE_TIMEOUT = IsLoginLimit; //seconds
+                    var _idleSecondsCounter = 0;
+                    var GoToLogout = false;
+                    var SampleImageUrl = '/MediaFolder/sample.jpg';
+                    document.onclick = function () {
+                        _idleSecondsCounter = 0;
+                    };
+                    document.onmousemove = function () {
+                        _idleSecondsCounter = 0;
+                    };
+                    document.onkeypress = function () {
+                        _idleSecondsCounter = 0;
+                    };
+                    //if (!GoToLogout) {
+                    //    window.setInterval(CheckIdleTime, 1000);
+                    //}
+                    function CheckIdleTime() {
+                        if (IDLE_TIMEOUT != 0) {
+                            _idleSecondsCounter++;
+                            var oPanel = document.getElementById("SecondsUntilExpire");
+                            if (oPanel)
+                                oPanel.innerHTML = (IDLE_TIMEOUT - _idleSecondsCounter) + "";
+                            if (_idleSecondsCounter >= IDLE_TIMEOUT) {
+                                GoToLogout = true;
+                                //document.location.href = SITE_URL + "/Pages/Login";
+                                //alert('logout');
+                                document.location.href = SITE_URL + "/login/Logout";
+                            }
+                            if ((IDLE_TIMEOUT - _idleSecondsCounter) == 55) {
+                                $('#iddle_msg').modal("show");
+                            }
+                        }
+                    }
+                    //*Document ready
+                    jQuery(document).ready(function () {
+                        $('.multi-row span, textarea').removeClass("displayBlock")
+                        !function ($) {
+                            "use strict";
+                            var SweetAlert = function () {
+                            };
+                            SweetAlert.prototype.init = function () {
+                            },
+                                //init
+                            $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert
+                        }(window.jQuery),
+                            //initializing
+                            function ($) { "use strict"; $.SweetAlert.init()
+                            }(window.jQuery);
+                        tinymce.init({
+                            selector: "textarea.tinyMCEEditor",
+                            theme: "modern",
+                            //width: 600,
+                            height: 200,
+                            relative_urls: false,
+                            remove_script_host: false,
+                            plugins: [
+                                "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                                "save table contextmenu directionality template paste textcolor"
+                            ],
+                            toolbar: "sizeselect | fontselect | fontsizeselect | insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons",
+                            style_formats: [
+                                { title: 'Bold text', inline: 'b' },
+                                { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },
+                                { title: 'Red header', block: 'h1', styles: { color: '#ff0000' } },
+                                { title: 'Example 1', inline: 'span', classes: 'example1' },
+                                { title: 'Example 2', inline: 'span', classes: 'example2' },
+                                { title: 'Table styles' },
+                                { title: 'Table row 1', selector: 'tr', classes: 'tablerow1' }
+                            ],
+                            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt"
+                        });
+                        $(document).on('focusin', function (e) {
+                            if ($(e.target).closest(".mce-window").length) {
+                                e.stopImmediatePropagation();
+                            }
+                        });
+                        LoadTotal();
+                    });
+                    //*end document ready
+                    function onClick_Logout() {
+                        document.location.href = SITE_URL + "/login/logout";
+                    }
+                    function onClickProfile() {
+                        //alert('click profile');
+                        var data = GetUserProfileData();
+                        $('#txtUserCode').val(data.UserCode);
+                        $('#txtUserName').val(data.UserName);
+                        $('#txtEmail').val(data.Email);
+                        $('#txtPhoneNo').val(data.PhoneNo);
+                        $('#txtUserGroup').val(data.UserGroupCode);
+                        $("#img_profileImage").attr('src', data.ImageUrl);
+                        $('#myProfileModal').modal("show");
+                    }
+                    function GetUserProfileData() {
+                        var request = $.ajax({
+                            type: 'POST',
+                            dataType: 'json',
+                            async: false,
+                            beforeSend: function () {
+                                return true;
+                            },
+                            url: SITE_URL + '/SystemManager/GetUserProfileData',
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                show_ajax_error(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                        var result = request.responseJSON;
+                        return (result.data != null) ? result.data : [];
+                    }
+    </script>
+</body>
+</html>

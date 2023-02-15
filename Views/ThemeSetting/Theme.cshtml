@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Theme";
+}
+<div class="row">
+    <div class="col-12">
+        <!-- Left sidebar -->
+        <div class="email-leftbar card">
+            <a href="" class="btn btn-danger btn-rounded btn-custom btn-block waves-effect waves-light">Theme</a>
+            <h6 class="m-t-30">Fancy and customizable colorpicker</h6>
+            <div class="mail-list m-t-20">
+                <a href="#" id="themeDashboard"><span class="mdi mdi-arrow-right-drop-circle text-info float-right mt-1"></span>Dashboard Theme</a>
+                <a href="#" id="themeTable"><span class="mdi mdi-arrow-right-drop-circle text-warning float-right mt-1"></span>Table Theme</a>
+                <a href="#" id="themeLogin"><span class="mdi mdi-arrow-right-drop-circle text-primary float-right mt-1"></span>Login Theme</a>
+            </div>
+        </div>
+        <!-- End Left sidebar -->
+        <!-- Right Sidebar -->
+        <div class="email-rightbar mb-3">
+            <div class="row">
+                <div class="col-lg-12 themeDashboard">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="mt-0 header-title">Dashboard theme</h4>
+                            <div class="form-group m-b-0">
+                                <label>Dashboard Color</label>
+                                <input type="text" class="colorpicker-large form-control" value="#00a7b5" id="dashboardBackgroundColor">
+                            </div>
+                            <div class="form-group m-b-0">
+                                <label>Dashboard Menu Hover Color</label>
+                                <input type="text" class="colorpicker-large form-control" value="#00a7b5" id="dashboardMenuHoverColor">
+                            </div>
+                            <div class="form-group m-b-0">
+                                <label>Font Color</label>
+                                <input type="text" class="colorpicker-large form-control" value="#00a7b5" id="dashboardFontColor">
+                            </div>
+                            <img id="DashboardLogoImg" hidden />
+                            <div class="card-body">
+                                <div class="">
+                                    <img id="img_DashboardLogo" alt="image" class="img-fluid" src="/images/small/img-3.jpg" onclick="onClickSetImage_DashboardLogo()">
+                                </div>
+                                <button class="btn btn-outline-dark btn-sm btn-block waves-effect tooltips" title="Edit Image" type="button" onclick="onClickSetImage_DashboardLogo()">
+                                    <i class="fa fa-edit"></i> EditImage
+                                </button>
+                                <div class="form-group">
+                                    <label>ImageUrl</label>
+                                    <input type="text" id="txtURL_DashboardLogo" class="form-control form-control-sm" style="font-size: 10px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 themeTable">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="mt-0 header-title">Table theme</h4>
+                            <div class="form-group">
+                                <label>Table Background Color</label>
+                                <input type="text" class="colorpicker-large form-control" value="#00a7b5" id="tableBackgroundColor">
+                            </div>
+                            <div class="form-group">
+                                <label>Table title color</label>
+                                <input type="text" class="colorpicker-large form-control" value="#00a7b5" id="tableTitleBackgroundColor">
+                            </div>
+                            <div class="form-group">
+                                <label>Customized Background Color</label>
+                                <input type="text" class="colorpicker-large form-control" value="#00a7b5" id="backgroundColorPickerValue">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 themeLogin">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="mt-0 header-title">Login theme</h4>
+                            <div class="form-group">
+                                <label>Logo Background Color</label>
+                                <input type="text" class="colorpicker-large form-control" value="#00a7b5" id="logoBackgroundColor">
+                                <div class="form-group">
+                                    <label>Logo Description</label>
+                                    <input type="text" class="form-control" id="logoDescription" />
+                                </div>
+                                <img id="LoginLogoImg" hidden />
+                                <div class="card-body">
+                                    <div class="">
+                                        <img id="img_LoginLogoImg" alt="image" class="img-fluid" src="/images/small/img-3.jpg" onclick="onClickSetImage_LogoImg()">
+                                    </div>
+                                    <button class="btn btn-outline-dark btn-sm btn-block waves-effect tooltips" title="Edit Image" type="button" onclick="onClickSetImage_LogoImg()">
+                                        <i class="fa fa-edit"></i> EditImage
+                                    </button>
+                                    <div class="form-group">
+                                        <label>ImageUrl</label>
+                                        <input type="text" id="txtURL_LoginLogoImg" class="form-control form-control-sm" style="font-size: 10px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <div class="button-items">
+                                <button type="button" id="btnUpdateDashboardColor" onclick="UpdateDashboardColor()" class="btn btn-secondary waves-effect">Save Theme</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end Col-9 -->
+    </div>
+</div><!-- End row -->
+@section scripts{
+    @Html.Partial("Script")
+}

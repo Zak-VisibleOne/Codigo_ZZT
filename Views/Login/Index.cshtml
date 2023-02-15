@@ -1,0 +1,259 @@
+﻿@{
+    Layout = null;
+}
+@using POSData;
+@{
+    var logoDesc = "";
+    var bgColor = "";
+    var bgImage = "";
+    var logoDescColor = "";
+    var loginFormBgColor = "";
+    var loginFormTextColor = "";
+    var signInTextColor = "";
+    var btnLogin = "";
+    var btnLoginHover = "";
+
+    logoDescColor = "black";
+
+    logoDesc = "POS web";
+    bgColor = "#568e8f";
+    bgImage = "apple-icon-57x57.png";
+
+    loginFormBgColor = "white";
+    loginFormTextColor = "black";
+    signInTextColor = "black";
+    btnLogin = "#065C66";
+    btnLoginHover = "#FFB222";
+}
+@{
+    string user = (Session["Uname"] != null) ? Session["Uname"].ToString() : "";//username
+    string userCode = (Session["User"] != null) ? Session["User"].ToString() : "";
+    POSSystemEntities context = new POSSystemEntities();
+    var config = context.Globalconfigs.FirstOrDefault();
+    if (config != null)
+    {
+        bgImage = config.LoginLogo;
+        logoDesc = config.LoginDescription;
+        bgColor = config.LoginBgColor;
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Login</title>
+    <meta content="Admin Dashboard" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <link rel="shortcut icon" href="~/images/logo/logo.png">
+    @Styles.Render("~/Content/css")
+    <style>
+        body {
+            background: url('../images/login-background.jpg') center no-repeat;
+            background-size: cover;
+        }
+
+            body:after {
+                content: '';
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                display: block;
+                opacity: 0.3;
+                z-index: -1;
+                background: #ED213A; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #FFB222, #065C66); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #FFB222, #065C66); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            }
+
+        .myBtn {
+            transition: all 0.3s linear;
+        }
+
+            .myBtn:hover {
+                background: @btnLoginHover !important;
+            }
+
+        .loginBg {
+            background-color: @bgColor;
+            min-height: 400px;
+        }
+
+        .formBg {
+            padding-left:2rem;
+            padding-right:2rem;
+            background-color: @loginFormBgColor;
+            color:@loginFormTextColor;
+            min-height: 400px;
+        }
+
+        .login-form{
+            margin-bottom:3rem;
+        }
+        .logoImage {
+            width: 100%;
+            max-width:300px;
+            height:auto;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .login-form{
+        margin-bottom:3rem;
+        }
+        .bgimgLogin {
+            height: 400px;
+            width: 100%;
+            background-position: center;
+            background-image: url(../../images/logo/iStock-1152638021.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .loginFormCard {
+            margin: 10% auto;
+            max-width: 400px;
+            position: relative;
+
+        }
+
+        .logoDesc {
+            text-align: center;
+            color: @logoDescColor;
+            font-size: large;
+        }
+        .signInTitle {
+            font-weight: bold;
+            font-size: large;
+            color:@signInTextColor;
+        }
+    .btnLogin {
+        width: 100%;
+        background-color: @btnLogin;
+        border: 1px solid @btnLogin;
+    }
+        .logoBgImage{
+            display:flex;
+            justify-content:center;
+            margin-top:3rem;
+        }
+        @@media (max-width: 1000px) {
+            .logoImage {
+                width: 30%;
+                text-align: center;
+                margin-left: 35%;
+                margin-right: 35%;
+                margin-top: 30%;
+            }
+
+            .formBg {
+                background-color: @loginFormBgColor;
+                color:@loginFormTextColor;
+                min-height: 400px;
+            }
+        }
+        @@media (max-width: 768px) {
+            .logoImage {
+                width: 30%;
+                text-align: center;
+                margin-left: 35%;
+                margin-right: 35%;
+                margin-top: 30%;
+            }
+            .formBg {
+                background-color: @loginFormBgColor;
+                color:@loginFormTextColor;
+                min-height: 400px;
+            }
+        }
+        @@media (max-width: 425px) {
+            .logoImage {
+                width: 30%;
+                text-align: center;
+                margin-left: 35%;
+                margin-right: 35%;
+                margin-top: 49%;
+            }
+            .loginFormCard{
+                max-width:350px;
+                margin:50% auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Begin page -->
+    <div class="loginFormCard">
+        <div class="loginBg">
+            <div>
+                <div class="row">
+                    <div class="col-lg-12 formBg">
+                        <div class="logoBgImage">
+                            <a href="/ace/report/Login" class="logo logo-admin">
+                                <img src="~/images/logo/logo1.png" alt="logo" class="logoImage"><br />
+                            </a>                        
+                            <br /><p class="logoDesc" style="display:none;">@logoDesc</p>
+                        </div>
+                        <form class="form-horizontal m-t-30 login-form" action="" method="post">
+                            
+                            <div class="alert alert-danger display-hide">
+                                <button class="close" data-close="alert"></button>
+                                <span> Enter any username and password. </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="Enter username">
+                            </div>
+                            <div class="form-group">
+                                <label for="userpassword">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter password">
+                            </div>
+                            <div id="site_statistics_loading">
+                                <img src="@Url.Content("~/Content/loading.gif")" alt="loading" />
+                            </div>
+                            <div class="form-group row m-t-20">
+                                <div class="col-12">
+                                    <div class="g-recaptcha" data-sitekey="6LdQO1IcAAAAAIoO5DL1FUxf-vgWMiZ4KuHZtWia"></div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" name="remember" value="1" class="custom-control-input" id="customControlInline">
+                                        <label class="custom-control-label" for="customControlInline">Remember me</label><br />
+                                    </div>
+                                    <div class="form-group">
+                                        <a href="#" onclick="forgetPassword()"><p style="color:mediumblue">Forget Password</p></a>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <br /><button class="btn btn-danger myBtn w-md waves-effect waves-light btnLogin" type="submit">Log In</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="verifyViewForLogin" style="display:none" class="card-body">
+                            <h5>Your verification token (Code has been sent to your email .)</h5>
+                            <div class="form-group">
+                                <input type="text" id="verifyCodeNumberLogin" class="form-control" />
+                            </div>
+                            <p id="verifyCodeNumberLoginMessage" style="display:none"></p>
+                            <div class="form-group">
+                                <button type="button" id="btnVerifyEmail" onclick="verifyCodeForLogin()" class="btn btn-primary waves-effect waves-light">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-t-40 text-center">
+            <p>
+                © 2022 Visible One.
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Html.Partial("LoginScript")
+</body>
+</html>
