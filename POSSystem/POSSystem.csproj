@@ -2564,8 +2564,6 @@
     <Content Include="Views\Dashboard\Script.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\LoginScript.cshtml" />
-    <Content Include="Views\Media\Index.cshtml" />
-    <Content Include="Views\Media\MediaScript.cshtml" />
     <Content Include="Views\Reporting\Index.cshtml" />
     <Content Include="Views\Reporting\Script.cshtml" />
     <Content Include="Views\ReportView\Index.cshtml" />
