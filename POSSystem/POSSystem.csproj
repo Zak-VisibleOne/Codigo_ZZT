@@ -185,35 +185,20 @@
     <Compile Include="Contants\Menu.cs" />
     <Compile Include="Controllers\PointSystemApiController.cs" />
     <Compile Include="Controllers\POSSystemApiController.cs" />
-    <Compile Include="Controllers\StockTransferController.cs" />
-    <Compile Include="Controllers\PurchaseReturnController.cs" />
-    <Compile Include="Controllers\PurchaseOrderController.cs" />
-    <Compile Include="Controllers\StockOpeningController.cs" />
-    <Compile Include="Controllers\StockInoutController.cs" />
-    <Compile Include="Controllers\PaymentReceiveController.cs" />
-    <Compile Include="Controllers\StockClassController.cs" />
-    <Compile Include="Controllers\DiscountTypeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
-    <Compile Include="Controllers\ExportImportController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\ModelController.cs" />
-    <Compile Include="Controllers\SalePersonController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
     <Compile Include="Controllers\ReportViewController.cs" />
-    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\SystemManagerController.cs" />
-    <Compile Include="Controllers\ThemeSettingController.cs" />
-    <Compile Include="Controllers\TownshipController.cs" />
-    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

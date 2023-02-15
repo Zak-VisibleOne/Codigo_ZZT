@@ -43,6 +43,19 @@
           <Property Name="ExpirePeriod" Type="tinyint" />
           <Property Name="ImageUrl" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Coupon">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CouponCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CouponName" Type="nvarchar" MaxLength="50" />
+          <Property Name="QRCodeImageUrl" Type="nvarchar(max)" />
+          <Property Name="AvailableQty" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="DiscountAmount" Type="float" />
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustId" />
@@ -185,6 +198,17 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <Property Name="CreatedUser" Type="nvarchar" MaxLength="50" />
           <Property Name="UpdatedUser" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="TotalPoint" Type="int" />
+          <Property Name="TotalPurchaseAmount" Type="float" />
+        </EntityType>
         <EntityType Name="PurchaseDetail">
           <Key>
             <PropertyRef Name="ID" />
@@ -199,6 +223,16 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <Property Name="Discount" Type="float" />
           <Property Name="Amount" Type="float" />
           <Property Name="Remark" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PurchaseHead">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CouponCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiptNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="PurchaseHeader">
           <Key>
@@ -221,6 +255,16 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <Property Name="CrtTime" Type="datetime" />
           <Property Name="UpdUser" Type="nvarchar" MaxLength="10" />
           <Property Name="UptDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PurchaseItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="TotalPrice" Type="float" />
         </EntityType>
         <EntityType Name="ReportMaintenance">
           <Key>
@@ -453,6 +497,7 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DiscountType" EntityType="Self.DiscountType" Schema="dbo" store:Type="Tables" />
@@ -461,8 +506,11 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <EntitySet Name="ipAddressLog" EntityType="Self.ipAddressLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MediaInfo" EntityType="Self.MediaInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseHead" EntityType="Self.PurchaseHead" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseHeader" EntityType="Self.PurchaseHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseItem" EntityType="Self.PurchaseItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportMaintenance" EntityType="Self.ReportMaintenance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleDetail" EntityType="Self.SaleDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleHeader" EntityType="Self.SaleHeader" Schema="dbo" store:Type="Tables" />
@@ -496,6 +544,7 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <EntitySet Name="Categories" EntityType="POSSystemModel.Category" />
           <EntitySet Name="Cities" EntityType="POSSystemModel.City" />
           <EntitySet Name="Companies" EntityType="POSSystemModel.Company" />
+          <EntitySet Name="Coupons" EntityType="POSSystemModel.Coupon" />
           <EntitySet Name="Customers" EntityType="POSSystemModel.Customer" />
           <EntitySet Name="Departments" EntityType="POSSystemModel.Department" />
           <EntitySet Name="DiscountTypes" EntityType="POSSystemModel.DiscountType" />
@@ -504,8 +553,11 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <EntitySet Name="ipAddressLogs" EntityType="POSSystemModel.ipAddressLog" />
           <EntitySet Name="Locations" EntityType="POSSystemModel.Location" />
           <EntitySet Name="MediaInfoes" EntityType="POSSystemModel.MediaInfo" />
+          <EntitySet Name="Members" EntityType="POSSystemModel.Member" />
           <EntitySet Name="PurchaseDetails" EntityType="POSSystemModel.PurchaseDetail" />
+          <EntitySet Name="PurchaseHeads" EntityType="POSSystemModel.PurchaseHead" />
           <EntitySet Name="PurchaseHeaders" EntityType="POSSystemModel.PurchaseHeader" />
+          <EntitySet Name="PurchaseItems" EntityType="POSSystemModel.PurchaseItem" />
           <EntitySet Name="ReportMaintenances" EntityType="POSSystemModel.ReportMaintenance" />
           <EntitySet Name="SaleDetails" EntityType="POSSystemModel.SaleDetail" />
           <EntitySet Name="SaleHeaders" EntityType="POSSystemModel.SaleHeader" />
@@ -559,6 +611,19 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <Property Name="Note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ExpirePeriod" Type="Byte" />
           <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Coupon">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CouponCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CouponName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QRCodeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AvailableQty" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="DiscountAmount" Type="Double" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -689,6 +754,17 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MemberName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPoint" Type="Int32" />
+          <Property Name="TotalPurchaseAmount" Type="Double" />
+        </EntityType>
         <EntityType Name="PurchaseDetail">
           <Key>
             <PropertyRef Name="ID" />
@@ -703,6 +779,16 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <Property Name="Discount" Type="Double" />
           <Property Name="Amount" Type="Double" />
           <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PurchaseHead">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CouponCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UsedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="PurchaseHeader">
           <Key>
@@ -725,6 +811,16 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
           <Property Name="CrtTime" Type="DateTime" Precision="3" />
           <Property Name="UpdUser" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="UptDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PurchaseItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="TotalPrice" Type="Double" />
         </EntityType>
         <EntityType Name="ReportMaintenance">
           <Key>
@@ -1011,6 +1107,20 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Coupons">
+            <EntityTypeMapping TypeName="POSSystemModel.Coupon">
+              <MappingFragment StoreEntitySet="Coupon">
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="AvailableQty" ColumnName="AvailableQty" />
+                <ScalarProperty Name="QRCodeImageUrl" ColumnName="QRCodeImageUrl" />
+                <ScalarProperty Name="CouponName" ColumnName="CouponName" />
+                <ScalarProperty Name="CouponCode" ColumnName="CouponCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="POSSystemModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
@@ -1147,6 +1257,18 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="POSSystemModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="TotalPurchaseAmount" ColumnName="TotalPurchaseAmount" />
+                <ScalarProperty Name="TotalPoint" ColumnName="TotalPoint" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberCode" ColumnName="MemberCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PurchaseDetails">
             <EntityTypeMapping TypeName="POSSystemModel.PurchaseDetail">
               <MappingFragment StoreEntitySet="PurchaseDetail">
@@ -1159,6 +1281,17 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
                 <ScalarProperty Name="StockID" ColumnName="StockID" />
                 <ScalarProperty Name="SrNo" ColumnName="SrNo" />
                 <ScalarProperty Name="RefHeaderID" ColumnName="RefHeaderID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseHeads">
+            <EntityTypeMapping TypeName="POSSystemModel.PurchaseHead">
+              <MappingFragment StoreEntitySet="PurchaseHead">
+                <ScalarProperty Name="UsedDate" ColumnName="UsedDate" />
+                <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
+                <ScalarProperty Name="CouponCode" ColumnName="CouponCode" />
+                <ScalarProperty Name="MemberCode" ColumnName="MemberCode" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1182,6 +1315,17 @@ warning 6002: The table/view 'Codigo.dbo.DocumentID' does not have a primary key
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
                 <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseItems">
+            <EntityTypeMapping TypeName="POSSystemModel.PurchaseItem">
+              <MappingFragment StoreEntitySet="PurchaseItem">
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

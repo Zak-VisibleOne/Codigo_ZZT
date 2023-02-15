@@ -28,6 +28,7 @@ namespace POSData
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Coupon> Coupons { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DiscountType> DiscountTypes { get; set; }
@@ -36,8 +37,11 @@ namespace POSData
         public virtual DbSet<ipAddressLog> ipAddressLogs { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<MediaInfo> MediaInfoes { get; set; }
+        public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
+        public virtual DbSet<PurchaseHead> PurchaseHeads { get; set; }
         public virtual DbSet<PurchaseHeader> PurchaseHeaders { get; set; }
+        public virtual DbSet<PurchaseItem> PurchaseItems { get; set; }
         public virtual DbSet<ReportMaintenance> ReportMaintenances { get; set; }
         public virtual DbSet<SaleDetail> SaleDetails { get; set; }
         public virtual DbSet<SaleHeader> SaleHeaders { get; set; }

@@ -62,6 +62,9 @@
     <Compile Include="Company.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Coupon.cs">
+      <DependentUpon>POSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Customer.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
@@ -90,6 +93,9 @@
     <Compile Include="MediaInfo.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Member.cs">
+      <DependentUpon>POSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="POSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,7 +115,13 @@
     <Compile Include="PurchaseDetail.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PurchaseHead.cs">
+      <DependentUpon>POSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PurchaseHeader.cs">
+      <DependentUpon>POSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseItem.cs">
       <DependentUpon>POSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReportMaintenance.cs">
