@@ -2514,6 +2514,7 @@
     <Content Include="SQL\login\UpdateState.sql" />
     <Content Include="SQL\Media\GeMediaByID.sql" />
     <Content Include="SQL\Media\GetMediaList.sql" />
+    <Content Include="SQL\Purchase\GetPurchaseHead.sql" />
     <Content Include="SQL\Purchase\GetSupplierList.sql" />
     <Content Include="SQL\Purchase\GetPurchaseHeader.sql" />
     <Content Include="SQL\Purchase\GetPurchaseList.sql" />

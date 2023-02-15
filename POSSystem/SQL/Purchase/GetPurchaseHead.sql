@@ -1,0 +1,6 @@
+﻿SELECT [ID]
+      ,[MemberCode]
+      ,[CouponCode]
+      ,[ReceiptNumber]
+      ,[UsedDate]
+  FROM [dbo].[PurchaseHead]

@@ -6,6 +6,8 @@ using System.Web.Http;
 using POSData;
 using System.Data;
 using System.Web;
+using System.Collections.Generic;
+using POSSystem.Utils;
 //using System.Web.Http;
 //using System.Net.Http.Headers;
 namespace POSSystem.Controllers
@@ -30,6 +32,7 @@ namespace POSSystem.Controllers
         }
 
         //Calculate Point
+      
 
 
         [HttpPost]
