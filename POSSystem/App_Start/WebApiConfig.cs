@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using POSSystem.Filters;
+using System.Web.Http;
 namespace POSSystem
 {
     public static class WebApiConfig
@@ -14,6 +15,7 @@ namespace POSSystem
             config.Formatters.Remove(config.Formatters.XmlFormatter);//return json only
             config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+            //config.Filters.Add(new BasicAuthenticationAttribute());
         }
     }
 }

@@ -8,10 +8,12 @@ using System.Data;
 using System.Web;
 using System.Collections.Generic;
 using POSSystem.Utils;
+using POSSystem.Filters;
 //using System.Web.Http;
 //using System.Net.Http.Headers;
 namespace POSSystem.Controllers
 {
+    //[BasicAuthentication]
     public class POSSystemApiController : ApiController
     {
         private POSSystemEntities Context { get; set; }

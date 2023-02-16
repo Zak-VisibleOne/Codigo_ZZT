@@ -196,6 +196,7 @@
     <Compile Include="Controllers\ReportingController.cs" />
     <Compile Include="Controllers\ReportViewController.cs" />
     <Compile Include="Controllers\SystemManagerController.cs" />
+    <Compile Include="Filters\BasicAuthenticationAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

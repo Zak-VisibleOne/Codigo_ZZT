@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 //using System.Net.Http.Headers;
 namespace POSSystem.Controllers
 {
+    //[BasicAuthentication]
     public class CMSApiController : ApiController
     {
         private POSSystemEntities Context { get; set; }
